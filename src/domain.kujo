@@ -1,4 +1,4 @@
-from src.common import get, has
+from src.common import get, has, safe_id, valid_timestamp
 
 export func record_type(command) {
     if command == "claim add" { return "claim" }
@@ -27,6 +27,8 @@ func require_text(payload, key) {
 }
 
 func valid_classification(value) { return has(["verified", "observed", "inferred", "opinion", "hypothesis", "planned", "conflicted", "expired", "unavailable", "rejected"], value) }
+func require_id(payload,key){error:=require_text(payload,key);if error!=""{return error};if !safe_id(payload[key]){return "invalid record reference: "+key};return ""}
+func valid_id_array(value, minimum){if type(value)!="array"||len(value)<minimum||len(value)>1000{return false};for id in value{if !safe_id(id){return false}};return true}
 
 export func validate_command(command, payload, artifact) {
     if command == "claim add" {
@@ -36,11 +38,15 @@ export func validate_command(command, payload, artifact) {
     }
     if command == "source add" {
         for key in ["locator", "source_type", "retrieved_at"] { error := require_text(payload, key); if error != "" { return error } }
+        if !valid_timestamp(payload["retrieved_at"]) { return "retrieved_at must be RFC 3339 UTC" }
     }
     if command == "evidence attach" {
         for key in ["claim_id", "source_id", "source_location", "captured_support", "checksum", "classification", "retrieved_at", "reviewed_by"] { error := require_text(payload, key); if error != "" { return error } }
         if !valid_classification(payload["classification"]) { return "invalid evidence classification" }
         if payload["classification"] == "verified" && len(trim(payload["captured_support"])) < 4 { return "verified evidence requires captured support" }
+        if !safe_id(payload["claim_id"]) || !safe_id(payload["source_id"]) { return "evidence record references are invalid" }
+        if !regex_match(lower(payload["checksum"]), "^[a-f0-9]{64}$") { return "checksum must be SHA-256 hex" }
+        if !valid_timestamp(payload["retrieved_at"]) { return "retrieved_at must be RFC 3339 UTC" }
     }
     if command == "evidence classify" {
         for key in ["evidence_id", "classification", "reviewed_by"] { error := require_text(payload, key); if error != "" { return error } }
@@ -49,13 +55,13 @@ export func validate_command(command, payload, artifact) {
     if command == "conflict add" {
         error := require_text(payload, "claim_id"); if error != "" { return error }
         error = require_text(payload, "description"); if error != "" { return error }
-        if type(get(payload, "source_ids", null)) != "array" || len(payload["source_ids"]) < 2 { return "conflict requires at least two source_ids" }
+        if !valid_id_array(get(payload, "source_ids", null), 2) { return "conflict requires 2..1000 safe source_ids" }
     }
     if command == "quote add" { for key in ["text", "speaker", "source_id", "approval_status"] { error := require_text(payload, key); if error != "" { return error } } }
     if command == "consent record" { for key in ["subject", "scope", "status", "recorded_by"] { error := require_text(payload, key); if error != "" { return error } } }
     if command == "rights record" { for key in ["asset_id", "media_type", "scope", "status", "basis", "recorded_by"] { error := require_text(payload, key); if error != "" { return error } } }
     if command == "packet" {
-        if type(get(payload, "claim_ids", null)) != "array" || len(payload["claim_ids"]) == 0 { return "packet requires claim_ids" }
+        if !valid_id_array(get(payload, "claim_ids", null), 1) { return "packet requires 1..1000 safe claim_ids" }
     }
     return ""
 }
