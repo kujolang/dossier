@@ -10,16 +10,18 @@ captured support, classifications, conflicts, quotations, consent, freshness,
 and rights. It gives editors, agents, CI jobs, and review workflows a portable
 record of what a material claim may honestly rely on.
 
-## Readiness posture
+## Production capabilities
 
 Dossier is ready for serious standalone evidence operations with immutable
 records, append-only audit events, atomic writes, bounded queries, strict claim
-and evidence taxonomies, secret rejection, deterministic fixtures, and
-fail-closed validation. It never turns a URL into verification, inference into
-fact, or a recorded assertion into granted rights, consent, or approval.
+and evidence taxonomies, secret rejection, deterministic fixtures, detached
+packet signatures, configurable freshness, offline citations, optional
+AES-256-GCM storage, bounded streaming, concurrency checks, retention receipts,
+and fail-closed validation. It never turns a URL into verification, inference
+into fact, or a recorded assertion into granted rights, consent, or approval.
 
-See the [production review](docs/PRODUCTION_READINESS_REVIEW.md) and
-[next-session worklist](docs/NEXT_SESSION.md).
+See the [production review](docs/PRODUCTION_READINESS_REVIEW.md) and completed
+[hardening worklist](docs/NEXT_SESSION.md).
 
 ## Quick install
 
