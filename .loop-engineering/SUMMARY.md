@@ -16,7 +16,7 @@ success
 
 ## Commits
 
-- Loop engineering: Harden Dossier into a production-ready, universally useful Kujo-native production Kujo tool without weakening its authority boundaries.
+- Loop engineering: Clean up, verify, and prepare Dossier for the v0.2.0 release without weakening its authority boundaries.
 
 ## Remaining
 

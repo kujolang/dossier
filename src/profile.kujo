@@ -2,7 +2,8 @@ export func profile() {
     return {
         "slug": "dossier",
         "name": "Dossier",
-        "version": "0.1.0",
+        "version": "0.2.0",
+        "record_versions": ["0.1.0", "0.2.0"],
         "contract_version": "1.0.0",
         "default_state": ".dossier",
         "description": "Evidence, claims, sources, consent, freshness, conflicts, quotations, and rights records for defensible editorial work.",
