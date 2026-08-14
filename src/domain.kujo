@@ -1,0 +1,61 @@
+from src.common import get, has
+
+export func record_type(command) {
+    if command == "claim add" { return "claim" }
+    if command == "source add" { return "source" }
+    if command == "evidence attach" || command == "evidence classify" { return "evidence" }
+    if command == "conflict add" { return "conflict" }
+    if command == "quote add" { return "quotation" }
+    if command == "consent record" { return "consent" }
+    if command == "rights record" { return "rights" }
+    if command == "packet" { return "evidence_packet" }
+    return replace_str(command, " ", "_")
+}
+
+export func id_prefix(command) {
+    kind := record_type(command)
+    if kind == "quotation" { return "quote" }
+    if kind == "evidence_packet" { return "packet" }
+    return replace_str(kind, "_", "-")
+}
+
+func require_text(payload, key) {
+    value := get(payload, key, "")
+    if type(value) != "string" || trim(value) == "" { return "missing required field: " + key }
+    if len(value) > 65536 { return "field exceeds 64 KiB: " + key }
+    return ""
+}
+
+func valid_classification(value) { return has(["verified", "observed", "inferred", "opinion", "hypothesis", "planned", "conflicted", "expired", "unavailable", "rejected"], value) }
+
+export func validate_command(command, payload, artifact) {
+    if command == "claim add" {
+        error := require_text(payload, "claim_text"); if error != "" { return error }
+        error = require_text(payload, "claim_kind"); if error != "" { return error }
+        if !has(["fact", "observation", "inference", "opinion", "hypothesis"], payload["claim_kind"]) { return "invalid claim_kind" }
+    }
+    if command == "source add" {
+        for key in ["locator", "source_type", "retrieved_at"] { error := require_text(payload, key); if error != "" { return error } }
+    }
+    if command == "evidence attach" {
+        for key in ["claim_id", "source_id", "source_location", "captured_support", "checksum", "classification", "retrieved_at", "reviewed_by"] { error := require_text(payload, key); if error != "" { return error } }
+        if !valid_classification(payload["classification"]) { return "invalid evidence classification" }
+        if payload["classification"] == "verified" && len(trim(payload["captured_support"])) < 4 { return "verified evidence requires captured support" }
+    }
+    if command == "evidence classify" {
+        for key in ["evidence_id", "classification", "reviewed_by"] { error := require_text(payload, key); if error != "" { return error } }
+        if !valid_classification(payload["classification"]) { return "invalid evidence classification" }
+    }
+    if command == "conflict add" {
+        error := require_text(payload, "claim_id"); if error != "" { return error }
+        error = require_text(payload, "description"); if error != "" { return error }
+        if type(get(payload, "source_ids", null)) != "array" || len(payload["source_ids"]) < 2 { return "conflict requires at least two source_ids" }
+    }
+    if command == "quote add" { for key in ["text", "speaker", "source_id", "approval_status"] { error := require_text(payload, key); if error != "" { return error } } }
+    if command == "consent record" { for key in ["subject", "scope", "status", "recorded_by"] { error := require_text(payload, key); if error != "" { return error } } }
+    if command == "rights record" { for key in ["asset_id", "media_type", "scope", "status", "basis", "recorded_by"] { error := require_text(payload, key); if error != "" { return error } } }
+    if command == "packet" {
+        if type(get(payload, "claim_ids", null)) != "array" || len(payload["claim_ids"]) == 0 { return "packet requires claim_ids" }
+    }
+    return ""
+}

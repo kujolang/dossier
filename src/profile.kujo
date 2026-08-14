@@ -1,0 +1,19 @@
+export func profile() {
+    return {
+        "slug": "dossier",
+        "name": "Dossier",
+        "version": "0.1.0",
+        "contract_version": "1.0.0",
+        "default_state": ".dossier",
+        "description": "Evidence, claims, sources, consent, freshness, conflicts, quotations, and rights records for defensible editorial work.",
+        "commands": ["claim add", "claim show", "source add", "evidence attach", "evidence classify", "conflict add", "quote add", "consent record", "rights record", "freshness check", "verify", "packet", "report", "export", "doctor", "version", "init", "show", "validate", "history"],
+        "read_commands": ["claim show", "freshness check", "verify", "report", "export", "doctor", "version", "show", "validate", "history"],
+        "show_commands": ["claim show", "show"],
+        "list_commands": ["report", "history"],
+        "list_kinds": {},
+        "validate_commands": ["freshness check", "verify", "validate"],
+        "export_commands": ["export"],
+        "diff_commands": [],
+        "limitations": ["A locator or URL is never evidence by itself.", "Dossier records consent and rights assertions but cannot grant either one or approve publication."]
+    }
+}

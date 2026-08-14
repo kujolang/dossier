@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+KUJO_RUNTIME="${KUJO_BIN:-$ROOT/../kujo/target/release/kujo}"
+if [[ ! -x "$KUJO_RUNTIME" ]] && command -v kujo >/dev/null 2>&1; then KUJO_RUNTIME="$(command -v kujo)"; fi
+if [[ ! -x "$KUJO_RUNTIME" ]]; then printf 'Dossier: Kujo runtime not found; set KUJO_BIN.\n' >&2; exit 2; fi
+cd "$ROOT"
+"$KUJO_RUNTIME" check dossier.kujo
+"$KUJO_RUNTIME" run tests/test.kujo
+"$KUJO_RUNTIME" run tests/security_test.kujo
+"$KUJO_RUNTIME" run tests/domain_test.kujo
+while IFS= read -r document; do "$KUJO_RUNTIME" run scripts/validate_json.kujo -- "$document"; done < <(find fixtures schemas -type f -name '*.json' -print | sort)
+tmp_state="$(mktemp -d)"; trap 'find "$tmp_state" -depth -delete' EXIT
+KUJO_BIN="$KUJO_RUNTIME" ./bin/dossier --help >/dev/null
+KUJO_BIN="$KUJO_RUNTIME" ./bin/dossier --version --json >/dev/null
+KUJO_BIN="$KUJO_RUNTIME" ./bin/dossier doctor --state "$tmp_state/state" --json >/dev/null
+if rg -n 'python3|node |\.py\b|\.mjs\b' src tests scripts/*.kujo dossier.kujo kujo.toml; then
+  printf 'Dossier validation failed: foreign runtime dependency reference found.\n' >&2; exit 1
+fi
+test ! -f package.json && test ! -f requirements.txt && test ! -f go.mod && test ! -f Cargo.toml
+git diff --check
+printf 'Dossier validation passed.\n'
