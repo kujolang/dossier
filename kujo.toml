@@ -1,0 +1,4 @@
+[package]
+name = "dossier"
+version = "0.1.0"
+entry = "dossier.kujo"
