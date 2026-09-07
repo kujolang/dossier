@@ -10,7 +10,7 @@
 - Audit date: 2026-09-07 UTC. Host: Darwin x86_64; tested executable: sibling Kujo `target/release/kujo`, reporting 1.3.1.
 - Purpose: offline evidence ledger for editors, reviewers, agents, and CI, covering claims, sources, captured support, classifications, consent, and rights assertions.
 - Dependencies: one external Kujo executable, no manifest package dependencies, no database/model/provider/network service. Tests/release wrappers also use standard POSIX utilities and Bash. No dependencies added or removed.
-- CI runtime: Kujo commit `5059695d14d6726bc17fef55e0b95511624967cf`, built from source. GitHub actions are SHA-pinned. This audit executed the local 1.3.1 runtime, not a fresh build of the CI pin; source inspection confirmed the atomic no-replace and encoding/schema primitives at the pin.
+- CI runtime: Kujo commit `5059695d14d6726bc17fef55e0b95511624967cf`, built from source. GitHub actions are SHA-pinned. Local verification used 1.3.1; GitHub CI also built the pinned runtime and passed on implementation/report commit `b9ed7e3dda01089303aa2e6ee83436dc34223ca9`. Source inspection confirmed the atomic no-replace and encoding/schema primitives at the pin.
 
 ## Ground truth and coverage
 
@@ -74,7 +74,7 @@ findings below are explicitly source-supported or validated with final tests.
 | D12 | P2 | Scale | `sort(list_dir(...))` still materializes every directory name before bounded processing. | Source-supported; no paged directory API found in inspected Kujo inventory. | Document limit; review a stable bounded enumeration primitive or compatible index before claiming constant-memory large-ledger queries. | Open |
 | D13 | Needs more evidence | API | `history` remains a record-list view rather than an event view. | [Probe](evidence/history-probe.txt) shows record keys despite a separate creation event. | Document actual behavior; design an additive event-view contract after consumer review. | Open; no breaking replacement |
 | D14 | P1 | Legacy compatibility | Actual tagged 0.1.0 records lacked contract fields and used a different history hash/filename; the old gate only relabeled a modern record. | Unmodified release-generated fixture and [starting-revision failure](evidence/legacy-before.txt). | Read the original metadata/type/history format without rewriting it; retain domain safety and test mixed ledgers. | Fixed |
-| D15 | P1 | Pinned-runtime errors | CI exposed a crypto failure escaping a caller catch on the older runtime. | [Initial CI failure](evidence/ci-initial-failure.txt), run 34083221803. | Normalize native crypto failures inside their helpers and export-parent failures at the call site; retain diagnostic/no-plaintext assertions. | Fixed locally; pinned CI recheck required |
+| D15 | P1 | Pinned-runtime errors | CI exposed a crypto failure escaping a caller catch on the older runtime. | [Initial CI failure](evidence/ci-initial-failure.txt), run 34083221803. | Normalize native crypto failures inside their helpers and export-parent failures at the call site; retain diagnostic/no-plaintext assertions. | Fixed; pinned CI passed |
 
 ## Changes implemented
 
@@ -239,7 +239,7 @@ UTF-8 helper with existing modern `byte_length`; no runtime change is required.
 - Needs more evidence: D13 additive audit-event view and downstream contract review. Current `history` semantics are preserved and documented.
 - Needs more evidence: crash-recovery automation, hostile-local-filesystem isolation, generic malformed-type coverage for all optional policy helpers, and multi-sample/RSS performance characterization. These were reviewed but are not claimed solved.
 - P3 / not worth changing: profile indirection, unused-looking compatibility hooks, formatting of compact helper modules, tiny duplicate packet canonicalization absent a measured hot workload, and dependency replacement.
-- Verification boundary: local gate passed on Kujo 1.3.1; remote pinned-runtime CI is a separate result, not implied by the local receipt.
+- Verification boundary: local gate passed on Kujo 1.3.1 and the remote pinned-runtime gate independently passed on `b9ed7e3dda01089303aa2e6ee83436dc34223ca9`; subsequent audit-receipt publication changes no implementation files.
 
 ## Verification receipt and reproduction
 
@@ -260,6 +260,7 @@ archive. `KUJO_BIN` defaults in the gate to the sibling release executable.
 | `bash -n scripts/validate.sh scripts/contention_benchmark.sh` and `sh -n bin/dossier` | PASS |
 | `/usr/bin/time -p bash scripts/validate.sh` after implementation | PASS, 106 assertions, both contention cases, all JSON documents, CLI smoke and policy checks; 91.67s |
 | `git diff --check` | PASS |
+| `gh run watch 34084153483 --exit-status` | PASS, pinned runtime built and all 106 assertions plus both contention cases passed on b9ed7e3 |
 
 The full gate executes `kujo check dossier.kujo`; eight suites (`test`,
 `security_test`, `storage_test`, `domain_test`, `hardening_test`, `audit_test`,
@@ -293,3 +294,12 @@ before writing. No duplicate of either Dossier-specific finding was found.
 The completed-session handoff/current milestone belongs in Strata `Agent Notes`,
 with this report and the final commit as provenance; it is separate from the
 unresolved-finding register above.
+
+## Final pinned-runtime verification
+
+[GitHub CI run 34084153483](https://github.com/kujolang/dossier/actions/runs/34084153483)
+passed on `b9ed7e3dda01089303aa2e6ee83436dc34223ca9` after building the pinned
+Kujo runtime. The [CI receipt](evidence/ci-success.txt) records all eight suites
+(106 assertions), both contention cases and the final successful gate. This
+closes D15's older-runtime recheck. The final publication commit only adds this
+receipt and updates this audit; implementation remains `2991a5bdc63717ac8c4f54bf729ab06b83bfd112`.
