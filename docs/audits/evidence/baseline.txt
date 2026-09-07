@@ -1,0 +1,11 @@
+check passed: dossier.kujo
+13 passed; 0 failed
+11 passed; 0 failed
+4 passed; 0 failed
+6 passed; 0 failed
+12 passed; 0 failed
+Dossier contention benchmark passed: workers=32 records=32
+Dossier validation passed.
+real 6.33
+user 6.73
+sys 3.09

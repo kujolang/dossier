@@ -1,0 +1,4 @@
+{"output_bytes":92071,"truncated":true,"warnings":1000}
+real 13.52
+user 5.10
+sys 0.86

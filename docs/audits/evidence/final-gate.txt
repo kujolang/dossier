@@ -1,0 +1,13 @@
+check passed: dossier.kujo
+13 passed; 0 failed
+13 passed; 0 failed
+4 passed; 0 failed
+6 passed; 0 failed
+15 passed; 0 failed
+20 passed; 0 failed
+25 passed; 0 failed
+Dossier contention checks passed: distinct=32/32 same-id=1/32; record/history checksums agree.
+Dossier validation passed.
+real 32.62
+user 31.51
+sys 8.43
