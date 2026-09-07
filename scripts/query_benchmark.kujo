@@ -1,0 +1,10 @@
+from src.storage import list_records
+mode := args()[0]; root := args()[1]
+if mode == "prepare" {
+    create_dir(root + "/records")
+    for i in range(2000) { write_file(root + "/records/claim-" + to_string(10000 + i) + ".json", "{", false) }
+    print("corrupt_records=2000")
+} else if mode == "query" {
+    listing := list_records(root, "", "", 100)
+    print(to_json({"warnings": len(listing["warnings"]), "truncated": listing["truncated"], "output_bytes": len(to_json(listing))}))
+} else { eprint("expected prepare or query and a dedicated fixture path"); exit(2) }

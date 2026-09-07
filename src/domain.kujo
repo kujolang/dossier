@@ -1,4 +1,4 @@
-from src.common import get, has, safe_id, valid_timestamp
+from src.common import get, has, safe_id, valid_timestamp, utf8_size
 
 export func record_type(command) {
     if command == "claim add" { return "claim" }
@@ -22,7 +22,7 @@ export func id_prefix(command) {
 func require_text(payload, key) {
     value := get(payload, key, "")
     if type(value) != "string" || trim(value) == "" { return "missing required field: " + key }
-    if len(value) > 65536 { return "field exceeds 64 KiB: " + key }
+    if utf8_size(value) > 65536 { return "field exceeds 64 KiB: " + key }
     return ""
 }
 
@@ -49,15 +49,19 @@ export func validate_command(command, payload, artifact) {
         if !valid_timestamp(payload["retrieved_at"]) { return "retrieved_at must be RFC 3339 UTC" }
     }
     if command == "evidence classify" {
+        error := require_id(payload, "evidence_id"); if error != "" { return error }
         for key in ["evidence_id", "classification", "reviewed_by"] { error := require_text(payload, key); if error != "" { return error } }
         if !valid_classification(payload["classification"]) { return "invalid evidence classification" }
     }
     if command == "conflict add" {
+        error := require_id(payload, "claim_id"); if error != "" { return error }
         error := require_text(payload, "claim_id"); if error != "" { return error }
         error = require_text(payload, "description"); if error != "" { return error }
         if !valid_id_array(get(payload, "source_ids", null), 2) { return "conflict requires 2..1000 safe source_ids" }
+        mut seen := {}
+        for id in payload["source_ids"] { if has_key(seen, id) == 1 { return "conflict source_ids must be distinct" }; seen[id] = true }
     }
-    if command == "quote add" { for key in ["text", "speaker", "source_id", "approval_status"] { error := require_text(payload, key); if error != "" { return error } } }
+    if command == "quote add" { for key in ["text", "speaker", "source_id", "approval_status"] { error := require_text(payload, key); if error != "" { return error } }; error := require_id(payload, "source_id"); if error != "" { return error } }
     if command == "consent record" { for key in ["subject", "scope", "status", "recorded_by"] { error := require_text(payload, key); if error != "" { return error } } }
     if command == "rights record" { for key in ["asset_id", "media_type", "scope", "status", "basis", "recorded_by"] { error := require_text(payload, key); if error != "" { return error } } }
     if command == "packet" {

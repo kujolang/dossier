@@ -1,0 +1,61 @@
+from src.core import dispatch
+from src.args import parse_args
+from src.common import utf8_size
+from src.storage import save_new
+mut passed := 0; mut failed := 0
+func check(ok, label) { if ok { passed = passed + 1 } else { failed = failed + 1; eprint("FAIL: " + label) } }
+func opts(values) { return parse_args(values, ["json", "dry-run", "force"]) }
+root := "/tmp/dossier-audit-contract-" + uuid_v4()
+check(utf8_size("") == 0 && utf8_size("é") == 2 && utf8_size("€") == 3 && utf8_size("😀") == 4, "UTF-8 byte sizes include multibyte characters")
+created := dispatch("claim add", opts(["--state", root, "--input", "fixtures/core.json", "--actor", "editor", "--id", "claim-audit"]))
+check(created["ok"], "create audit fixture")
+oversized := created["value"]["record"]; oversized["id"] = "claim-unicode"; oversized["extra"] = repeat("é", 530000)
+check(save_new(root, oversized)["code"] == "record_too_large" && !file_exists(root + "/records/claim-unicode.json"), "record byte limit rejects Unicode expansion")
+schema := parse_json(read_file("schemas/record.schema.json"))
+check(json_schema_validate(created["value"]["record"], schema)["valid"], "record matches published schema")
+legacy := created["value"]["record"]; legacy["tool_version"] = "0.1.0"
+check(json_schema_validate(legacy, schema)["valid"], "schema accepts supported legacy version")
+path := root + "/records/claim-audit.json"
+original := read_file(path)
+check(dispatch("validate", opts(["--state", root]))["ok"], "valid record and history")
+for output in [path, root + "/metadata.json", root + "/history/new.json", root + "/locks/new.json"] {
+    result := dispatch("export", opts(["--state", root, "--output", output, "--force"]))
+    check(!result["ok"] && result["code"] == "unsafe_output", "force cannot replace managed state")
+}
+check(read_file(path) == original, "managed record remains immutable")
+exported := root + "/export.json"
+check(dispatch("export", opts(["--state", root, "--output", exported, "--dry-run"]))["ok"] && !file_exists(exported), "export dry run has no writes")
+check(dispatch("export", opts(["--state", root, "--output", exported]))["ok"], "safe export works")
+check(!dispatch("export", opts(["--state", root, "--output", exported]))["ok"], "safe export requires explicit replacement")
+check(dispatch("export", opts(["--state", root, "--output", exported, "--force"]))["ok"], "safe explicit replacement works")
+record := parse_json(original); payload := record["payload"]; payload["claim_text"] = "Tampered but domain-valid claim"; record["payload"] = payload
+write_file(path, to_json(record), true)
+result := dispatch("verify", opts(["--state", root, "--id", "claim-audit"]))
+check(!result["ok"] && result["code"] == "history_mismatch", "history detects content drift")
+check(!dispatch("validate", opts(["--state", root]))["ok"], "whole-state validation detects drift")
+payload["api_key"] = "fixture-only"; record["payload"] = payload
+write_file(path, to_json(record), true)
+check(dispatch("verify", opts(["--state", root, "--id", "claim-audit"]))["code"] == "secret_rejected", "stored secret fields rejected")
+write_file(path, original, true)
+history_path := root + "/history/" + list_dir(root + "/history")[0]
+delete_file(history_path)
+check(dispatch("verify", opts(["--state", root, "--id", "claim-audit"]))["code"] == "history_missing", "missing history rejected")
+config := root + "/config.json"
+write_file(config, "{\"limit\":100}", true)
+check(dispatch("report", opts(["--state", root, "--config", config]))["ok"], "schema-valid config limit")
+write_file(config, "{\"limit\":\"100\"}", true)
+check(!dispatch("report", opts(["--state", root, "--config", config]))["ok"], "schema-invalid config limit")
+write_file(config, "{\"state\":[]}", true)
+check(dispatch("report", opts(["--config", config]))["code"] == "invalid_config", "config state type rejected")
+// Exercise the actual CLI, including JSON output and documented exit statuses.
+runtime := args()[0]
+version := spawn_process([runtime, "run", "dossier.kujo", "--", "--version", "--json"], {"timeout_ms": 5000, "max_output_bytes": 8192})
+check(version.exitcode == 0 && parse_json(version.stdout)["ok"], "version alias honors JSON")
+missing := spawn_process([runtime, "run", "dossier.kujo", "--", "report", "--state"], {"timeout_ms": 5000, "max_output_bytes": 8192})
+check(missing.exitcode == 2, "CLI missing value exit 2")
+unknown := spawn_process([runtime, "run", "dossier.kujo", "--", "--version", "--unknown"], {"timeout_ms": 5000, "max_output_bytes": 8192})
+check(unknown.exitcode == 2, "version alias checks trailing flags")
+for file in [path, exported, config, root + "/metadata.json"] { delete_file(file) }
+for dir in ["records", "history", "locks"] { os_rmdir(root + "/" + dir) }; os_rmdir(root)
+print(to_string(passed) + " passed; " + to_string(failed) + " failed")
+if failed > 0 { exit(1) }

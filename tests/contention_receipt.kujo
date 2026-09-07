@@ -1,0 +1,20 @@
+from src.common import get
+work := args()[0]; mode := args()[1]; expected := to_int(args()[2])
+state := work + "/" + mode
+if len(list_dir(state + "/records")) != expected || len(list_dir(state + "/history")) != expected || len(list_dir(state + "/locks")) != 0 { eprint("contention left unexpected state"); exit(1) }
+mut winners := 0
+for i in range(1, 33) {
+    reply := parse_json(read_file(work + "/" + mode + "-" + to_string(i) + ".json"))
+    if reply["ok"] {
+        winners = winners + 1
+        record := reply["data"]["record"]
+        contents := read_file(state + "/records/" + record["id"] + ".json")
+        if parse_json(contents) != record { eprint("successful writer was overwritten"); exit(1) }
+        event := parse_json(read_file(state + "/history/" + substring(sha256(record["created_at"] + "\n" + record["id"]), 0, 32) + ".json"))
+        if event["record_sha256"] != sha256(contents) { eprint("history checksum differs from record"); exit(1) }
+    } else {
+        code := get(reply, "error_code", "")
+        if code != "duplicate_id" && code != "write_conflict" { eprint("unexpected contention failure: " + code); exit(1) }
+    }
+}
+if winners != expected { exit(1) }

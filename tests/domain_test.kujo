@@ -1,3 +1,4 @@
+from tests.support import cleanup
 from src.core import dispatch
 from src.args import parse_args
 mut passed:=0;mut failed:=0
@@ -16,4 +17,5 @@ conflict:=root+"-conflict.json";write_file(conflict,"{\"schema_version\":\"1.0.0
 check(!dispatch("conflict add",opts(["--state",root,"--input",conflict,"--actor","standards-editor"]))["ok"],"conflict needs independent sources")
 check(dispatch("validate",opts(["--state",root]))["ok"],"stored records validate")
 for path in [bad,source,evidence,weak,conflict]{if file_exists(path){delete_file(path)}}
+cleanup(root)
 print(to_string(passed)+" passed; "+to_string(failed)+" failed");if failed>0{exit(1)}

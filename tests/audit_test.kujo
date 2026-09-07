@@ -1,0 +1,54 @@
+from src.core import dispatch, main
+from src.args import parse_args
+from src.common import valid_timestamp, bounded_int
+from src.domain import validate_command
+from src.storage import list_records
+mut passed := 0; mut failed := 0
+func check(ok, label) { if ok { passed = passed + 1 } else { failed = failed + 1; eprint("FAIL: " + label) } }
+func opts(values) { return parse_args(values, ["json", "dry-run", "force"]) }
+root := "/tmp/dossier-audit-" + uuid_v4()
+result := dispatch("claim add", opts(["--state", root, "--input", "fixtures/core.json", "--actor", "editor", "--dry-run"]))
+check(result["ok"] && !file_exists(root), "dry run must not initialize state")
+invalid := dispatch("claim add", opts(["--state", root, "--input", "fixtures/core.json"]))
+check(!invalid["ok"] && !file_exists(root), "invalid mutation must not initialize state")
+check(dispatch("init", opts(["--state", root, "--dry-run"]))["ok"] && !file_exists(root), "init dry run has no writes")
+check(len(opts(["--state"])["errors"]) == 1, "missing option value is a usage error")
+check(!valid_timestamp("2026-02-29T00:00:00Z"), "non-leap February rejected")
+check(!valid_timestamp("1900-02-29T00:00:00Z"), "non-leap century rejected")
+check(valid_timestamp("2000-02-29T00:00:00.123Z"), "leap century accepted")
+check(!valid_timestamp("2026-04-31T00:00:00Z"), "short month rejected")
+check(!bounded_int(repeat("9", 1000), 100, 1, 1000)["ok"], "oversized integer fails without exception")
+check(bounded_int("0001000", 100, 1, 1000)["value"] == 1000, "leading zero integer compatibility")
+check(validate_command("conflict add", {"claim_id": "claim-one", "description": "disagreement", "source_ids": ["source-one", "source-one"]}, null) != "", "conflict requires distinct sources")
+check(validate_command("evidence classify", {"evidence_id": "../bad", "classification": "observed", "reviewed_by": "editor"}, null) != "", "classification reference validated")
+check(dispatch("init", opts(["--state", root]))["ok"], "fixture init")
+for i in range(1001) {
+    id := "claim-" + to_string(10000 + i)
+    write_file(root + "/records/" + id + ".json", to_json({"id": id, "record_type": "claim"}), false)
+}
+listing := list_records(root, "source", "", 100)
+check(listing["truncated"] && len(listing["records"]) == 0, "filtered scan is bounded")
+if has_key(listing, "next_after") == 1 {
+    next := list_records(root, "source", listing["next_after"], 100)
+    check(!next["truncated"], "empty filtered page has a usable cursor")
+} else { check(false, "empty filtered page has a usable cursor") }
+check(!dispatch("doctor", opts(["--state", root]))["ok"], "doctor cannot certify truncated state")
+check(dispatch("validate", opts(["--state", root]))["code"] == "validation_incomplete", "validation cannot certify a partial scan")
+// Replace fixture records with malformed JSON to exercise bounded diagnostics.
+for name in list_dir(root + "/records") { write_file(root + "/records/" + name, "{", true) }
+warnings := list_records(root, "", "", 100)
+check(len(warnings["warnings"]) == 1000 && warnings["truncated"], "corruption diagnostics are bounded")
+for name in list_dir(root + "/records") { delete_file(root + "/records/" + name) }
+for i in range(6) {
+    id := "claim-large-" + to_string(i)
+    write_file(root + "/records/" + id + ".json", to_json({"id": id, "record_type": "claim", "padding": repeat("x", 900000)}), false)
+}
+large := list_records(root, "", "", 1000)
+check(len(large["records"]) == 4 && large["truncated"], "record bytes per page are bounded")
+rest := list_records(root, "", large["next_after"], 1000)
+check(len(rest["records"]) == 2 && !rest["truncated"], "byte-budget pagination loses no records")
+for name in list_dir(root + "/records") { delete_file(root + "/records/" + name) }
+for dir in ["records", "history", "locks"] { os_rmdir(root + "/" + dir) }
+delete_file(root + "/metadata.json"); os_rmdir(root)
+print(to_string(passed) + " passed; " + to_string(failed) + " failed")
+if failed > 0 { exit(1) }

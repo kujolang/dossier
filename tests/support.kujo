@@ -1,0 +1,14 @@
+// Only call with test-owned UUID paths. Never follow fixture symlinks.
+export func cleanup(path) {
+    mut linked := false
+    try { linked = path_is_symlink(path) } except error { return }
+    if linked {
+        result := spawn_process(["unlink", path], {"timeout_ms": 5000, "max_output_bytes": 4096})
+        if result.exitcode != 0 { eprint("failed to remove fixture symlink: " + path); exit(1) }
+        return
+    }
+    if path_is_dir(path) && !linked {
+        for name in list_dir(path) { cleanup(join_path(path, name)) }
+        os_rmdir(path)
+    } else { delete_file(path) }
+}

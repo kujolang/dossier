@@ -12,12 +12,12 @@ record of what a material claim may honestly rely on.
 
 ## Production capabilities
 
-Dossier is ready for serious standalone evidence operations with immutable
-records, append-only audit events, atomic writes, bounded queries, strict claim
-and evidence taxonomies, secret rejection, deterministic fixtures, detached
-packet signatures, configurable freshness, offline citations, optional
-AES-256-GCM storage, bounded streaming, concurrency checks, retention receipts,
-and fail-closed validation. It never turns a URL into verification, inference
+The CLI provides immutable records, append-only audit events, atomic writes,
+bounded record pages, claim and evidence taxonomies, secret-field rejection,
+deterministic fixtures, concurrent-writer checks, and fail-closed validation.
+Optional Kujo library helpers provide packet signatures, freshness policies,
+offline citations, AES-256-GCM packet files, and retention receipts; these are
+not CLI commands or automatic state encryption. It never turns a URL into verification, inference
 into fact, or a recorded assertion into granted rights, consent, or approval.
 
 See the [production review](docs/PRODUCTION_READINESS_REVIEW.md) and completed
@@ -93,3 +93,9 @@ bash scripts/validate.sh
 
 CI builds the pinned Kujo runtime and runs the same gate. Hosted providers are
 optional and are not required for core operation.
+
+Read the [hardening audit](docs/audits/repository-hardening.md) for measured
+limits and remaining work. When `truncated` is true, pass `next_after` as
+`--after` to continue, including on an empty filtered page. Whole-state
+validation fails with `validation_incomplete` when a page cannot cover the
+state; use paginated reports and `verify --id` for larger ledgers.
