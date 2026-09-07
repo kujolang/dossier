@@ -52,7 +52,16 @@ calendar dates must exist and conflict source IDs must be distinct. Native
 operation errors are returned with `operation_failed` and their diagnostic in
 the ordinary JSON envelope, exit 1, instead of escaping as runtime exit 4.
 
-The record schema accepts tool versions 0.1.0 and 0.2.0 and requires the
-existing `contract_version` field. Record IDs, canonical hashes, input shapes,
+The record schema accepts tool versions 0.1.0 and 0.2.0. Original tagged 0.1.0
+records/metadata may omit `contract_version`; that specific legacy format
+implies contract 1.0.0 and uses its original record-type labels and 24-character
+event filenames with canonical-JSON `checksum`. Later records require the
+explicit contract field and use the 32-character filename/raw-byte checksum.
+Readers select the documented format, never silently fall back to accepting
+missing history. Legacy files are not rewritten; new records can coexist with
+them. Historical payloads lacking current required domain fields still fail
+validation and need review before a new record is created.
+
+Record IDs, canonical hashes, input shapes,
 and environment variables are unchanged. The launcher uses `KUJO_BIN` when
 provided and otherwise finds `kujo` on PATH.

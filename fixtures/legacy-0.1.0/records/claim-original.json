@@ -1,0 +1,27 @@
+{
+  "actor": "fixture-legacy",
+  "command": "claim add",
+  "created_at": "2026-08-14T00:00:00Z",
+  "id": "claim-original",
+  "payload": {
+    "claim_kind": "fact",
+    "claim_text": "The fixture workflow runs without network access.",
+    "material": true,
+    "provenance": [
+      {
+        "kind": "fixture",
+        "source": "fixtures/core.json"
+      }
+    ],
+    "schema_version": "1.0.0"
+  },
+  "provenance": [
+    {
+      "kind": "fixture",
+      "source": "fixtures/core.json"
+    }
+  ],
+  "record_type": "claim",
+  "schema_version": "1.0.0",
+  "tool_version": "0.1.0"
+}

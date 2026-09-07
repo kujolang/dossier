@@ -1,0 +1,8 @@
+{
+  "actor": "fixture-legacy",
+  "at": "2026-08-14T00:00:00Z",
+  "checksum": "561001faa2de99510ece346d7ff96501443baff8627ad660e2a0d939dc662ad2",
+  "event": "record.created",
+  "record_id": "claim-original",
+  "schema_version": "1.0.0"
+}

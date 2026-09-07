@@ -13,6 +13,7 @@ cd "$ROOT"
 "$KUJO_RUNTIME" run tests/hardening_test.kujo
 "$KUJO_RUNTIME" run tests/audit_test.kujo
 "$KUJO_RUNTIME" run tests/audit_contract_test.kujo -- "$KUJO_RUNTIME"
+"$KUJO_RUNTIME" run tests/legacy_test.kujo
 KUJO_BIN="$KUJO_RUNTIME" bash scripts/contention_benchmark.sh
 while IFS= read -r document; do "$KUJO_RUNTIME" run scripts/validate_json.kujo -- "$document"; done < <(find fixtures schemas -type f -name '*.json' -print | sort)
 tmp_state="$(mktemp -d)"; trap 'find "$tmp_state" -depth -delete' EXIT

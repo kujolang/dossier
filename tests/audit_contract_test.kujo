@@ -55,6 +55,8 @@ missing := spawn_process([runtime, "run", "dossier.kujo", "--", "report", "--sta
 check(missing.exitcode == 2, "CLI missing value exit 2")
 unknown := spawn_process([runtime, "run", "dossier.kujo", "--", "--version", "--unknown"], {"timeout_ms": 5000, "max_output_bytes": 8192})
 check(unknown.exitcode == 2, "version alias checks trailing flags")
+bad_output := spawn_process([runtime, "run", "dossier.kujo", "--", "export", "--state", root, "--output", root + "/missing/out.json", "--json"], {"timeout_ms": 5000, "max_output_bytes": 8192})
+check(bad_output.exitcode == 1 && parse_json(bad_output.stdout)["error_code"] == "write_failed", "native export failure retains JSON and exit 1")
 for file in [path, exported, config, root + "/metadata.json"] { delete_file(file) }
 for dir in ["records", "history", "locks"] { os_rmdir(root + "/" + dir) }; os_rmdir(root)
 print(to_string(passed) + " passed; " + to_string(failed) + " failed")

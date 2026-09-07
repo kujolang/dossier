@@ -1,0 +1,31 @@
+from src.core import dispatch
+from src.args import parse_args
+from tests.support import cleanup
+mut passed := 0; mut failed := 0
+func check(ok, label) { if ok { passed = passed + 1 } else { failed = failed + 1; eprint("FAIL: " + label) } }
+func opts(values) { return parse_args(values, ["json", "dry-run", "force"]) }
+root := "/tmp/dossier-original-legacy-" + uuid_v4()
+create_dir(root)
+for dir in ["records", "history"] {
+    create_dir(root + "/" + dir)
+    for name in list_dir("fixtures/legacy-0.1.0/" + dir) { write_file(root + "/" + dir + "/" + name, read_file("fixtures/legacy-0.1.0/" + dir + "/" + name), false) }
+}
+metadata := read_file("fixtures/legacy-0.1.0/metadata.json"); write_file(root + "/metadata.json", metadata, false)
+path := root + "/records/claim-original.json"; original := read_file(path)
+check(json_schema_validate(parse_json(original), parse_json(read_file("schemas/record.schema.json")))["valid"], "published schema accepts original tagged record")
+check(dispatch("verify", opts(["--state", root, "--id", "claim-original"]))["ok"], "original canonical audit checksum verified")
+check(dispatch("validate", opts(["--state", root]))["ok"], "original whole-state validation")
+check(dispatch("init", opts(["--state", root]))["ok"], "original state metadata accepted")
+check(read_file(root + "/metadata.json") == metadata && read_file(path) == original, "legacy files are not rewritten")
+check(dispatch("claim add", opts(["--state", root, "--input", "fixtures/core.json", "--actor", "fixture-modern", "--id", "claim-modern"]))["ok"] && dispatch("validate", opts(["--state", root]))["ok"], "new records coexist with original history")
+record := parse_json(original); payload := record["payload"]; payload["claim_text"] = "Changed legacy claim"; record["payload"] = payload
+write_file(path, to_json(record), true)
+check(dispatch("verify", opts(["--state", root, "--id", "claim-original"]))["code"] == "history_mismatch", "legacy content drift fails closed")
+record["payload"] = {}; write_file(path, to_json(record), true)
+check(dispatch("verify", opts(["--state", root, "--id", "claim-original"]))["code"] == "domain_validation", "legacy support does not bypass current domain safety")
+write_file(path, original, true)
+for name in list_dir(root + "/history") { if len(name) == 29 { delete_file(root + "/history/" + name) } }
+check(dispatch("verify", opts(["--state", root, "--id", "claim-original"]))["code"] == "history_missing", "legacy missing history fails closed")
+cleanup(root)
+print(to_string(passed) + " passed; " + to_string(failed) + " failed")
+if failed > 0 { exit(1) }

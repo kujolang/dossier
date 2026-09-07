@@ -6,9 +6,8 @@ policy:={"source_classes":{"primary":30},"claim_classes":{"fact":7}};check(fresh
 source:=parse_json(read_file("fixtures/citations/source.json"));for format in ["apa","mla","chicago"]{check(citation(format,source)["ok"],"citation "+format)}
 root:="/tmp/dossier-encryption-"+uuid_v4();plain:=root+".json";encrypted:=root+".aead";restored:=root+".restored";write_file(plain,to_json(packet),true);check(encrypt_packet(plain,encrypted,"0123456789abcdef0123456789abcdef")["ok"],"encrypt");check(decrypt_packet(encrypted,restored,"0123456789abcdef0123456789abcdef")["ok"]&&read_file(restored)==read_file(plain),"decrypt")
 check(!encrypt_packet(plain, root + ".bad-key", repeat("é", 32))["ok"], "encryption key is 32 bytes, not 32 characters")
-mut rejected := false
-try { result := decrypt_packet(encrypted, root + ".wrong-key", "abcdef0123456789abcdef0123456789"); rejected = !result["ok"] } except error { rejected = true }
-check(rejected && !file_exists(root + ".wrong-key"), "authentication failure publishes no plaintext")
+rejected := decrypt_packet(encrypted, root + ".wrong-key", "abcdef0123456789abcdef0123456789")
+check(!rejected["ok"] && contains(rejected["error"], "authentication failed") == 1 && !file_exists(root + ".wrong-key"), "authentication failure returns a diagnostic and publishes no plaintext")
 claims:=[{"classification":"verified"},{"classification":"observed"}];report:=streaming_packet_report(claims,1);check(report["ok"]&&report["batches"]==2&&report["verified"]==1,"packet stream");benchmark:=benchmark_packet_stream(100000,500);check(benchmark["ok"]&&benchmark["batches"]==200&&benchmark["verified"]==50000,"large corpus stream")
 receipt:=retention_receipt({"id":"feedback-one","record_type":"feedback","created_day":1,"subject":"private"},{"version":"1","default":90,"feedback":30,"redact_fields":["subject"]},40);check(receipt["action"]=="redact"&&receipt["redacted_fields"]==["subject"],"redaction receipt")
 for path in [plain,encrypted,restored]{delete_file(path)};print(to_string(pass)+" passed; "+to_string(fail)+" failed");if fail>0{exit(1)}

@@ -1,4 +1,4 @@
-from src.common import get, parse_object, safe_id, utf8_size
+from src.common import get, parse_object, safe_id, utf8_size, canonical_json
 
 func parent_dir(path) {
     mut index := len(path) - 1
@@ -46,7 +46,9 @@ export func initialize(state, metadata) {
         if file_size(path) > 65536 { return {"ok": false, "code": "metadata_too_large", "error": "metadata exceeds 64 KiB"} }
         parsed := parse_object(read_file(path), "state metadata"); if !parsed["ok"] { return parsed }
         existing := parsed["value"]
-        if get(existing, "tool", "") != get(metadata, "tool", "") || get(existing, "contract_version", "") != get(metadata, "contract_version", "") { return {"ok": false, "code": "incompatible_state", "error": "state metadata belongs to an incompatible tool or contract"} }
+        existing_contract := get(existing, "contract_version", "")
+        if has_key(existing, "contract_version") == 0 && get(existing, "tool_version", "") == "0.1.0" && get(existing, "schema_version", "") == "1.0.0" { existing_contract = "1.0.0" }
+        if get(existing, "tool", "") != get(metadata, "tool", "") || existing_contract != get(metadata, "contract_version", "") { return {"ok": false, "code": "incompatible_state", "error": "state metadata belongs to an incompatible tool or contract"} }
     } else {
         try { write_file_atomic(path, to_json_pretty(metadata) + "\n", false) } except error {
             // A concurrent initializer may have won. Revalidate its metadata.
@@ -111,12 +113,18 @@ export func load_record(state, id) {
 export func verify_history(state, record, checksum) {
     dir := history_dir(state)
     if !path_is_dir(dir) || path_is_symlink(dir) { return {"ok": false, "code": "history_missing", "error": "audit history must be a regular directory"} }
-    path := join_path(dir, substring(sha256(record["created_at"] + "\n" + record["id"]), 0, 32) + ".json")
+    event_id := substring(sha256(record["created_at"] + "\n" + record["id"]), 0, 32)
+    checksum_key := "record_sha256"; expected_checksum := checksum
+    if get(record, "tool_version", "") == "0.1.0" && has_key(record, "contract_version") == 0 {
+        event_id = substring(sha256(record["created_at"] + record["id"]), 0, 24)
+        checksum_key = "checksum"; expected_checksum = sha256(canonical_json(record))
+    }
+    path := join_path(dir, event_id + ".json")
     if !path_is_file(path) || path_is_symlink(path) { return {"ok": false, "code": "history_missing", "error": "record has no safe audit event"} }
     if file_size(path) > 65536 { return {"ok": false, "code": "history_too_large", "error": "audit event exceeds 64 KiB"} }
     parsed := parse_object(read_file(path), "audit event"); if !parsed["ok"] { return parsed }
     event := parsed["value"]
-    if get(event, "record_sha256", "") != checksum || get(event, "record_id", "") != record["id"] || get(event, "actor", "") != record["actor"] || get(event, "at", "") != record["created_at"] || get(event, "event", "") != "record.created" || get(event, "schema_version", "") != "1.0.0" { return {"ok": false, "code": "history_mismatch", "error": "record and audit event disagree"} }
+    if get(event, checksum_key, "") != expected_checksum || get(event, "record_id", "") != record["id"] || get(event, "actor", "") != record["actor"] || get(event, "at", "") != record["created_at"] || get(event, "event", "") != "record.created" || get(event, "schema_version", "") != "1.0.0" { return {"ok": false, "code": "history_mismatch", "error": "record and audit event disagree"} }
     return {"ok": true}
 }
 

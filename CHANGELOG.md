@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Read original tagged v0.1.0 metadata/records and canonical-checksum audit events without rewriting historical files; verify against a fixture produced by that release while retaining current domain safety checks.
+- Normalize crypto authentication and output-parent failures at the native-call boundary so older pinned runtimes preserve structured failures instead of depending on cross-function exception handling.
 - Publish immutable records, audit events, metadata, and record locks without replacement; verify record bytes against creation events and protect managed state from forced exports.
 - Bound query scans to 1,000 JSON candidates and 4 MiB, add `next_after` to scanned report/export pages, and fail whole-state checks with `validation_incomplete` when truncated.
 - Make record/init/export dry runs write-free; enforce missing CLI values, JSON version flags, configuration types, real calendar dates, distinct conflict sources, and safe references.
