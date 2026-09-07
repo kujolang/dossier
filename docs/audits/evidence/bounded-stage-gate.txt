@@ -5,10 +5,9 @@ check passed: dossier.kujo
 6 passed; 0 failed
 15 passed; 0 failed
 20 passed; 0 failed
-26 passed; 0 failed
-9 passed; 0 failed
+25 passed; 0 failed
 Dossier contention checks passed: distinct=32/32 same-id=1/32; record/history checksums agree.
 Dossier validation passed.
-real 91.67
-user 50.43
-sys 12.48
+real 32.62
+user 31.51
+sys 8.43

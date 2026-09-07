@@ -5,7 +5,7 @@
 - Repository: `kujolang/dossier`, local directory `/Users/robertdevore/2026/Kujolang/kujo-repos/dossier`.
 - Branch: `main`; initially clean.
 - Starting SHA: `5c17bd7c77abee499fe9c67498bed6f2a1baf8fa`.
-- Ending implementation SHA: `eea32708d6b018c05d030507cc5b6d02f23ff9cf`.
+- Ending implementation SHA: `2991a5bdc63717ac8c4f54bf729ab06b83bfd112` (initial hardening: `eea32708d6b018c05d030507cc5b6d02f23ff9cf`).
 - This report/evidence is committed separately after the implementation. Resolve its publication SHA with `git log -1 --format=%H -- docs/audits/repository-hardening.md`; a commit cannot embed its own hash.
 - Audit date: 2026-09-07 UTC. Host: Darwin x86_64; tested executable: sibling Kujo `target/release/kujo`, reporting 1.3.1.
 - Purpose: offline evidence ledger for editors, reviewers, agents, and CI, covering claims, sources, captured support, classifications, consent, and rights assertions.
@@ -69,10 +69,12 @@ findings below are explicitly source-supported or validated with final tests.
 | D07 | P1 | Input/error | Very large decimal options escaped as runtime errors; impossible dates passed regex validation; version alias dropped flags. | Baseline regression; actual subprocess exit and JSON assertions. | Bounded numeric accumulation, Gregorian date validation, missing-value diagnostics, version flag parsing, native-error envelope. | Fixed |
 | D08 | P1 | Byte contracts | `len(string)` counts characters, allowing byte-budget violations and incorrect export receipts. | Kujo `str_len` uses Unicode character count; 530000 two-byte characters exceeded record byte budget. | Exact UTF-8 sizes for record/field/export/citation/key checks, multibyte regressions. | Fixed |
 | D09 | P2 | Schema/domain | Config types were unchecked, schema rejected supported legacy records, references/duplicate conflict sources were inconsistent. | Published config schema vs loader; old record schema fixed version to 0.2.0. | Typed config, supported version enum and required contract field, safe references and unique source IDs. | Fixed |
-| D10 | P2 | Portability/verification | Launcher embedded a developer path; validation did not propagate its resolved runtime into contention; tests left state behind. | Launcher/scripts/test inspection. | PATH fallback, explicit runtime propagation, test-owned cleanup, assertion of fixture setup, 96-assertion gate and real contention receipts. | Fixed |
+| D10 | P2 | Portability/verification | Launcher embedded a developer path; validation did not propagate its resolved runtime into contention; tests left state behind. | Launcher/scripts/test inspection. | PATH fallback, explicit runtime propagation, test-owned cleanup, assertion of fixture setup, 106-assertion gate and real contention receipts. | Fixed |
 | D11 | P2 | Documentation | Broad streaming/encryption/freshness claims obscured library-only and synthetic behavior. | `core.dispatch` and `src/hardening.kujo`; benchmark just counts generated entries. | Clarify module APIs, materialized arrays, HMAC/shared-key semantics, and CLI validation behavior. | Fixed |
 | D12 | P2 | Scale | `sort(list_dir(...))` still materializes every directory name before bounded processing. | Source-supported; no paged directory API found in inspected Kujo inventory. | Document limit; review a stable bounded enumeration primitive or compatible index before claiming constant-memory large-ledger queries. | Open |
 | D13 | Needs more evidence | API | `history` remains a record-list view rather than an event view. | [Probe](evidence/history-probe.txt) shows record keys despite a separate creation event. | Document actual behavior; design an additive event-view contract after consumer review. | Open; no breaking replacement |
+| D14 | P1 | Legacy compatibility | Actual tagged 0.1.0 records lacked contract fields and used a different history hash/filename; the old gate only relabeled a modern record. | Unmodified release-generated fixture and [starting-revision failure](evidence/legacy-before.txt). | Read the original metadata/type/history format without rewriting it; retain domain safety and test mixed ledgers. | Fixed |
+| D15 | P1 | Pinned-runtime errors | CI exposed a crypto failure escaping a caller catch on the older runtime. | [Initial CI failure](evidence/ci-initial-failure.txt), run 34083221803. | Normalize native crypto failures inside their helpers and export-parent failures at the call site; retain diagnostic/no-plaintext assertions. | Fixed locally; pinned CI recheck required |
 
 ## Changes implemented
 
@@ -124,6 +126,29 @@ CLI JSON and exit codes, calendar centuries, long digits, config shapes,
 protected outputs, Unicode, domain-valid record tampering, missing history,
 secret fields in stored payloads, wrong signing keys and failed AEAD publication.
 
+### Original release and pinned-runtime follow-up — D14–D15
+
+Historical inspection after the initial implementation used unmodified tag
+`v0.1.0` (`c16df57ffa28eec78a790bea5a2f8b568402b979`) to create a ledger with
+the current explicit claim fixture. The starting revision rejected that record
+with `missing_field: contract_version`. The original release stored no contract
+field, used command-prefix record types, and wrote a 24-character event filename
+with a canonical-JSON `checksum`. Readers now interpret that exact legacy format
+and metadata without rewriting it, while later records retain raw-byte checksum
+verification. Nine regressions exercise the original fixture, mixed-version
+state, metadata immutability, missing events, tampering, and domain-safety
+rejection. Historical payloads that lack today's required claim/evidence fields
+still require review; compatibility never invents evidence.
+
+The first remote CI run built the pinned runtime successfully but failed on the
+new wrong-key test: that runtime let the nested crypto error escape the caller
+catch. Crypto helpers now catch the native operation locally and return its
+diagnostic; a separate CLI regression asserts structured exit-1 behavior for a
+missing export parent. No crypto assertion was removed or timeout increased.
+The final local gate has 106 assertions and eight suites; its busy-host elapsed
+time was 91.67s. The earlier 96-assertion pass is retained as
+[evidence](evidence/bounded-stage-gate.txt), not substituted for final validation.
+
 ### Verification, output and developer experience — D10–D11
 
 The launcher now honors `KUJO_BIN` or PATH. The selected runtime is propagated
@@ -158,9 +183,9 @@ throughput. Preserved [before](evidence/query-before.txt) and [after](evidence/q
 | Query elapsed seconds | 23.36 | 13.52 | Single noisy sample |
 | Query CPU user/system seconds | 10.74 / 2.13 | 5.10 / 0.86 | Same caveat |
 | Accepted-size record bytes processed per page | No aggregate bound | 4194304 | Code-enforced budget, not measured RSS |
-| Regression assertions | 46 | 96 | Includes 20 query/byte-boundary and 25 contract checks |
+| Regression assertions | 46 | 106 | Includes 20 query/byte-boundary, 26 contract, and 9 original-release compatibility checks |
 | Contention cases | 32 distinct writes | 32 distinct plus 32 same-ID writes | Exactly 32 and 1 winners, respectively |
-| Full gate seconds | 6.33 | 32.62 | Expanded verification workload; not an application regression comparison |
+| Full gate seconds | 6.33 | 91.67 | Expanded verification workload; not an application regression comparison |
 | Manifest package dependencies | 0 | 0 | Unchanged; Kujo remains external |
 
 No allocation/RSS, binary size, build-time, provider-token, or network-performance
@@ -190,7 +215,7 @@ Retain private OS permissions and backups as documented in `docs/security.md`.
 - Public APIs: existing signatures/record formats remain; internal scan support and UTF-8 helper are additive exports. `history` retains its existing view.
 - CLI: valid commands remain. Missing values now return 2; version JSON works; dry runs avoid writes; unsafe forced exports and incomplete checks fail. Unexpected native failures retain their diagnostic inside exit-1 envelopes.
 - File formats: record/event/metadata formats unchanged; per-record locks change from directories to exclusive files. Stop old writers before upgrading a shared state.
-- JSON schemas: record schema accepts both supported tool versions and requires the already-present `contract_version`; query/export `next_after` is additive.
+- JSON schemas: record schema accepts both supported tool versions; only the original 0.1.0 format may omit `contract_version`; query/export `next_after` is additive.
 - Config/environment: config file shape and `KUJO_BIN` are unchanged; schema-invalid config types now fail. The default executable is PATH `kujo` rather than a developer-specific absolute path.
 - Unicode: documented byte limits now mean bytes. Previously accepted over-budget Unicode content/keys may fail; export byte receipts are corrected.
 - External consumers: pagination and fail-closed validation require callers to handle `truncated` and nonzero exits. No consumer source was changed or assumed private. Existing incomplete/corrupt states are reported rather than migrated silently.
@@ -209,7 +234,7 @@ UTF-8 helper with existing modern `byte_length`; no runtime change is required.
 
 ## Remaining work
 
-- P0/P1: no unresolved finding established within the documented operator-controlled trust boundary; no known introduced regression remains.
+- P0/P1: no unresolved local finding established within the documented operator-controlled trust boundary; no known introduced regression remains.
 - P2: D12 directory-name enumeration. An index/new runtime primitive needs measurement and recovery design, not a speculative cache.
 - Needs more evidence: D13 additive audit-event view and downstream contract review. Current `history` semantics are preserved and documented.
 - Needs more evidence: crash-recovery automation, hostile-local-filesystem isolation, generic malformed-type coverage for all optional policy helpers, and multi-sample/RSS performance characterization. These were reviewed but are not claimed solved.
@@ -230,15 +255,15 @@ archive. `KUJO_BIN` defaults in the gate to the sibling release executable.
 | `/usr/bin/time -p /Users/robertdevore/2026/Kujolang/kujo-repos/kujo/target/release/kujo run scripts/query_benchmark.kujo -- query /tmp/dossier-audit/query-state` in baseline archive | PASS, 184045 bytes, 2000 warnings, 23.36s |
 | `/usr/bin/time -p ../kujo/target/release/kujo run scripts/query_benchmark.kujo -- query /tmp/dossier-audit/query-state` | PASS, 92071 bytes, 1000 warnings, 13.52s |
 | `../kujo/target/release/kujo run tests/test.kujo` | PASS, including complete legacy record/event compatibility |
-| `../kujo/target/release/kujo run tests/audit_contract_test.kujo -- ../kujo/target/release/kujo` | PASS, 25 assertions |
+| `../kujo/target/release/kujo run tests/audit_contract_test.kujo -- ../kujo/target/release/kujo` | PASS, 26 assertions |
 | `bash scripts/contention_benchmark.sh` | PASS, all 64 exits and persisted receipts checked |
 | `bash -n scripts/validate.sh scripts/contention_benchmark.sh` and `sh -n bin/dossier` | PASS |
-| `/usr/bin/time -p bash scripts/validate.sh` after implementation | PASS, 96 assertions, both contention cases, all JSON documents, CLI smoke and policy checks; 32.62s |
+| `/usr/bin/time -p bash scripts/validate.sh` after implementation | PASS, 106 assertions, both contention cases, all JSON documents, CLI smoke and policy checks; 91.67s |
 | `git diff --check` | PASS |
 
-The full gate executes `kujo check dossier.kujo`; seven suites (`test`,
+The full gate executes `kujo check dossier.kujo`; eight suites (`test`,
 `security_test`, `storage_test`, `domain_test`, `hardening_test`, `audit_test`,
-`audit_contract_test`); the contention receipt; `scripts/validate_json.kujo` for
+`audit_contract_test`, `legacy_test`); the contention receipt; `scripts/validate_json.kujo` for
 every fixture/schema; launcher help/version/doctor; dependency-reference,
 README-badge and ignore-policy checks. A Kujo compiler build, Rust formatting,
 separate type checker, UI/E2E suite, or model eval is not provided by this repo.
@@ -261,7 +286,7 @@ before writing. No duplicate of either Dossier-specific finding was found.
 - D13 Capture: `cap_e225bc5b-ed8f-4e10-aa9b-19aa57db6cd3`; no Signal, pending consumer evidence.
 - Each item was retrieved by exact ID. Concept queries `directory name`,
   `Dossier directory`, and `Dossier history` retrieved the respective items.
-- Duplicates skipped: 0. Completed D01–D11 fixes, routine verification, and
+- Duplicates skipped: 0. Completed D01–D11 and D14–D15 fixes, routine verification, and
   transient host errors were rejected as Capture candidates. No tasks,
   dispositions, or external messages were created.
 

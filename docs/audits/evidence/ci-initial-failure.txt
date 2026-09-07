@@ -1,0 +1,32 @@
+kujo-native	Validate	﻿2026-09-07T04:33:21.6575751Z ##[group]Run bash scripts/validate.sh
+kujo-native	Validate	2026-09-07T04:33:21.6576011Z [36;1mbash scripts/validate.sh[0m
+kujo-native	Validate	2026-09-07T04:33:21.6595870Z shell: /usr/bin/bash -e {0}
+kujo-native	Validate	2026-09-07T04:33:21.6596078Z env:
+kujo-native	Validate	2026-09-07T04:33:21.6596261Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Validate	2026-09-07T04:33:21.6596484Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Validate	2026-09-07T04:33:21.6596668Z   CARGO_INCREMENTAL: 0
+kujo-native	Validate	2026-09-07T04:33:21.6596828Z   CARGO_TERM_COLOR: always
+kujo-native	Validate	2026-09-07T04:33:21.6597095Z   KUJO_BIN: /home/runner/work/dossier/dossier/.runtime/kujo/target/release/kujo
+kujo-native	Validate	2026-09-07T04:33:21.6597363Z ##[endgroup]
+kujo-native	Validate	2026-09-07T04:33:21.6676273Z check passed: dossier.kujo
+kujo-native	Validate	2026-09-07T04:33:21.7275135Z 13 passed; 0 failed
+kujo-native	Validate	2026-09-07T04:33:21.8211894Z 13 passed; 0 failed
+kujo-native	Validate	2026-09-07T04:33:21.8741275Z 4 passed; 0 failed
+kujo-native	Validate	2026-09-07T04:33:21.9328852Z 6 passed; 0 failed
+kujo-native	Validate	2026-09-07T04:33:21.9507392Z [KUJOVM001] [vm] Runtime Error: Stream AEAD authentication failed at frame 0
+kujo-native	Validate	2026-09-07T04:33:21.9507833Z   --> 0:0
+kujo-native	Validate	2026-09-07T04:33:21.9508071Z 
+kujo-native	Validate	2026-09-07T04:33:21.9511365Z Call stack:
+kujo-native	Validate	2026-09-07T04:33:21.9511532Z   0 at check
+kujo-native	Validate	2026-09-07T04:33:21.9511670Z   1 at check
+kujo-native	Validate	2026-09-07T04:33:21.9511804Z   2 at check
+kujo-native	Validate	2026-09-07T04:33:21.9511934Z   3 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512061Z   4 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512187Z   5 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512325Z   6 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512450Z   7 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512572Z   8 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512699Z   9 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512840Z   10 at check
+kujo-native	Validate	2026-09-07T04:33:21.9512915Z 
+kujo-native	Validate	2026-09-07T04:33:21.9526574Z ##[error]Process completed with exit code 4.
