@@ -1,0 +1,1 @@
+{"ok":true,"receipt":{"bytes_in":8388608,"bytes_out":8388854,"chunk_size":1048576,"chunks":8,"format":"KUJOAEAD1","ok":true,"plaintext_sha256":"042e995365a46153f8d3a1327d986e2fec93554ed9d6b8126cecc7965ecf3be6"}}

@@ -76,7 +76,8 @@ evidence record requires exact source location, captured support, checksum,
 retrieval time, and reviewer identity.
 
 State defaults to `.dossier/`. JSON records are immutable, history is
-append-only, exports are atomic, and all inputs and query sizes are bounded.
+append-only, exports are atomic, and record inputs and page processing are bounded.
+Directory enumeration still scales with the total number of files.
 Traversal, symlinks, malformed JSON, incompatible schema majors, duplicate IDs,
 secret-shaped fields, and unsafe overwrites fail closed. See
 [contracts](docs/contracts.md) and [security](docs/security.md).

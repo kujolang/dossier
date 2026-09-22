@@ -1,0 +1,12 @@
+{"canonical_bytes":1031902,"claims":1000,"iterations":5,"manifest":{"algorithm":"sha256","claims":1000,"ok":true,"packet_sha256":"bab07e5c2551c778d4c6bd064a5354cf149c6b079c85aa6ddd0388383108d405","signature":"04aae86912827f70004467a77d743f6694034b2f162955ef9b93ef037b773a65","signature_algorithm":"hmac-sha256"}}
+real 5.75
+user 4.65
+sys 1.01
+{"canonical_bytes":1031902,"claims":1000,"iterations":5,"manifest":{"algorithm":"sha256","claims":1000,"ok":true,"packet_sha256":"bab07e5c2551c778d4c6bd064a5354cf149c6b079c85aa6ddd0388383108d405","signature":"04aae86912827f70004467a77d743f6694034b2f162955ef9b93ef037b773a65","signature_algorithm":"hmac-sha256"}}
+real 6.29
+user 4.99
+sys 1.17
+{"canonical_bytes":1031902,"claims":1000,"iterations":5,"manifest":{"algorithm":"sha256","claims":1000,"ok":true,"packet_sha256":"bab07e5c2551c778d4c6bd064a5354cf149c6b079c85aa6ddd0388383108d405","signature":"04aae86912827f70004467a77d743f6694034b2f162955ef9b93ef037b773a65","signature_algorithm":"hmac-sha256"}}
+real 5.56
+user 4.45
+sys 1.02

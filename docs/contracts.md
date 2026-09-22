@@ -65,3 +65,19 @@ validation and need review before a new record is created.
 Record IDs, canonical hashes, input shapes,
 and environment variables are unchanged. The launcher uses `KUJO_BIN` when
 provided and otherwise finds `kujo` on PATH.
+
+## Optional helper input boundaries
+
+Freshness and retention day values accept non-negative finite integers or
+fractions; strings and booleans are not numeric policies. Batch sizes and
+synthetic claim counts must be integers within their existing limits.
+Citation author/title/year/locator values must be non-empty strings, with the
+existing 4 KiB rendered limit. Retention `redact_fields` must be an array of
+strings. Invalid helper arguments return `ok: false`, rather than relying on
+native coercions or arithmetic errors. Packet manifests and HMAC bytes remain
+unchanged; signing reuses a single canonical representation.
+
+The native AES file helpers currently check output existence before a replacing
+rename. Use a distinct output path for each encryption/decryption operation;
+concurrent calls must not share a destination. Dossier's record locks do not
+protect these optional library operations. See the 2026-09-22 audit follow-up.

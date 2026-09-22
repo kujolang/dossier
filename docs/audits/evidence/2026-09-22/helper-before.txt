@@ -1,0 +1,14 @@
+FAIL: fractional batch size rejected
+FAIL: fractional claim count rejected
+FAIL: fractional synthetic batch rejected
+[KUJOVM001] [vm] Runtime Error: Invalid binary operation: null < int
+  --> 0:0
+   = help: Use operands whose types support this operator, or convert values before applying it.
+
+Call stack:
+  0 at check
+  1 at check
+  2 at check
+  3 at check
+  4 at check
+

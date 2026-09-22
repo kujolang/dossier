@@ -1,0 +1,7 @@
+[KUJOVM001] [vm] Runtime Error: Invalid binary operation: string + int
+  --> 0:0
+   = help: Use operands whose types support this operator, or convert values before applying it.
+
+Call stack:
+  0 at citation
+

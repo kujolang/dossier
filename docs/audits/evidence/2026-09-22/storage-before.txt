@@ -1,0 +1,14 @@
+FAIL: malformed storage metadata rejected
+FAIL: invalid storage input leaves no lock or record
+FAIL: malformed storage metadata rejected
+FAIL: invalid storage input leaves no lock or record
+[KUJOVM001] [vm] Runtime Error: Invalid index operation
+  --> 0:0
+
+Call stack:
+  0 at check
+  1 at check
+  2 at check
+  3 at check
+  4 at check
+

@@ -1,3 +1,5 @@
+Current follow-up: [2026-09-22 re-audit](repository-hardening-2026-09-22.md).
+
 # Dossier repository hardening audit
 
 ## Repository and provenance

@@ -1,0 +1,90 @@
+{
+  "completeness": "complete",
+  "deferred": [],
+  "documentType": "codex-security.coverage",
+  "excludePaths": [],
+  "explicitExclusions": [],
+  "includePaths": [
+    "."
+  ],
+  "inventoryStrategy": "repository",
+  "mode": "repository",
+  "openQuestions": [
+    {
+      "question": "Would a future workload require bounded directory enumeration rather than only bounded record-page processing? Current list_dir/sort is proportional to directory entries (src/storage.kujo:141; docs/contracts.md:15-17); no hostile shared-service deployment is assumed."
+    },
+    {
+      "question": "Would future deployment require sandbox-grade ancestor-race resistance, authenticated state or crash-atomic record/event transactions? Those guarantees are explicitly absent under operator-local storage (SECURITY.md:3; docs/security.md:10-16; docs/contracts.md:39-47)."
+    },
+    {
+      "question": "Can a future Kujo runtime provide no-replace crypto output publication? Parent source inspection identified fs::rename, and concurrent encryptions both returned success while final output retained only one payload (docs/audits/evidence/2026-09-22/crypto-one.txt:1; docs/audits/evidence/2026-09-22/crypto-two.txt:1; docs/audits/evidence/2026-09-22/crypto-read.txt:1). Dossier type-checks paths and initially checks absence (src/hardening.kujo:57-58). This is verified reliability debt; native runtime changes are outside this repository task."
+    }
+  ],
+  "scanId": "dossier-2026-09-22-standard",
+  "schemaVersion": "1.0",
+  "surfaces": [
+    {
+      "disposition": "no_issue_found",
+      "id": "cli_input",
+      "label": "CLI, configuration and JSON inputs",
+      "notes": "Regular-file/symlink/size checks, actor constraints, safe IDs and secret-shaped-key rejection traced at src/core.kujo:26-93 and src/common.kujo:25-89; args handling at src/args.kujo:19-74. No validated boundary failure.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "storage",
+      "label": "Immutable storage and events",
+      "notes": "Atomic no-replace writes, per-ID exclusive locks, history checksum and legacy formats traced at src/storage.kujo:40-132. Same-authority state rewriting and hostile ancestor races are outside SECURITY.md:3 policy; crash atomicity and stale locks are documented limits, not hidden guarantees.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "queries",
+      "label": "Bounded record retrieval and integrity validation",
+      "notes": "src/storage.kujo:135-168 bounds candidates and accepted bytes; src/core.kujo:188-203 rejects incomplete checks. Directory enumeration remains proportional to names, explicitly documented at docs/contracts.md:15-17. Show/report/export are retrieval, not full validation.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "exports",
+      "label": "Output destinations and force semantics",
+      "notes": "src/core.kujo:124-146 protects managed state, rejects leaf symlinks and requires force for replacement. Dry-run does not write; native path-race protection is limited to operator-controlled directories.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "artifacts",
+      "label": "Artifact reads and drift",
+      "notes": "src/core.kujo:63-68,113-117 bounds and hashes regular non-symlink artifacts; paths are stored verbatim and reopened. No network fetch of locators.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "domain",
+      "label": "Evidence and authority assertions",
+      "notes": "src/domain.kujo:33-69 validates fields/taxonomies/references; src/profile.kujo:18 preserves consent/rights non-authority. Actor/reviewer assertions are not authentication; no missing tenant-auth finding under supplied policy.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "optional_helpers",
+      "label": "Optional library crypto, policies and receipts",
+      "notes": "Current src/hardening.kujo:11-81 is independent of CLI. Explicit-key HMAC/AES, string path guards and finite policy-type checks preserve caller boundaries. Parent native fs::rename inspection and crypto-one.txt/crypto-two.txt/crypto-read.txt receipts establish a concurrent-output no-clobber reliability limitation, not a security finding. Helper boundary tests passed 90 checks (docs/audits/evidence/2026-09-22/final-gate.txt:7). Retention emits a receipt; it does not delete data.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "build",
+      "label": "Launcher, CI and developer validation",
+      "notes": "bin/dossier:3-4 selects trusted runtime; .github/workflows/validate.yml:5-27 pins actions/runtime source and uses read-only contents permission; scripts/validate.sh:3-9 has explicit executable selection. CI network/build authority is separate from offline core.",
+      "receiptRefs": []
+    },
+    {
+      "disposition": "no_issue_found",
+      "id": "support",
+      "label": "Tests, schemas, fixtures, docs and scripts",
+      "notes": "Parent completed remaining repository coverage. Fixtures/tests are developer inputs and schemas/docs describe contracts. README.md:79-80 now correctly qualifies directory enumeration; docs/contracts.md:23-33 explains history/freshness behavior. No validated security finding from support surfaces.",
+      "receiptRefs": []
+    }
+  ]
+}

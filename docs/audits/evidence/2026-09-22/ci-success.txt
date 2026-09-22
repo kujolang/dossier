@@ -1,0 +1,1254 @@
+kujo-native	Set up job	﻿2026-09-22T17:02:03.0733661Z Current runner version: '2.337.0'
+kujo-native	Set up job	2026-09-22T17:02:03.0759446Z ##[group]Runner Image Provisioner
+kujo-native	Set up job	2026-09-22T17:02:03.0760407Z Hosted Compute Agent
+kujo-native	Set up job	2026-09-22T17:02:03.0761052Z Version: 20260828.587
+kujo-native	Set up job	2026-09-22T17:02:03.0761797Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+kujo-native	Set up job	2026-09-22T17:02:03.0762969Z Build Date: 2026-08-28T16:44:25Z
+kujo-native	Set up job	2026-09-22T17:02:03.0763764Z Worker ID: {665ad80e-05d9-4c9e-b07c-e86be2a855cd}
+kujo-native	Set up job	2026-09-22T17:02:03.0764548Z Azure Region: westcentralus
+kujo-native	Set up job	2026-09-22T17:02:03.0765187Z ##[endgroup]
+kujo-native	Set up job	2026-09-22T17:02:03.0766789Z ##[group]Operating System
+kujo-native	Set up job	2026-09-22T17:02:03.0767434Z Ubuntu
+kujo-native	Set up job	2026-09-22T17:02:03.0768109Z 24.04.5
+kujo-native	Set up job	2026-09-22T17:02:03.0768737Z LTS
+kujo-native	Set up job	2026-09-22T17:02:03.0769330Z ##[endgroup]
+kujo-native	Set up job	2026-09-22T17:02:03.0769957Z ##[group]Runner Image
+kujo-native	Set up job	2026-09-22T17:02:03.0770588Z Image: ubuntu-24.04
+kujo-native	Set up job	2026-09-22T17:02:03.0771174Z Version: 20260907.300.1
+kujo-native	Set up job	2026-09-22T17:02:03.0773062Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+kujo-native	Set up job	2026-09-22T17:02:03.0774943Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+kujo-native	Set up job	2026-09-22T17:02:03.0775943Z ##[endgroup]
+kujo-native	Set up job	2026-09-22T17:02:03.0777175Z ##[group]GITHUB_TOKEN Permissions
+kujo-native	Set up job	2026-09-22T17:02:03.0779224Z Contents: read
+kujo-native	Set up job	2026-09-22T17:02:03.0779835Z Metadata: read
+kujo-native	Set up job	2026-09-22T17:02:03.0780573Z ##[endgroup]
+kujo-native	Set up job	2026-09-22T17:02:03.0782922Z Secret source: Actions
+kujo-native	Set up job	2026-09-22T17:02:03.0784026Z Cache mode: write
+kujo-native	Set up job	2026-09-22T17:02:03.0784765Z Prepare workflow directory
+kujo-native	Set up job	2026-09-22T17:02:03.1233498Z Prepare all required actions
+kujo-native	Set up job	2026-09-22T17:02:03.1280258Z Getting action download info
+kujo-native	Set up job	2026-09-22T17:02:03.4152877Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+kujo-native	Set up job	2026-09-22T17:02:03.5449332Z Download action repository 'dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921' (SHA:6d653acede28d24f02e3cd41383119e8b1b35921)
+kujo-native	Set up job	2026-09-22T17:02:03.9038785Z Complete job name: kujo-native
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	﻿2026-09-22T17:02:03.9782714Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9783871Z with:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9784327Z   repository: kujolang/dossier
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9788101Z   token: ***
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9788551Z   ssh-strict: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9788999Z   ssh-user: git
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9789457Z   persist-credentials: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9789943Z   clean: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9790392Z   sparse-checkout-cone-mode: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9790917Z   fetch-depth: 1
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9791365Z   fetch-tags: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9791819Z   show-progress: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9792416Z   lfs: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9792838Z   submodules: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9793292Z   set-safe-directory: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9793798Z   allow-unsafe-pr-checkout: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9794488Z env:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9794979Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:03.9795580Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0848841Z Syncing repository: kujolang/dossier
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0851568Z ##[group]Getting Git version info
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0852902Z Working directory is '/home/runner/work/dossier/dossier'
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0853988Z [command]/usr/bin/git version
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0900619Z git version 2.55.0
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0922898Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0938550Z Temporarily overriding HOME='/home/runner/work/_temp/bc6fd5b0-1b10-4a6f-8584-81f3baff7d46' before making global git config changes
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0940750Z Adding repository directory to the temporary git global config as a safe directory
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.0944403Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dossier/dossier
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1002909Z Deleting the contents of '/home/runner/work/dossier/dossier'
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1007938Z ##[group]Initializing the repository
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1014103Z [command]/usr/bin/git init /home/runner/work/dossier/dossier
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1102893Z hint: Using 'master' as the name for the initial branch. This default branch name
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1105416Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1107082Z hint: to use in all of your new repositories, which will suppress this warning,
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1108483Z hint: call:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1109260Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1110172Z hint: 	git config --global init.defaultBranch <name>
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1111277Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1112633Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1114345Z hint: 'development'. The just-created branch can be renamed via this command:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1115757Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1116577Z hint: 	git branch -m <name>
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1117477Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1118610Z hint: Disable this message with "git config set advice.defaultBranchName false"
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1120470Z Initialized empty Git repository in /home/runner/work/dossier/dossier/.git/
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1123632Z [command]/usr/bin/git remote add origin https://github.com/kujolang/dossier
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1184814Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1186417Z ##[group]Disabling automatic garbage collection
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1194622Z [command]/usr/bin/git config --local gc.auto 0
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1235211Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1236603Z ##[group]Setting up auth
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1243284Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1292969Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1768789Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.1808641Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.2074555Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.2116723Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.2403079Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.2446927Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.2448220Z ##[group]Fetching the repository
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.2458170Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +656f34abdc2eb5cc7a552e8010e8b78f5bf322d6:refs/remotes/origin/main
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7597478Z From https://github.com/kujolang/dossier
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7599388Z  * [new ref]         656f34abdc2eb5cc7a552e8010e8b78f5bf322d6 -> origin/main
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7603920Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7605719Z ##[group]Determining the checkout info
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7607426Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7608717Z [command]/usr/bin/git sparse-checkout disable
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7661348Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7699636Z ##[group]Checking out the ref
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7701310Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7800311Z Switched to a new branch 'main'
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7805452Z branch 'main' set up to track 'origin/main'.
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7812766Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7858187Z [command]/usr/bin/git log -1 --format=%H
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.7885939Z 656f34abdc2eb5cc7a552e8010e8b78f5bf322d6
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	﻿2026-09-22T17:02:04.8384493Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8386366Z with:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8387339Z   repository: kujolang/kujo
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8388565Z   ref: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8390153Z   path: .runtime/kujo
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8399563Z   token: ***
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8400565Z   ssh-strict: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8401591Z   ssh-user: git
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8402718Z   persist-credentials: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8403869Z   clean: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8404892Z   sparse-checkout-cone-mode: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8406101Z   fetch-depth: 1
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8407108Z   fetch-tags: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8408136Z   show-progress: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8409180Z   lfs: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8410165Z   submodules: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8411225Z   set-safe-directory: true
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8412539Z   allow-unsafe-pr-checkout: false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8413742Z env:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8414836Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.8416286Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9301541Z Syncing repository: kujolang/kujo
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9304946Z ##[group]Getting Git version info
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9307490Z Working directory is '/home/runner/work/dossier/dossier/.runtime/kujo'
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9342002Z [command]/usr/bin/git version
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9404259Z git version 2.55.0
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9430486Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9444932Z Temporarily overriding HOME='/home/runner/work/_temp/a6dabaf5-02ac-4003-83a1-a38838ab26e8' before making global git config changes
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9450126Z Adding repository directory to the temporary git global config as a safe directory
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9454590Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dossier/dossier/.runtime/kujo
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9499483Z ##[group]Initializing the repository
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9520244Z [command]/usr/bin/git init /home/runner/work/dossier/dossier/.runtime/kujo
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9578380Z hint: Using 'master' as the name for the initial branch. This default branch name
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9582706Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9586304Z hint: to use in all of your new repositories, which will suppress this warning,
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9589122Z hint: call:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9590891Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9592963Z hint: 	git config --global init.defaultBranch <name>
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9595016Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9596913Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9599791Z hint: 'development'. The just-created branch can be renamed via this command:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9601558Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9602865Z hint: 	git branch -m <name>
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9604162Z hint:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9653061Z hint: Disable this message with "git config set advice.defaultBranchName false"
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9656959Z Initialized empty Git repository in /home/runner/work/dossier/dossier/.runtime/kujo/.git/
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9662665Z [command]/usr/bin/git remote add origin https://github.com/kujolang/kujo
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9667860Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9670291Z ##[group]Disabling automatic garbage collection
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9696529Z [command]/usr/bin/git config --local gc.auto 0
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9701411Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9703920Z ##[group]Setting up auth
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9706269Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:04.9755493Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0023403Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0064289Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0332961Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0375698Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0627777Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0673927Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0676403Z ##[group]Fetching the repository
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:05.0685785Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2308058Z From https://github.com/kujolang/kujo
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2309083Z  * branch            5059695d14d6726bc17fef55e0b95511624967cf -> FETCH_HEAD
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2315351Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2316119Z ##[group]Determining the checkout info
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2317176Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2321233Z [command]/usr/bin/git sparse-checkout disable
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2370250Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2406667Z ##[group]Checking out the ref
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.2410674Z [command]/usr/bin/git checkout --progress --force 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3041003Z Note: switching to '5059695d14d6726bc17fef55e0b95511624967cf'.
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3041605Z 
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3041981Z You are in 'detached HEAD' state. You can look around, make experimental
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3042954Z changes and commit them, and you can discard any commits you make in this
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3043681Z state without impacting any branches by switching back to a branch.
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3044304Z 
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3053392Z If you want to create a new branch to retain commits you create, you may
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3054669Z do so (now or later) by using -c with the switch command. Example:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3055399Z 
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3055750Z   git switch -c <new-branch-name>
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3056332Z 
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3056611Z Or undo this operation with:
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3056944Z 
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3057078Z   git switch -
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3057360Z 
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3060182Z Turn off this advice by setting config variable advice.detachedHead to false
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3060936Z 
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3061265Z HEAD is now at 5059695 :lock: SECURITY: require signed release tags
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3063072Z ##[endgroup]
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3102739Z [command]/usr/bin/git log -1 --format=%H
+kujo-native	Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:02:06.3134641Z 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	﻿2026-09-22T17:02:06.3439037Z ##[group]Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3439474Z with:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3439684Z   toolchain: stable
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3439911Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3440155Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3440470Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3529341Z ##[start-action display=Run : parse toolchain version;id=__dtolnay_rust-toolchain.parse]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3568428Z ##[group]Run : parse toolchain version
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3568882Z [36;1m: parse toolchain version[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3569184Z [36;1mif [[ -z $toolchain ]]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3569731Z [36;1m  # GitHub does not enforce `required: true` inputs itself. https://github.com/actions/runner/issues/1070[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3570295Z [36;1m  echo "'toolchain' is a required input" >&2[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3570603Z [36;1m  exit 1[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3570958Z [36;1melif [[ $toolchain =~ ^stable' '[0-9]+' '(year|month|week|day)s?' 'ago$ ]]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3571433Z [36;1m  if [[ Linux == macOS ]]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3571969Z [36;1m    echo "toolchain=1.$((($(date -v-$(sed 's/stable \([0-9]*\) \(.\).*/\1\2/' <<< $toolchain) +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3572680Z [36;1m  else[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3573100Z [36;1m    echo "toolchain=1.$((($(date --date "${toolchain#stable }" +%s)/60/60/24-16569)/7/6))" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3573802Z [36;1m  fi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3574111Z [36;1melif [[ $toolchain =~ ^stable' 'minus' '[0-9]+' 'releases?$ ]]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3574640Z [36;1m  echo "toolchain=1.$((($(date +%s)/60/60/24-16569)/7/6-${toolchain//[^0-9]/}))" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3575089Z [36;1melif [[ $toolchain =~ ^1\.[0-9]+$ ]]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3575595Z [36;1m  echo "toolchain=1.$((i=${toolchain#1.}, c=($(date +%s)/60/60/24-16569)/7/6, i+9*i*(10*i<=c)+90*i*(100*i<=c)))" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3576080Z [36;1melse[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3576337Z [36;1m  echo "toolchain=$toolchain" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3576635Z [36;1mfi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3621243Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3621620Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3621878Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3622193Z   toolchain: stable
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3622743Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3744743Z ##[end-action id=__dtolnay_rust-toolchain.parse;outcome=success;conclusion=success;duration_ms=21]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3768555Z ##[start-action display=Run : construct rustup command line;id=__dtolnay_rust-toolchain.flags]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3789294Z ##[group]Run : construct rustup command line
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3789645Z [36;1m: construct rustup command line[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3790111Z [36;1mecho "targets=$(for t in ${targets//,/ }; do echo -n ' --target' $t; done)" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3790758Z [36;1mecho "components=$(for c in ${components//,/ }; do echo -n ' --component' $c; done)" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3791233Z [36;1mecho "downgrade=" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3829674Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3830034Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3830299Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3830620Z   targets: 
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3830845Z   components: 
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3831102Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3908070Z ##[end-action id=__dtolnay_rust-toolchain.flags;outcome=success;conclusion=success;duration_ms=13]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3911768Z ##[start-action display=Run : set $CARGO_HOME;id=__dtolnay_rust-toolchain.__run]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3931298Z ##[group]Run : set $CARGO_HOME
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3931593Z [36;1m: set $CARGO_HOME[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3931925Z [36;1mecho CARGO_HOME=${CARGO_HOME:-"$HOME/.cargo"} >> $GITHUB_ENV[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3970501Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3971088Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3971352Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.3971682Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4041382Z ##[end-action id=__dtolnay_rust-toolchain.__run;outcome=success;conclusion=success;duration_ms=12]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4043963Z ##[start-action display=Run : install rustup if needed;id=__dtolnay_rust-toolchain.__run_2]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4069648Z ##[group]Run : install rustup if needed
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4069983Z [36;1m: install rustup if needed[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4070287Z [36;1mif ! command -v rustup &>/dev/null; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4071041Z [36;1m  curl --proto '=https' --tlsv1.2 --retry 10 --retry-connrefused --location --silent --show-error --fail https://sh.rustup.rs | sh -s -- --default-toolchain none -y[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4071750Z [36;1m  echo "$CARGO_HOME/bin" >> $GITHUB_PATH[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4072043Z [36;1mfi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4108790Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4109161Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4109424Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4109751Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4110006Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4174682Z ##[end-action id=__dtolnay_rust-toolchain.__run_2;outcome=success;conclusion=success;duration_ms=12]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4178810Z ##[start-action display=Run : install rustup if needed on windows;id=__dtolnay_rust-toolchain.__run_3]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4185707Z ##[end-action id=__dtolnay_rust-toolchain.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4188938Z ##[start-action display=rustup toolchain install stable;id=__dtolnay_rust-toolchain.__run_4]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4232716Z ##[group]Run rustup toolchain install stable --profile minimal --no-self-update
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4233284Z [36;1mrustup toolchain install stable --profile minimal --no-self-update[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4270197Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4270557Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4270816Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4271145Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.4271397Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.6148334Z info: syncing channel updates for stable-x86_64-unknown-linux-gnu
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7712695Z 
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7804645Z   stable-x86_64-unknown-linux-gnu unchanged - rustc 1.98.1 (48a229cea 2026-09-01)
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7805103Z 
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7833754Z ##[end-action id=__dtolnay_rust-toolchain.__run_4;outcome=success;conclusion=success;duration_ms=364]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7839742Z ##[start-action display=Run rustup default stable;id=__dtolnay_rust-toolchain.__run_5]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7859407Z ##[group]Run rustup default stable
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7859718Z [36;1mrustup default stable[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7901177Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7901549Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7901802Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7902124Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.7902681Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8014427Z info: using existing install for stable-x86_64-unknown-linux-gnu
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8021660Z info: default toolchain set to stable-x86_64-unknown-linux-gnu
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8022160Z 
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8111694Z   stable-x86_64-unknown-linux-gnu unchanged - rustc 1.98.1 (48a229cea 2026-09-01)
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8112632Z 
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8129161Z ##[end-action id=__dtolnay_rust-toolchain.__run_5;outcome=success;conclusion=success;duration_ms=28]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8133797Z ##[start-action display=Run : create cachekey;id=__dtolnay_rust-toolchain.rustc-version]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8152580Z ##[group]Run : create cachekey
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8152943Z [36;1m: create cachekey[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8153465Z [36;1mDATE=$(rustc +stable --version --verbose | sed -ne 's/^commit-date: \(20[0-9][0-9]\)-\([01][0-9]\)-\([0-3][0-9]\)$/\1\2\3/p')[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8154338Z [36;1mHASH=$(rustc +stable --version --verbose | sed -ne 's/^commit-hash: //p')[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8154836Z [36;1mecho "cachekey=$(echo $DATE$HASH | head -c12)" >> $GITHUB_OUTPUT[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8194704Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8195064Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8195310Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8195638Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8195889Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8588596Z ##[end-action id=__dtolnay_rust-toolchain.rustc-version;outcome=success;conclusion=success;duration_ms=45]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8591374Z ##[start-action display=Run : disable incremental compilation;id=__dtolnay_rust-toolchain.__run_6]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8610807Z ##[group]Run : disable incremental compilation
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8611195Z [36;1m: disable incremental compilation[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8611542Z [36;1mif [ -z "${CARGO_INCREMENTAL+set}" ]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8611876Z [36;1m  echo CARGO_INCREMENTAL=0 >> $GITHUB_ENV[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8612159Z [36;1mfi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8653135Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8653501Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8653754Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8654267Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8654531Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8725553Z ##[end-action id=__dtolnay_rust-toolchain.__run_6;outcome=success;conclusion=success;duration_ms=13]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8727963Z ##[start-action display=Run : enable colors in Cargo output;id=__dtolnay_rust-toolchain.__run_7]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8745542Z ##[group]Run : enable colors in Cargo output
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8745894Z [36;1m: enable colors in Cargo output[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8746220Z [36;1mif [ -z "${CARGO_TERM_COLOR+set}" ]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8746582Z [36;1m  echo CARGO_TERM_COLOR=always >> $GITHUB_ENV[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8746876Z [36;1mfi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8786066Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8786422Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8786675Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8787004Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8787286Z   CARGO_INCREMENTAL: 0
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8787505Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8856135Z ##[end-action id=__dtolnay_rust-toolchain.__run_7;outcome=success;conclusion=success;duration_ms=12]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8860737Z ##[start-action display=Run : enable Cargo sparse registry;id=__dtolnay_rust-toolchain.__run_8]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8878794Z ##[group]Run : enable Cargo sparse registry
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8879155Z [36;1m: enable Cargo sparse registry[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8879532Z [36;1m# implemented in 1.66, stabilized in 1.68, made default in 1.70[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8880266Z [36;1mif [ -z "${CARGO_REGISTRIES_CRATES_IO_PROTOCOL+set}" -o -f "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol ]; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8880980Z [36;1m  if rustc +stable --version --verbose | grep -q '^release: 1\.6[89]\.'; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8881545Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8882097Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse >> $GITHUB_ENV[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8882896Z [36;1m  elif rustc +stable --version --verbose | grep -q '^release: 1\.6[67]\.'; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8883448Z [36;1m    touch "/home/runner/work/_temp"/.implicit_cargo_registries_crates_io_protocol || true[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8883958Z [36;1m    echo CARGO_REGISTRIES_CRATES_IO_PROTOCOL=git >> $GITHUB_ENV[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8884307Z [36;1m  fi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8884508Z [36;1mfi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8922189Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8922911Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8923171Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8923497Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8923763Z   CARGO_INCREMENTAL: 0
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8923993Z   CARGO_TERM_COLOR: always
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.8924223Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9270612Z ##[end-action id=__dtolnay_rust-toolchain.__run_8;outcome=success;conclusion=success;duration_ms=40]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9275467Z ##[start-action display=Run : work around spurious network errors in curl 8.0;id=__dtolnay_rust-toolchain.__run_9]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9294672Z ##[group]Run : work around spurious network errors in curl 8.0
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9295122Z [36;1m: work around spurious network errors in curl 8.0[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9295681Z [36;1m# https://rust-lang.zulipchat.com/#narrow/stream/246057-t-cargo/topic/timeout.20investigation[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9296302Z [36;1mif rustc +stable --version --verbose | grep -q '^release: 1\.7[01]\.'; then[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9296780Z [36;1m  echo CARGO_HTTP_MULTIPLEXING=false >> $GITHUB_ENV[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9297099Z [36;1mfi[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9338238Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9338594Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9338855Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9339185Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9339657Z   CARGO_INCREMENTAL: 0
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9339890Z   CARGO_TERM_COLOR: always
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9340132Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9550192Z ##[end-action id=__dtolnay_rust-toolchain.__run_9;outcome=success;conclusion=success;duration_ms=27]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9554556Z ##[start-action display=Run rustc +stable --version --verbose;id=__dtolnay_rust-toolchain.__run_10]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9573124Z ##[group]Run rustc +stable --version --verbose
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9573485Z [36;1mrustc +stable --version --verbose[0m
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9612815Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9613186Z env:
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9613439Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9613768Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9614027Z   CARGO_INCREMENTAL: 0
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9614259Z   CARGO_TERM_COLOR: always
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9614486Z ##[endgroup]
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9799863Z rustc 1.98.1 (48a229cea 2026-09-01)
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9800506Z binary: rustc
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9800828Z commit-hash: 48a229ceaefd4985c50990b14116b6d856af0985
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9801212Z commit-date: 2026-09-01
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9801469Z host: x86_64-unknown-linux-gnu
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9801786Z release: 1.98.1
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9802007Z LLVM version: 22.1.8
+kujo-native	Run dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921	2026-09-22T17:02:06.9824117Z ##[end-action id=__dtolnay_rust-toolchain.__run_10;outcome=success;conclusion=success;duration_ms=26]
+kujo-native	Build pinned Kujo runtime	﻿2026-09-22T17:02:06.9883454Z ##[group]Run cargo build --release --manifest-path .runtime/kujo/Cargo.toml
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9884013Z [36;1mcargo build --release --manifest-path .runtime/kujo/Cargo.toml[0m
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9924634Z shell: /usr/bin/bash -e {0}
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9924916Z env:
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9925177Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9925510Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9925769Z   CARGO_INCREMENTAL: 0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9926010Z   CARGO_TERM_COLOR: always
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:06.9926242Z ##[endgroup]
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:08.4672567Z [1m[92m    Updating[0m crates.io index
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.7755717Z [1m[92m Downloading[0m crates ...
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.8565306Z [1m[92m  Downloaded[0m btoi v0.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.8902923Z [1m[92m  Downloaded[0m built v0.8.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.8932016Z [1m[92m  Downloaded[0m adler2 v2.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.8948607Z [1m[92m  Downloaded[0m byteorder-lite v0.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.8962704Z [1m[92m  Downloaded[0m blowfish v0.9.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.8980059Z [1m[92m  Downloaded[0m bumpalo v3.20.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9015808Z [1m[92m  Downloaded[0m futures-task v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9074663Z [1m[92m  Downloaded[0m chunked_transfer v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9091672Z [1m[92m  Downloaded[0m pbkdf2 v0.12.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9109926Z [1m[92m  Downloaded[0m cfg-if v1.0.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9127661Z [1m[92m  Downloaded[0m color_quant v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9140007Z [1m[92m  Downloaded[0m colorchoice v1.0.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9200528Z [1m[92m  Downloaded[0m bzip2 v0.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9225508Z [1m[92m  Downloaded[0m pastey v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9250218Z [1m[92m  Downloaded[0m paste v1.0.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9293048Z [1m[92m  Downloaded[0m parking_lot_core v0.9.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9317654Z [1m[92m  Downloaded[0m constant_time_eq v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9343026Z [1m[92m  Downloaded[0m byteorder v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9360593Z [1m[92m  Downloaded[0m cipher v0.4.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9377785Z [1m[92m  Downloaded[0m cpufeatures v0.2.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9392687Z [1m[92m  Downloaded[0m equator v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9407117Z [1m[92m  Downloaded[0m crypto-common v0.1.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9417384Z [1m[92m  Downloaded[0m cmov v0.5.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9438131Z [1m[92m  Downloaded[0m colored v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9467066Z [1m[92m  Downloaded[0m foreign-types-shared v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9474544Z [1m[92m  Downloaded[0m cranelift-control v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9509635Z [1m[92m  Downloaded[0m futures-core v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9538073Z [1m[92m  Downloaded[0m cranelift v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9547435Z [1m[92m  Downloaded[0m errno v0.3.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9564852Z [1m[92m  Downloaded[0m fallible-streaming-iterator v0.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9575103Z [1m[92m  Downloaded[0m fnv v1.0.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9584940Z [1m[92m  Downloaded[0m cfg_aliases v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9594554Z [1m[92m  Downloaded[0m clap_lex v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9607468Z [1m[92m  Downloaded[0m endian-type v0.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9614578Z [1m[92m  Downloaded[0m cpufeatures v0.3.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9630337Z [1m[92m  Downloaded[0m equator-macro v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9640212Z [1m[92m  Downloaded[0m foreign-types v0.3.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9648287Z [1m[92m  Downloaded[0m digest v0.10.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9667019Z [1m[92m  Downloaded[0m rand_chacha v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9715637Z [1m[92m  Downloaded[0m cranelift-codegen-shared v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9726803Z [1m[92m  Downloaded[0m crypto-common v0.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9741873Z [1m[92m  Downloaded[0m equivalent v1.0.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9754148Z [1m[92m  Downloaded[0m futures-sink v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9763669Z [1m[92m  Downloaded[0m ed25519 v2.2.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9784374Z [1m[92m  Downloaded[0m fallible-iterator v0.3.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9797915Z [1m[92m  Downloaded[0m ff v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9815098Z [1m[92m  Downloaded[0m futures-executor v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9830558Z [1m[92m  Downloaded[0m cranelift-jit v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9845842Z [1m[92m  Downloaded[0m ecdsa v0.16.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9864315Z [1m[92m  Downloaded[0m fdeflate v0.3.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9885021Z [1m[92m  Downloaded[0m foldhash v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9901623Z [1m[92m  Downloaded[0m deflate64 v0.1.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9926570Z [1m[92m  Downloaded[0m crossbeam-deque v0.8.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:09.9946864Z [1m[92m  Downloaded[0m darling v0.23.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0043646Z [1m[92m  Downloaded[0m bytes v1.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0087930Z [1m[92m  Downloaded[0m clap v4.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0223443Z [1m[92m  Downloaded[0m const-oid v0.10.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0249589Z [1m[92m  Downloaded[0m profiling v1.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0262801Z [1m[92m  Downloaded[0m darling_macro v0.23.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0271711Z [1m[92m  Downloaded[0m rand_core v0.6.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0286340Z [1m[92m  Downloaded[0m thiserror-impl v2.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0303572Z [1m[92m  Downloaded[0m potential_utf v0.1.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0319415Z [1m[92m  Downloaded[0m quick-error v2.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0337908Z [1m[92m  Downloaded[0m curve25519-dalek-derive v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0351406Z [1m[92m  Downloaded[0m fd-lock v4.0.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0381931Z [1m[92m  Downloaded[0m futures-io v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0391726Z [1m[92m  Downloaded[0m cranelift-module v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0404458Z [1m[92m  Downloaded[0m crossbeam-queue v0.3.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0417688Z [1m[92m  Downloaded[0m form_urlencoded v1.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0426435Z [1m[92m  Downloaded[0m futures-macro v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0442147Z [1m[92m  Downloaded[0m atomic-waker v1.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0457470Z [1m[92m  Downloaded[0m avif-serialize v0.8.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0470938Z [1m[92m  Downloaded[0m crc32fast v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0493921Z [1m[92m  Downloaded[0m crossbeam-utils v0.8.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0529014Z [1m[92m  Downloaded[0m ctutils v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0559516Z [1m[92m  Downloaded[0m displaydoc v0.2.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0599163Z [1m[92m  Downloaded[0m fallible-iterator v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0605424Z [1m[92m  Downloaded[0m chacha20 v0.10.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0631003Z [1m[92m  Downloaded[0m clap_derive v4.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0657894Z [1m[92m  Downloaded[0m cranelift-bforest v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0676985Z [1m[92m  Downloaded[0m cranelift-entity v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0696116Z [1m[92m  Downloaded[0m crossbeam-epoch v0.9.20
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0726808Z [1m[92m  Downloaded[0m ctr v0.9.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0748679Z [1m[92m  Downloaded[0m either v1.16.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0764428Z [1m[92m  Downloaded[0m itoa v1.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0779237Z [1m[92m  Downloaded[0m region v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0798586Z [1m[92m  Downloaded[0m rfc6979 v0.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0811412Z [1m[92m  Downloaded[0m rustc_version v0.4.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0826479Z [1m[92m  Downloaded[0m serde_spanned v0.6.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0842712Z [1m[92m  Downloaded[0m profiling-procmacros v1.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0853465Z [1m[92m  Downloaded[0m saturating v0.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0869473Z [1m[92m  Downloaded[0m slice-group-by v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0898815Z [1m[92m  Downloaded[0m cranelift-bitset v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0908306Z [1m[92m  Downloaded[0m strsim v0.11.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0926075Z [1m[92m  Downloaded[0m const-oid v0.9.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0950869Z [1m[92m  Downloaded[0m cranelift-native v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0959451Z [1m[92m  Downloaded[0m digest v0.11.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.0985480Z [1m[92m  Downloaded[0m fax v0.2.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1010746Z [1m[92m  Downloaded[0m find-msvc-tools v0.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1029640Z [1m[92m  Downloaded[0m base64ct v1.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1061263Z [1m[92m  Downloaded[0m bytemuck v1.25.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1097587Z [1m[92m  Downloaded[0m cfb v0.7.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1141096Z [1m[92m  Downloaded[0m cranelift-codegen-meta v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1181223Z [1m[92m  Downloaded[0m cranelift-frontend v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1203188Z [1m[92m  Downloaded[0m csv-core v0.1.13
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1219112Z [1m[92m  Downloaded[0m darling_core v0.23.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1280306Z [1m[92m  Downloaded[0m deranged v0.5.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1298369Z [1m[92m  Downloaded[0m futures v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1359754Z [1m[92m  Downloaded[0m futures-channel v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1379147Z [1m[92m  Downloaded[0m hmac v0.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1401228Z [1m[92m  Downloaded[0m hybrid-array v0.4.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1424621Z [1m[92m  Downloaded[0m infer v0.16.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1447143Z [1m[92m  Downloaded[0m jobserver v0.1.34
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1469168Z [1m[92m  Downloaded[0m manyhow-macros v0.11.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1476913Z [1m[92m  Downloaded[0m maybe-rayon v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1485476Z [1m[92m  Downloaded[0m md-5 v0.10.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1503730Z [1m[92m  Downloaded[0m bitflags v2.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1552438Z [1m[92m  Downloaded[0m bitstream-io v4.10.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1582902Z [1m[92m  Downloaded[0m crypto-bigint v0.5.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1659612Z [1m[92m  Downloaded[0m der v0.7.10
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1715731Z [1m[92m  Downloaded[0m elliptic-curve v0.13.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1756633Z [1m[92m  Downloaded[0m powerfmt v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1768494Z [1m[92m  Downloaded[0m subtle v2.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1780505Z [1m[92m  Downloaded[0m signature v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1795367Z [1m[92m  Downloaded[0m scopeguard v1.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1808229Z [1m[92m  Downloaded[0m sync_wrapper v1.0.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1816577Z [1m[92m  Downloaded[0m serde_urlencoded v0.7.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1833578Z [1m[92m  Downloaded[0m sha1 v0.10.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1850044Z [1m[92m  Downloaded[0m phf v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1863199Z [1m[92m  Downloaded[0m postgres-protocol v0.6.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1884299Z [1m[92m  Downloaded[0m polyval v0.6.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1901106Z [1m[92m  Downloaded[0m proc-macro-crate v3.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1915387Z [1m[92m  Downloaded[0m pin-project-lite v0.2.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1977842Z [1m[92m  Downloaded[0m ravif v0.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.1990039Z [1m[92m  Downloaded[0m hmac v0.12.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2010477Z [1m[92m  Downloaded[0m log v0.4.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2036483Z [1m[92m  Downloaded[0m noop_proc_macro v0.3.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2045935Z [1m[92m  Downloaded[0m num-conv v0.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2054535Z [1m[92m  Downloaded[0m openssl-macros v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2062075Z [1m[92m  Downloaded[0m openssl-probe v0.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2074423Z [1m[92m  Downloaded[0m openssl-sys v0.9.117
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2134046Z [1m[92m  Downloaded[0m tinystr v0.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2156237Z [1m[92m  Downloaded[0m tokio-native-tls v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2174709Z [1m[92m  Downloaded[0m cc v1.2.65
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2205698Z [1m[92m  Downloaded[0m clap_builder v4.6.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2273399Z [1m[92m  Downloaded[0m cranelift-isle v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2319411Z [1m[92m  Downloaded[0m ed25519-dalek v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2352519Z [1m[92m  Downloaded[0m flate2 v1.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2405424Z [1m[92m  Downloaded[0m hyper-util v0.1.20
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2471048Z [1m[92m  Downloaded[0m tokio-rustls v0.26.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2492917Z [1m[92m  Downloaded[0m tokio-postgres v0.7.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2548933Z [1m[92m  Downloaded[0m percent-encoding v2.3.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2558562Z [1m[92m  Downloaded[0m simd_helpers v0.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2567579Z [1m[92m  Downloaded[0m siphasher v1.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2581969Z [1m[92m  Downloaded[0m stable_deref_trait v1.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2590910Z [1m[92m  Downloaded[0m pkcs8 v0.10.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2621664Z [1m[92m  Downloaded[0m quote v1.0.45
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2650585Z [1m[92m  Downloaded[0m phf_shared v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2660406Z [1m[92m  Downloaded[0m shlex v2.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2674393Z [1m[92m  Downloaded[0m proc-macro-utils v0.10.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2687002Z [1m[92m  Downloaded[0m rand_core v0.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2703598Z [1m[92m  Downloaded[0m rgb v0.8.53
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2729317Z [1m[92m  Downloaded[0m rustc-hash v2.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2742862Z [1m[92m  Downloaded[0m termcolor v1.4.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2755861Z [1m[92m  Downloaded[0m pem-rfc7468 v0.7.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2776089Z [1m[92m  Downloaded[0m slab v0.4.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2789535Z [1m[92m  Downloaded[0m spki v0.7.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2808165Z [1m[92m  Downloaded[0m stringprep v0.1.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2824674Z [1m[92m  Downloaded[0m pem v3.0.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2838873Z [1m[92m  Downloaded[0m itertools v0.14.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2913690Z [1m[92m  Downloaded[0m num-bigint v0.4.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.2965758Z [1m[92m  Downloaded[0m num-bigint-dig v0.8.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3013119Z [1m[92m  Downloaded[0m pkg-config v0.3.33
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3030194Z [1m[92m  Downloaded[0m sec1 v0.7.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3047011Z [1m[92m  Downloaded[0m tower-http v0.6.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3146573Z [1m[92m  Downloaded[0m unicase v2.9.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3161498Z [1m[92m  Downloaded[0m unicode-bidi v0.3.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3186812Z [1m[92m  Downloaded[0m unicode-ident v1.0.24
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3215730Z [1m[92m  Downloaded[0m version_check v0.9.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3229198Z [1m[92m  Downloaded[0m want v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3238865Z [1m[92m  Downloaded[0m writeable v0.6.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3259500Z [1m[92m  Downloaded[0m chrono v0.4.45
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3329194Z [1m[92m  Downloaded[0m exr v1.74.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3424448Z [1m[92m  Downloaded[0m mysql_common v0.37.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3514371Z [1m[92m  Downloaded[0m nix v0.28.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3629222Z [1m[92m  Downloaded[0m postgres-types v0.2.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3657300Z [1m[92m  Downloaded[0m ppv-lite86 v0.2.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3671318Z [1m[92m  Downloaded[0m primeorder v0.13.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3684709Z [1m[92m  Downloaded[0m rustversion v1.0.22
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3714259Z [1m[92m  Downloaded[0m sha2 v0.11.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3753800Z [1m[92m  Downloaded[0m simple_asn1 v0.6.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3768130Z [1m[92m  Downloaded[0m target-lexicon v0.12.16
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3790320Z [1m[92m  Downloaded[0m typenum v1.20.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3832576Z [1m[92m  Downloaded[0m v_frame v0.3.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3849581Z [1m[92m  Downloaded[0m y4m v0.8.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3862613Z [1m[92m  Downloaded[0m zmij v1.0.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3881419Z [1m[92m  Downloaded[0m zune-jpeg v0.5.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3918627Z [1m[92m  Downloaded[0m ahash v0.8.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3943592Z [1m[92m  Downloaded[0m allocator-api2 v0.2.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3970926Z [1m[92m  Downloaded[0m anstyle v1.0.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.3986652Z [1m[92m  Downloaded[0m base64 v0.22.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4028952Z [1m[92m  Downloaded[0m block-buffer v0.10.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4040140Z [1m[92m  Downloaded[0m block-buffer v0.12.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4053143Z [1m[92m  Downloaded[0m curve25519-dalek v4.1.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4141135Z [1m[92m  Downloaded[0m gimli v0.29.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4211878Z [1m[92m  Downloaded[0m pkcs1 v0.7.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4237828Z [1m[92m  Downloaded[0m postgres v0.19.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4261247Z [1m[92m  Downloaded[0m ppmd-rust v1.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4289350Z [1m[92m  Downloaded[0m sha2 v0.10.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4316090Z [1m[92m  Downloaded[0m spin v0.9.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4341099Z [1m[92m  Downloaded[0m thiserror v2.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4410154Z [1m[92m  Downloaded[0m group v0.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4426883Z [1m[92m  Downloaded[0m hashlink v0.9.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4445804Z [1m[92m  Downloaded[0m proc-macro2 v1.0.106
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4477113Z [1m[92m  Downloaded[0m rustls-pki-types v1.14.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4505142Z [1m[92m  Downloaded[0m ryu v1.0.23
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4539581Z [1m[92m  Downloaded[0m semver v1.0.28
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4564264Z [1m[92m  Downloaded[0m serde_derive v1.0.228
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4596831Z [1m[92m  Downloaded[0m serde_yaml v0.9.34+deprecated
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4632898Z [1m[92m  Downloaded[0m simd-adler32 v0.3.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4653065Z [1m[92m  Downloaded[0m synstructure v0.13.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4664351Z [1m[92m  Downloaded[0m anstream v1.0.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4686338Z [1m[92m  Downloaded[0m http-body-util v0.1.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4705965Z [1m[92m  Downloaded[0m lebe v0.5.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4719159Z [1m[92m  Downloaded[0m nohash-hasher v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4730119Z [1m[92m  Downloaded[0m num-derive v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4749351Z [1m[92m  Downloaded[0m num-iter v0.1.45
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4759971Z [1m[92m  Downloaded[0m socket2 v0.6.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4779271Z [1m[92m  Downloaded[0m toml_datetime v1.1.1+spec-1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.4793150Z [1m[92m  Downloaded[0m vcpkg v0.2.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5383681Z [1m[92m  Downloaded[0m winnow v1.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5487059Z [1m[92m  Downloaded[0m yoke v0.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5506257Z [1m[92m  Downloaded[0m http v1.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5545084Z [1m[92m  Downloaded[0m http-body v1.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5556114Z [1m[92m  Downloaded[0m icu_collections v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5622187Z [1m[92m  Downloaded[0m icu_locale_core v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5698009Z [1m[92m  Downloaded[0m icu_normalizer_data v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5721016Z [1m[92m  Downloaded[0m icu_properties v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5746225Z [1m[92m  Downloaded[0m keyed_priority_queue v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5756956Z [1m[92m  Downloaded[0m lazy_static v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5776179Z [1m[92m  Downloaded[0m libbz2-rs-sys v0.2.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5796142Z [1m[92m  Downloaded[0m mime v0.3.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5809921Z [1m[92m  Downloaded[0m nom v8.0.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5866103Z [1m[92m  Downloaded[0m num-integer v0.1.46
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5883164Z [1m[92m  Downloaded[0m num-rational v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5896717Z [1m[92m  Downloaded[0m num-traits v0.2.19
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5924908Z [1m[92m  Downloaded[0m rayon-core v1.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5964314Z [1m[92m  Downloaded[0m serde_core v1.0.228
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.5993966Z [1m[92m  Downloaded[0m smallvec v1.15.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6009706Z [1m[92m  Downloaded[0m tracing-core v0.1.36
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6038123Z [1m[92m  Downloaded[0m universal-hash v0.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6047851Z [1m[92m  Downloaded[0m whoami v2.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6070593Z [1m[92m  Downloaded[0m zerofrom v0.1.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6081145Z [1m[92m  Downloaded[0m zerotrie v0.2.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6123232Z [1m[92m  Downloaded[0m zstd-safe v7.2.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6139571Z [1m[92m  Downloaded[0m zune-core v0.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6163517Z [1m[92m  Downloaded[0m aead v0.5.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6175260Z [1m[92m  Downloaded[0m ghash v0.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6187323Z [1m[92m  Downloaded[0m icu_normalizer v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6227032Z [1m[92m  Downloaded[0m icu_provider v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6254917Z [1m[92m  Downloaded[0m qoi v0.4.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6286638Z [1m[92m  Downloaded[0m rand v0.8.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6321864Z [1m[92m  Downloaded[0m rsa v0.9.10
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6378636Z [1m[92m  Downloaded[0m rustls-webpki v0.103.13
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6411579Z [1m[92m  Downloaded[0m serde v1.0.228
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6448345Z [1m[92m  Downloaded[0m generic-array v0.14.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6463144Z [1m[92m  Downloaded[0m half v2.7.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6491408Z [1m[92m  Downloaded[0m home v0.5.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6502166Z [1m[92m  Downloaded[0m inout v0.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6523243Z [1m[92m  Downloaded[0m libm v0.2.16
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6632925Z [1m[92m  Downloaded[0m md-5 v0.11.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6650303Z [1m[92m  Downloaded[0m memchr v2.8.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6708885Z [1m[92m  Downloaded[0m nibble_vec v0.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6722833Z [1m[92m  Downloaded[0m opaque-debug v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6732935Z [1m[92m  Downloaded[0m zune-inflate v0.2.54
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6751236Z [1m[92m  Downloaded[0m getrandom v0.2.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6782712Z [1m[92m  Downloaded[0m getrandom v0.3.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6820605Z [1m[92m  Downloaded[0m getrandom v0.4.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6861144Z [1m[92m  Downloaded[0m gif v0.14.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6879107Z [1m[92m  Downloaded[0m heck v0.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6892564Z [1m[92m  Downloaded[0m hyper v1.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.6966094Z [1m[92m  Downloaded[0m jsonwebtoken v10.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7020803Z [1m[92m  Downloaded[0m no_std_io2 v0.9.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7041647Z [1m[92m  Downloaded[0m once_cell v1.21.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7068253Z [1m[92m  Downloaded[0m csv v1.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7258433Z [1m[92m  Downloaded[0m h2 v0.4.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7326573Z [1m[92m  Downloaded[0m hashbrown v0.14.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7379528Z [1m[92m  Downloaded[0m image-webp v0.2.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7403040Z [1m[92m  Downloaded[0m is_terminal_polyfill v1.70.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7412856Z [1m[92m  Downloaded[0m mysql-common-derive v0.32.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7435737Z [1m[92m  Downloaded[0m rand v0.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7475272Z [1m[92m  Downloaded[0m unsafe-libyaml v0.2.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7509626Z [1m[92m  Downloaded[0m wasm-bindgen v0.2.125
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7537649Z [1m[92m  Downloaded[0m weezl v0.1.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7563676Z [1m[92m  Downloaded[0m zopfli v0.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7588263Z [1m[92m  Downloaded[0m zstd v0.13.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7619683Z [1m[92m  Downloaded[0m anyhow v1.0.103
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7662207Z [1m[92m  Downloaded[0m arbitrary v1.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7714151Z [1m[92m  Downloaded[0m async-trait v0.1.89
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7753354Z [1m[92m  Downloaded[0m autocfg v1.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.7773034Z [1m[92m  Downloaded[0m cranelift-codegen v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8039105Z [1m[92m  Downloaded[0m httpdate v1.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8051794Z [1m[92m  Downloaded[0m ipnet v2.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8069457Z [1m[92m  Downloaded[0m litemap v0.8.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8094007Z [1m[92m  Downloaded[0m lock_api v0.4.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8108339Z [1m[92m  Downloaded[0m loop9 v0.1.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8115702Z [1m[92m  Downloaded[0m lru v0.18.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8128438Z [1m[92m  Downloaded[0m manyhow v0.11.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8145136Z [1m[92m  Downloaded[0m mime_guess v2.0.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8164225Z [1m[92m  Downloaded[0m miniz_oxide v0.8.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8191389Z [1m[92m  Downloaded[0m png v0.18.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8235084Z [1m[92m  Downloaded[0m regalloc2 v0.10.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8273632Z [1m[92m  Downloaded[0m rustyline v14.0.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8325604Z [1m[92m  Downloaded[0m tinyvec_macros v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8334546Z [1m[92m  Downloaded[0m tokio-stream v0.1.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8386155Z [1m[92m  Downloaded[0m typed-path v0.12.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8458101Z [1m[92m  Downloaded[0m untrusted v0.9.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8475263Z [1m[92m  Downloaded[0m urlencoding v2.1.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8485717Z [1m[92m  Downloaded[0m yoke-derive v0.8.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8497727Z [1m[92m  Downloaded[0m aligned v0.4.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8510103Z [1m[92m  Downloaded[0m aligned-vec v0.6.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8520273Z [1m[92m  Downloaded[0m anstyle-query v1.1.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8532207Z [1m[92m  Downloaded[0m hashbrown v0.17.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8588673Z [1m[92m  Downloaded[0m hyper-tls v0.6.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8603457Z [1m[92m  Downloaded[0m openssl v0.10.81
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8706730Z [1m[92m  Downloaded[0m regex v1.12.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8763106Z [1m[92m  Downloaded[0m rusqlite v0.31.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8826721Z [1m[92m  Downloaded[0m time-core v0.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8838586Z [1m[92m  Downloaded[0m arg_enum_proc_macro v0.3.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8851040Z [1m[92m  Downloaded[0m as-slice v0.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8860715Z [1m[92m  Downloaded[0m ascii v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8881017Z [1m[92m  Downloaded[0m av1-grain v0.2.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8906727Z [1m[92m  Downloaded[0m base16ct v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8921166Z [1m[92m  Downloaded[0m bcrypt v0.15.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8931173Z [1m[92m  Downloaded[0m bit_field v0.10.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.8944452Z [1m[92m  Downloaded[0m mio v1.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9007815Z [1m[92m  Downloaded[0m zerofrom-derive v0.1.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9018986Z [1m[92m  Downloaded[0m arrayvec v0.7.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9040420Z [1m[92m  Downloaded[0m httparse v1.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9066653Z [1m[92m  Downloaded[0m moxcms v0.8.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9175586Z [1m[92m  Downloaded[0m native-tls v0.2.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9191265Z [1m[92m  Downloaded[0m wasm-bindgen-macro v0.2.125
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9201174Z [1m[92m  Downloaded[0m anstyle-parse v1.0.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9218278Z [1m[92m  Downloaded[0m hyper-rustls v0.27.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9233296Z [1m[92m  Downloaded[0m ident_case v1.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9242088Z [1m[92m  Downloaded[0m idna_adapter v1.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9251499Z [1m[92m  Downloaded[0m lzma-rust2 v0.15.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9339879Z [1m[92m  Downloaded[0m rayon v1.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9440547Z [1m[92m  Downloaded[0m reqwest v0.12.28
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9498027Z [1m[92m  Downloaded[0m serde_json v1.0.150
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9575774Z [1m[92m  Downloaded[0m time-macros v0.2.29
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9600836Z [1m[92m  Downloaded[0m aho-corasick v1.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9656161Z [1m[92m  Downloaded[0m base64 v0.21.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9696820Z [1m[92m  Downloaded[0m futures-util v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9877674Z [1m[92m  Downloaded[0m new_debug_unreachable v1.0.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9888923Z [1m[92m  Downloaded[0m tiff v0.11.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:10.9935528Z [1m[92m  Downloaded[0m zerocopy-derive v0.8.52
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0033737Z [1m[92m  Downloaded[0m imgref v1.12.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0045821Z [1m[92m  Downloaded[0m zip v7.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0097147Z [1m[92m  Downloaded[0m bitflags v1.3.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0131702Z [1m[92m  Downloaded[0m iana-time-zone v0.1.65
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0161632Z [1m[92m  Downloaded[0m p256 v0.13.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0198085Z [1m[92m  Downloaded[0m tiny_http v0.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0237626Z [1m[92m  Downloaded[0m tinyvec v1.11.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0264729Z [1m[92m  Downloaded[0m url v2.5.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0291718Z [1m[92m  Downloaded[0m unicode-normalization v0.1.25
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0328063Z [1m[92m  Downloaded[0m hkdf v0.12.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0352406Z [1m[92m  Downloaded[0m aes-gcm v0.10.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0383674Z [1m[92m  Downloaded[0m idna v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0420384Z [1m[92m  Downloaded[0m indexmap v2.14.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0465477Z [1m[92m  Downloaded[0m aes v0.8.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0501755Z [1m[92m  Downloaded[0m libc v0.2.186
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0918012Z [1m[92m  Downloaded[0m p384 v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.0965268Z [1m[92m  Downloaded[0m encoding_rs v0.8.35
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1173886Z [1m[92m  Downloaded[0m zeroize_derive v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1184417Z [1m[92m  Downloaded[0m zerovec-derive v0.11.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1200667Z [1m[92m  Downloaded[0m zerovec v0.11.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1264737Z [1m[92m  Downloaded[0m zstd-sys v2.0.16+zstd.1.5.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1436968Z [1m[92m  Downloaded[0m radix_trie v0.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1485080Z [1m[92m  Downloaded[0m tokio-macros v2.7.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1496596Z [1m[92m  Downloaded[0m tower-service v0.3.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1505295Z [1m[92m  Downloaded[0m unicode-segmentation v1.13.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1536190Z [1m[92m  Downloaded[0m icu_properties_data v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1650297Z [1m[92m  Downloaded[0m mysql_async v0.37.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1714784Z [1m[92m  Downloaded[0m toml_datetime v0.6.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1727151Z [1m[92m  Downloaded[0m syn v2.0.118
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1838222Z [1m[92m  Downloaded[0m toml v0.8.23
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1863141Z [1m[92m  Downloaded[0m unicode-width v0.1.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1919160Z [1m[92m  Downloaded[0m zlib-rs v0.6.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.1974269Z [1m[92m  Downloaded[0m image v0.25.10
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2071599Z [1m[92m  Downloaded[0m parking_lot v0.12.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2097511Z [1m[92m  Downloaded[0m time v0.3.49
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2241621Z [1m[92m  Downloaded[0m toml_edit v0.25.12+spec-1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2282820Z [1m[92m  Downloaded[0m zerocopy v0.8.52
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2510694Z [1m[92m  Downloaded[0m regex-syntax v0.8.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2581641Z [1m[92m  Downloaded[0m rustls v0.23.40
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2705307Z [1m[92m  Downloaded[0m utf8parse v0.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2716640Z [1m[92m  Downloaded[0m tokio-util v0.7.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2798282Z [1m[92m  Downloaded[0m toml_edit v0.22.27
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2844549Z [1m[92m  Downloaded[0m toml_write v0.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2858174Z [1m[92m  Downloaded[0m tower-layer v0.3.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2868353Z [1m[92m  Downloaded[0m utf8_iter v1.0.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.2879078Z [1m[92m  Downloaded[0m rustix v1.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3169387Z [1m[92m  Downloaded[0m toml_parser v1.1.2+spec-1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3193277Z [1m[92m  Downloaded[0m av-scenechange v0.14.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3310787Z [1m[92m  Downloaded[0m tower v0.5.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3418777Z [1m[92m  Downloaded[0m wasm-bindgen-macro-support v0.2.125
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3440487Z [1m[92m  Downloaded[0m zeroize v1.9.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3456784Z [1m[92m  Downloaded[0m try-lock v0.2.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3466882Z [1m[92m  Downloaded[0m regex-automata v0.4.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3613770Z [1m[92m  Downloaded[0m uuid v1.23.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3645238Z [1m[92m  Downloaded[0m wasm-bindgen-shared v0.2.125
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3656793Z [1m[92m  Downloaded[0m wasmtime-jit-icache-coherence v25.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3665435Z [1m[92m  Downloaded[0m twox-hash v2.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3689307Z [1m[92m  Downloaded[0m unicode-properties v0.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3709198Z [1m[92m  Downloaded[0m libz-sys v1.1.29
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.3955215Z [1m[92m  Downloaded[0m winnow v0.7.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.4057098Z [1m[92m  Downloaded[0m pxfm v0.1.29
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.4319749Z [1m[92m  Downloaded[0m linux-raw-sys v0.12.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.4977222Z [1m[92m  Downloaded[0m tracing v0.1.44
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.5145756Z [1m[92m  Downloaded[0m tokio v1.52.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.5616587Z [1m[92m  Downloaded[0m rav1e v0.8.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.5987742Z [1m[92m  Downloaded[0m ring v0.17.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:11.6460233Z [1m[92m  Downloaded[0m libsqlite3-sys v0.28.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:12.3078313Z [1m[92m   Compiling[0m proc-macro2 v1.0.106
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:12.3078999Z [1m[92m   Compiling[0m quote v1.0.45
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:12.3079532Z [1m[92m   Compiling[0m unicode-ident v1.0.24
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:12.3080004Z [1m[92m   Compiling[0m libc v0.2.186
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:15.4249301Z [1m[92m   Compiling[0m cfg-if v1.0.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:15.5435501Z [1m[92m   Compiling[0m version_check v0.9.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:15.8557279Z [1m[92m   Compiling[0m typenum v1.20.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:16.6758275Z [1m[92m   Compiling[0m generic-array v0.14.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:17.0123801Z [1m[92m   Compiling[0m find-msvc-tools v0.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:17.2309036Z [1m[92m   Compiling[0m subtle v2.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:17.4034523Z [1m[92m   Compiling[0m shlex v2.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:17.5464316Z [1m[92m   Compiling[0m pkg-config v0.3.33
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.0954162Z [1m[92m   Compiling[0m syn v2.0.118
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.1393848Z [1m[92m   Compiling[0m smallvec v1.15.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.2364713Z [1m[92m   Compiling[0m jobserver v0.1.34
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.3424424Z [1m[92m   Compiling[0m const-oid v0.9.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.5297079Z [1m[92m   Compiling[0m getrandom v0.2.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.5343345Z [1m[92m   Compiling[0m cc v1.2.65
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.6141745Z [1m[92m   Compiling[0m autocfg v1.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.7234227Z [1m[92m   Compiling[0m rand_core v0.6.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.9024248Z [1m[92m   Compiling[0m vcpkg v0.2.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:18.9643760Z [1m[92m   Compiling[0m zerocopy v0.8.52
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:19.2033827Z [1m[92m   Compiling[0m memchr v2.8.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:19.5733972Z [1m[92m   Compiling[0m foldhash v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:19.7083930Z [1m[92m   Compiling[0m equivalent v1.0.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:19.7504441Z [1m[92m   Compiling[0m allocator-api2 v0.2.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.1293873Z [1m[92m   Compiling[0m hashbrown v0.17.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.1339599Z [1m[92m   Compiling[0m bytes v1.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.1463836Z [1m[92m   Compiling[0m pin-project-lite v0.2.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.1969178Z [1m[92m   Compiling[0m libm v0.2.16
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.3906519Z [1m[92m   Compiling[0m num-traits v0.2.19
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.4914375Z [1m[92m   Compiling[0m futures-core v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.5824445Z [1m[92m   Compiling[0m once_cell v1.21.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.8612081Z [1m[92m   Compiling[0m log v0.4.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.8951497Z [1m[92m   Compiling[0m indexmap v2.14.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:20.9989708Z [1m[92m   Compiling[0m itoa v1.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:21.1625050Z [1m[92m   Compiling[0m bitflags v2.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:21.4181862Z [1m[92m   Compiling[0m synstructure v0.13.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:21.7883834Z [1m[92m   Compiling[0m stable_deref_trait v1.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:21.8224880Z [1m[92m   Compiling[0m getrandom v0.3.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:21.9033888Z [1m[92m   Compiling[0m cpufeatures v0.2.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:21.9433869Z [1m[92m   Compiling[0m base64ct v1.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:22.1827085Z [1m[92m   Compiling[0m serde_core v1.0.228
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:22.3162608Z [1m[92m   Compiling[0m futures-sink v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:22.5330779Z [1m[92m   Compiling[0m pem-rfc7468 v0.7.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:22.5553744Z [1m[92m   Compiling[0m mio v1.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:22.7603797Z [1m[92m   Compiling[0m socket2 v0.6.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:22.9024399Z [1m[92m   Compiling[0m zeroize_derive v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:23.0073985Z [1m[92m   Compiling[0m zerocopy-derive v0.8.52
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:23.3344247Z [1m[92m   Compiling[0m zerofrom-derive v0.1.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:23.4067786Z [1m[92m   Compiling[0m zeroize v1.9.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:24.1333851Z [1m[92m   Compiling[0m crypto-common v0.1.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:24.2214181Z [1m[92m   Compiling[0m block-buffer v0.10.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:24.3114333Z [1m[92m   Compiling[0m digest v0.10.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:24.4403802Z [1m[92m   Compiling[0m zerofrom v0.1.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:24.5073845Z [1m[92m   Compiling[0m yoke-derive v0.8.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:24.5243818Z [1m[92m   Compiling[0m zerovec-derive v0.11.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:25.3363747Z [1m[92m   Compiling[0m tokio-macros v2.7.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:25.3845058Z [1m[92m   Compiling[0m yoke v0.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:25.4753780Z [1m[92m   Compiling[0m der v0.7.10
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:25.5553849Z [1m[92m   Compiling[0m zerovec v0.11.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:25.8394527Z [1m[92m   Compiling[0m tokio v1.52.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:26.1803912Z [1m[92m   Compiling[0m displaydoc v0.2.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:26.7293770Z [1m[92m   Compiling[0m slab v0.4.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:26.8753979Z [1m[92m   Compiling[0m spki v0.7.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.0623700Z [1m[92m   Compiling[0m futures-channel v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.2643649Z [1m[92m   Compiling[0m ahash v0.8.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.3754004Z [1m[92m   Compiling[0m base64 v0.22.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.4624427Z [1m[92m   Compiling[0m simd-adler32 v0.3.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.7004234Z [1m[92m   Compiling[0m rand_core v0.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.7424240Z [1m[92m   Compiling[0m getrandom v0.4.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.8074364Z [1m[92m   Compiling[0m serde v1.0.228
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.9233742Z [1m[92m   Compiling[0m pkcs8 v0.10.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:27.9897557Z [1m[92m   Compiling[0m futures-macro v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:28.5473880Z [1m[92m   Compiling[0m serde_derive v1.0.228
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:28.6013927Z [1m[92m   Compiling[0m futures-task v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:28.6603975Z [1m[92m   Compiling[0m futures-io v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:28.7804017Z [1m[92m   Compiling[0m futures-util v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:29.1039930Z [1m[92m   Compiling[0m tinystr v0.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:29.2634172Z [1m[92m   Compiling[0m hmac v0.12.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:29.3632563Z [1m[92m   Compiling[0m openssl-sys v0.9.117
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:29.7094357Z [1m[92m   Compiling[0m hybrid-array v0.4.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:30.2544190Z [1m[92m   Compiling[0m byteorder v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:30.4644007Z [1m[92m   Compiling[0m percent-encoding v2.3.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:30.6393908Z [1m[92m   Compiling[0m litemap v0.8.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:30.7935720Z [1m[92m   Compiling[0m cranelift-isle v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:30.9343863Z [1m[92m   Compiling[0m crc32fast v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:31.0803850Z [1m[92m   Compiling[0m crossbeam-utils v0.8.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:31.2233852Z [1m[92m   Compiling[0m writeable v0.6.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:31.3885188Z [1m[92m   Compiling[0m icu_locale_core v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:31.9603660Z [1m[92m   Compiling[0m hashbrown v0.14.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:32.0690822Z [1m[92m   Compiling[0m zerotrie v0.2.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:32.3840106Z [1m[92m   Compiling[0m potential_utf v0.1.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:32.4773767Z [1m[92m   Compiling[0m sha2 v0.10.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:32.6804413Z [1m[92m   Compiling[0m libz-sys v1.1.29
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:32.8724377Z [1m[92m   Compiling[0m thiserror v2.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.0653616Z [1m[92m   Compiling[0m utf8_iter v1.0.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.1643729Z [1m[92m   Compiling[0m cmov v0.5.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.3448675Z [1m[92m   Compiling[0m cranelift-codegen-shared v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.3924263Z [1m[92m   Compiling[0m adler2 v2.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.3965517Z [1m[92m   Compiling[0m icu_properties_data v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.4427095Z [1m[92m   Compiling[0m icu_normalizer_data v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.4706496Z [1m[92m   Compiling[0m miniz_oxide v0.8.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.4998746Z [1m[92m   Compiling[0m cranelift-codegen-meta v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.5554136Z [1m[92m   Compiling[0m ctutils v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:33.7904147Z [1m[92m   Compiling[0m icu_collections v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:34.3550388Z [1m[92m   Compiling[0m icu_provider v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:34.7834274Z [1m[92m   Compiling[0m tokio-util v0.7.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:35.1619562Z [1m[92m   Compiling[0m block-buffer v0.12.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:35.2844657Z [1m[92m   Compiling[0m crypto-common v0.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:35.6884160Z [1m[92m   Compiling[0m num-integer v0.1.46
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:35.8917915Z [1m[92m   Compiling[0m http v1.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.1104528Z [1m[92m   Compiling[0m cranelift-bitset v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.2596695Z [1m[92m   Compiling[0m const-oid v0.10.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.3593541Z [1m[92m   Compiling[0m cpufeatures v0.3.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.4054431Z [1m[92m   Compiling[0m target-lexicon v0.12.16
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.4234515Z [1m[92m   Compiling[0m bumpalo v3.20.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.4414275Z [1m[92m   Compiling[0m cranelift-codegen v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.6683766Z [1m[92m   Compiling[0m digest v0.11.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.7104262Z [1m[92m   Compiling[0m cranelift-entity v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.8583658Z [1m[92m   Compiling[0m signature v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.9374077Z [1m[92m   Compiling[0m inout v0.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:36.9534002Z [1m[92m   Compiling[0m thiserror-impl v2.0.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.0244133Z [1m[92m   Compiling[0m ff v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.0508218Z [1m[92m   Compiling[0m openssl v0.10.81
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.1443913Z [1m[92m   Compiling[0m arbitrary v1.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.1970466Z [1m[92m   Compiling[0m tinyvec_macros v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.2406037Z [1m[92m   Compiling[0m zlib-rs v0.6.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.3594561Z [1m[92m   Compiling[0m foreign-types-shared v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.4074248Z [1m[92m   Compiling[0m rustc-hash v2.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.4794230Z [1m[92m   Compiling[0m fnv v1.0.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.5334308Z [1m[92m   Compiling[0m zmij v1.0.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.6803753Z [1m[92m   Compiling[0m crossbeam-epoch v0.9.20
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.8043883Z [1m[92m   Compiling[0m base16ct v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:37.9253866Z [1m[92m   Compiling[0m slice-group-by v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.0434151Z [1m[92m   Compiling[0m cranelift-control v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.0993828Z [1m[92m   Compiling[0m sec1 v0.7.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.1883799Z [1m[92m   Compiling[0m regalloc2 v0.10.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.2713663Z [1m[92m   Compiling[0m foreign-types v0.3.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.3103829Z [1m[92m   Compiling[0m tinyvec v1.11.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.7403842Z [1m[92m   Compiling[0m group v0.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.8847486Z [1m[92m   Compiling[0m cipher v0.4.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:38.9107681Z [1m[92m   Compiling[0m cranelift-bforest v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:39.0894174Z [1m[92m   Compiling[0m icu_properties v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:39.1833491Z [1m[92m   Compiling[0m icu_normalizer v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:40.0014529Z [1m[92m   Compiling[0m http-body v1.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:40.3323874Z [1m[92m   Compiling[0m flate2 v1.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:40.4677976Z [1m[92m   Compiling[0m chacha20 v0.10.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:40.7822098Z [1m[92m   Compiling[0m hkdf v0.12.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:40.8674039Z [1m[92m   Compiling[0m crypto-bigint v0.5.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:41.1563915Z [1m[92m   Compiling[0m openssl-macros v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:41.2723929Z [1m[92m   Compiling[0m gimli v0.29.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:41.3264358Z [1m[92m   Compiling[0m tracing-core v0.1.36
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:41.9494448Z [1m[92m   Compiling[0m zstd-sys v2.0.16+zstd.1.5.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:42.2013826Z [1m[92m   Compiling[0m ident_case v1.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:42.2663977Z [1m[92m   Compiling[0m strsim v0.11.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:42.5044394Z [1m[92m   Compiling[0m serde_json v1.0.150
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:42.6043789Z [1m[92m   Compiling[0m winnow v1.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:43.0134232Z [1m[92m   Compiling[0m httparse v1.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:43.2113799Z [1m[92m   Compiling[0m semver v1.0.28
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:43.6688539Z [1m[92m   Compiling[0m proc-macro-utils v0.10.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:43.7603961Z [1m[92m   Compiling[0m toml_parser v1.1.2+spec-1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:44.1504291Z [1m[92m   Compiling[0m rustc_version v0.4.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:44.3774270Z [1m[92m   Compiling[0m darling_core v0.23.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:45.6413520Z [1m[92m   Compiling[0m elliptic-curve v0.13.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:46.0013858Z [1m[92m   Compiling[0m tracing v0.1.44
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:46.7234276Z [1m[92m   Compiling[0m rand v0.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:47.4424356Z [1m[92m   Compiling[0m idna_adapter v1.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:48.1974044Z [1m[92m   Compiling[0m unicode-normalization v0.1.25
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:49.2403949Z [1m[92m   Compiling[0m form_urlencoded v1.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:49.3843633Z [1m[92m   Compiling[0m ppv-lite86 v0.2.21
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:49.7203821Z [1m[92m   Compiling[0m rayon-core v1.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:49.8103656Z [1m[92m   Compiling[0m utf8parse v0.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:49.8673904Z [1m[92m   Compiling[0m unicode-properties v0.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:50.0363829Z [1m[92m   Compiling[0m toml_datetime v1.1.1+spec-1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:50.2053793Z [1m[92m   Compiling[0m parking_lot_core v0.9.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:50.3323948Z [1m[92m   Compiling[0m anyhow v1.0.103
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:50.4974262Z [1m[92m   Compiling[0m time-core v0.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:50.6884192Z [1m[92m   Compiling[0m unicode-bidi v0.3.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.0324429Z [1m[92m   Compiling[0m native-tls v0.2.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.1384260Z [1m[92m   Compiling[0m num-conv v0.2.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.2443795Z [1m[92m   Compiling[0m try-lock v0.2.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.2984013Z [1m[92m   Compiling[0m atomic-waker v1.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.3648277Z [1m[92m   Compiling[0m tower-service v0.3.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.4274226Z [1m[92m   Compiling[0m heck v0.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.5553169Z [1m[92m   Compiling[0m spin v0.9.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.5713892Z [1m[92m   Compiling[0m h2 v0.4.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.6324231Z [1m[92m   Compiling[0m lazy_static v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.6723781Z [1m[92m   Compiling[0m want v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:51.7724372Z [1m[92m   Compiling[0m time-macros v0.2.29
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:52.9264375Z [1m[92m   Compiling[0m stringprep v0.1.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:54.7163972Z [1m[92m   Compiling[0m toml_edit v0.25.12+spec-1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:55.7153998Z [1m[92m   Compiling[0m rand_chacha v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:56.2278216Z [1m[92m   Compiling[0m crossbeam-deque v0.8.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:56.8104282Z [1m[92m   Compiling[0m idna v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:58.0984307Z [1m[92m   Compiling[0m darling_macro v0.23.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:58.1113664Z [1m[92m   Compiling[0m curve25519-dalek v4.1.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:58.2944492Z [1m[92m   Compiling[0m manyhow-macros v0.11.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:58.5867842Z [1m[92m   Compiling[0m md-5 v0.11.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:58.6073887Z [1m[92m   Compiling[0m sha2 v0.11.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:58.7574251Z [1m[92m   Compiling[0m hmac v0.13.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:58.8723851Z [1m[92m   Compiling[0m num-bigint v0.4.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:02:59.9503775Z [1m[92m   Compiling[0m rfc6979 v0.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:00.0349027Z [1m[92m   Compiling[0m uuid v1.23.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:00.4124033Z [1m[92m   Compiling[0m aho-corasick v1.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:01.1883101Z [1m[92m   Compiling[0m iana-time-zone v0.1.65
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:01.4870857Z [1m[92m   Compiling[0m zstd-safe v7.2.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:01.5797357Z [1m[92m   Compiling[0m openssl-probe v0.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:01.7443731Z [1m[92m   Compiling[0m powerfmt v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:01.9084381Z [1m[92m   Compiling[0m cfg_aliases v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:01.9553855Z [1m[92m   Compiling[0m fallible-iterator v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:02.2799361Z [1m[92m   Compiling[0m rustix v1.1.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:02.4843726Z [1m[92m   Compiling[0m scopeguard v1.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:02.5434146Z [1m[92m   Compiling[0m siphasher v1.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:02.8531103Z [1m[92m   Compiling[0m regex-syntax v0.8.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:03.7003930Z [1m[92m   Compiling[0m deranged v0.5.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:05.3413996Z [1m[92m   Compiling[0m num-bigint-dig v0.8.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:05.4993962Z [1m[92m   Compiling[0m ryu v1.0.23
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:05.8493985Z [1m[92m   Compiling[0m time v0.3.49
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:07.4956797Z [1m[92m   Compiling[0m regex-automata v0.4.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:08.3883809Z [1m[92m   Compiling[0m phf_shared v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:08.6433840Z [1m[92m   Compiling[0m lock_api v0.4.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:08.9289521Z [1m[92m   Compiling[0m postgres-protocol v0.6.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:09.7994194Z [1m[92m   Compiling[0m nix v0.28.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:10.4193708Z [1m[92m   Compiling[0m chrono v0.4.45
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:13.0364535Z [1m[92m   Compiling[0m ecdsa v0.16.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:13.6433690Z [1m[92m   Compiling[0m manyhow v0.11.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:13.7633749Z [1m[92m   Compiling[0m hyper v1.10.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:13.8373181Z [1m[92m   Compiling[0m darling v0.23.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:13.9193779Z [1m[92m   Compiling[0m url v2.5.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:16.7323890Z [1m[92m   Compiling[0m rand v0.8.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:17.1483865Z [1m[92m   Compiling[0m proc-macro-crate v3.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:17.6653916Z [1m[92m   Compiling[0m anstyle-parse v1.0.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:17.8293806Z [1m[92m   Compiling[0m primeorder v0.13.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.0726837Z [1m[92m   Compiling[0m num-iter v0.1.45
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.0795131Z [1m[92m   Compiling[0m half v2.7.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.1602091Z [1m[92m   Compiling[0m sha1 v0.10.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.3973902Z [1m[92m   Compiling[0m universal-hash v0.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.4904011Z [1m[92m   Compiling[0m curve25519-dalek-derive v0.1.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.5230279Z [1m[92m   Compiling[0m sync_wrapper v1.0.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.5953715Z [1m[92m   Compiling[0m libsqlite3-sys v0.28.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.7994469Z [1m[92m   Compiling[0m linux-raw-sys v0.12.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.9223771Z [1m[92m   Compiling[0m colorchoice v1.0.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:18.9793641Z [1m[92m   Compiling[0m tower-layer v0.3.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.1392645Z [1m[92m   Compiling[0m ipnet v2.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.1540817Z [1m[92m   Compiling[0m zune-core v0.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.3753908Z [1m[92m   Compiling[0m anstyle v1.0.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.5543963Z [1m[92m   Compiling[0m termcolor v1.4.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.8103885Z [1m[92m   Compiling[0m unicase v2.9.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.9004251Z [1m[92m   Compiling[0m opaque-debug v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.9310577Z [1m[92m   Compiling[0m weezl v0.1.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.9424634Z [1m[92m   Compiling[0m is_terminal_polyfill v1.70.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:19.9944435Z [1m[92m   Compiling[0m mysql_common v0.37.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:20.0764119Z [1m[92m   Compiling[0m anstyle-query v1.1.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:20.1257876Z [1m[92m   Compiling[0m quick-error v2.0.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:20.1755769Z [1m[92m   Compiling[0m anstream v1.0.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:20.4909195Z [1m[92m   Compiling[0m polyval v0.6.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:20.4987689Z [1m[92m   Compiling[0m mime_guess v2.0.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:20.6131784Z [1m[92m   Compiling[0m mysql-common-derive v0.32.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:20.8394242Z [1m[92m   Compiling[0m hyper-util v0.1.20
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:21.3515217Z [1m[92m   Compiling[0m zune-jpeg v0.5.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:21.6402899Z [1m[92m   Compiling[0m tower v0.5.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:24.4119198Z [1m[92m   Compiling[0m parking_lot v0.12.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:24.9358510Z [1m[92m   Compiling[0m postgres-types v0.2.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:25.5394556Z [1m[92m   Compiling[0m tokio-native-tls v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:25.6616237Z [1m[92m   Compiling[0m regex v1.12.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:26.3203836Z [1m[92m   Compiling[0m phf v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:26.3924685Z [1m[92m   Compiling[0m http-body-util v0.1.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:26.4473808Z [1m[92m   Compiling[0m aes v0.8.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:26.4693836Z [1m[92m   Compiling[0m ed25519 v2.2.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:26.6238837Z [1m[92m   Compiling[0m serde_spanned v0.6.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:26.7143823Z [1m[92m   Compiling[0m toml_datetime v0.6.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:26.9763906Z [1m[92m   Compiling[0m pkcs1 v0.7.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:27.1033860Z [1m[92m   Compiling[0m fdeflate v0.3.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:27.1104150Z [1m[92m   Compiling[0m zune-inflate v0.2.54
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:27.4493836Z [1m[92m   Compiling[0m async-trait v0.1.89
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:27.7044189Z [1m[92m   Compiling[0m btoi v0.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:27.7953803Z [1m[92m   Compiling[0m whoami v2.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.1303762Z [1m[92m   Compiling[0m nibble_vec v0.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.2224182Z [1m[92m   Compiling[0m endian-type v0.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.2814029Z [1m[92m   Compiling[0m color_quant v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.3174085Z [1m[92m   Compiling[0m bit_field v0.10.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.4024480Z [1m[92m   Compiling[0m byteorder-lite v0.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.4184239Z [1m[92m   Compiling[0m bytemuck v1.25.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.4693730Z [1m[92m   Compiling[0m clap_lex v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.6442960Z [1m[92m   Compiling[0m libbz2-rs-sys v0.2.5
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.6615212Z [1m[92m   Compiling[0m lebe v0.5.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.6904325Z [1m[92m   Compiling[0m toml_write v0.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.8213860Z [1m[92m   Compiling[0m winnow v0.7.15
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:28.8523730Z [1m[92m   Compiling[0m fax v0.2.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:29.1093765Z [1m[92m   Compiling[0m either v1.16.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:29.7920179Z [1m[92m   Compiling[0m mime v0.3.17
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:30.0963821Z [1m[92m   Compiling[0m bitflags v1.3.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:30.1463775Z [1m[92m   Compiling[0m saturating v0.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:30.2293837Z [1m[92m   Compiling[0m pxfm v0.1.29
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:30.9198566Z [1m[92m   Compiling[0m toml_edit v0.22.27
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:35.4643427Z [1m[92m   Compiling[0m moxcms v0.8.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:36.8213791Z [1m[92m   Compiling[0m region v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:37.1623685Z [1m[92m   Compiling[0m clap_builder v4.6.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:38.8964340Z [1m[92m   Compiling[0m rayon v1.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:41.4808811Z [1m[92m   Compiling[0m bzip2 v0.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:41.6353965Z [1m[92m   Compiling[0m tiff v0.11.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:44.2250171Z [1m[92m   Compiling[0m exr v1.74.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:44.2633895Z [1m[92m   Compiling[0m image-webp v0.2.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:46.4724029Z [1m[92m   Compiling[0m qoi v0.4.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:46.6855339Z [1m[92m   Compiling[0m gif v0.14.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:47.8653086Z [1m[92m   Compiling[0m radix_trie v0.2.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:48.1693919Z [1m[92m   Compiling[0m tokio-postgres v0.7.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:49.6324263Z [1m[92m   Compiling[0m png v0.18.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:49.7560124Z [1m[92m   Compiling[0m rsa v0.9.10
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:51.2153849Z [1m[92m   Compiling[0m hyper-tls v0.6.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:51.4234510Z [1m[92m   Compiling[0m ed25519-dalek v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:51.5133856Z [1m[92m   Compiling[0m zstd v0.13.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:51.7814289Z [1m[92m   Compiling[0m fd-lock v4.0.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:51.8614046Z [1m[92m   Compiling[0m tower-http v0.6.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:52.3907094Z [1m[92m   Compiling[0m ghash v0.5.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:52.4583609Z [1m[92m   Compiling[0m p384 v0.13.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:52.7803822Z [1m[92m   Compiling[0m p256 v0.13.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:53.3448019Z [1m[92m   Compiling[0m cranelift-module v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:53.7767831Z [1m[92m   Compiling[0m wasmtime-jit-icache-coherence v25.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:53.7940589Z [1m[92m   Compiling[0m simple_asn1 v0.6.4
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:53.8273769Z [1m[92m   Compiling[0m serde_urlencoded v0.7.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:54.0381434Z [1m[92m   Compiling[0m cfb v0.7.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:54.1873986Z [1m[92m   Compiling[0m cranelift-native v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:54.2784652Z [1m[92m   Compiling[0m cranelift-frontend v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:55.2439274Z [1m[92m   Compiling[0m clap_derive v4.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:55.7938913Z [1m[92m   Compiling[0m ctr v0.9.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:55.9384276Z [1m[92m   Compiling[0m blowfish v0.9.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:56.0604289Z [1m[92m   Compiling[0m zopfli v0.8.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:56.2864427Z [1m[92m   Compiling[0m crossbeam-queue v0.3.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:56.4163848Z [1m[92m   Compiling[0m lzma-rust2 v0.15.8
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:56.9494002Z [1m[92m   Compiling[0m hashlink v0.9.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:57.1763779Z [1m[92m   Compiling[0m futures-executor v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:57.3083948Z [1m[92m   Compiling[0m pbkdf2 v0.12.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:57.3925674Z [1m[92m   Compiling[0m pem v3.0.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:57.4474424Z [1m[92m   Compiling[0m aead v0.5.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:57.5601127Z [1m[92m   Compiling[0m rustls-pki-types v1.14.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:57.8053933Z [1m[92m   Compiling[0m keyed_priority_queue v0.4.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:57.9948639Z [1m[92m   Compiling[0m lru v0.18.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:58.1524297Z [1m[92m   Compiling[0m csv-core v0.1.13
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:58.2044093Z [1m[92m   Compiling[0m encoding_rs v0.8.35
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:58.3993454Z [1m[92m   Compiling[0m constant_time_eq v0.3.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:58.4533861Z [1m[92m   Compiling[0m twox-hash v2.1.2
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:58.5401344Z [1m[92m   Compiling[0m home v0.5.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:58.6213759Z [1m[92m   Compiling[0m deflate64 v0.1.12
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:58.9994094Z [1m[92m   Compiling[0m ascii v1.1.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:59.2933935Z [1m[92m   Compiling[0m httpdate v1.0.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:59.4014012Z [1m[92m   Compiling[0m fallible-iterator v0.3.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:59.5281997Z [1m[92m   Compiling[0m unicode-segmentation v1.13.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:59.9173756Z [1m[92m   Compiling[0m unsafe-libyaml v0.2.11
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:03:59.9933849Z [1m[92m   Compiling[0m unicode-width v0.1.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:00.1793828Z [1m[92m   Compiling[0m ppmd-rust v1.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:00.5704267Z [1m[92m   Compiling[0m fallible-streaming-iterator v0.1.9
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:00.6794363Z [1m[92m   Compiling[0m chunked_transfer v1.5.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:00.7773814Z [1m[92m   Compiling[0m typed-path v0.12.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:01.3874359Z [1m[92m   Compiling[0m tiny_http v0.12.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:01.5144029Z [1m[92m   Compiling[0m serde_yaml v0.9.34+deprecated
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:02.9173668Z [1m[92m   Compiling[0m zip v7.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:04.0324086Z [1m[92m   Compiling[0m rustyline v14.0.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:05.1184324Z [1m[92m   Compiling[0m reqwest v0.12.28
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:05.2603879Z [1m[92m   Compiling[0m mysql_async v0.37.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:07.3603640Z [1m[92m   Compiling[0m csv v1.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:08.1423777Z [1m[92m   Compiling[0m jsonwebtoken v10.4.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:13.7843822Z [1m[92m   Compiling[0m aes-gcm v0.10.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:13.9213679Z [1m[92m   Compiling[0m futures v0.3.32
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:13.9744256Z [1m[92m   Compiling[0m clap v4.6.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:14.0193836Z [1m[92m   Compiling[0m bcrypt v0.15.1
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:14.2796498Z [1m[92m   Compiling[0m cranelift v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:14.3304346Z [1m[92m   Compiling[0m infer v0.16.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:15.1154405Z [1m[92m   Compiling[0m cranelift-jit v0.112.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:15.9874518Z [1m[92m   Compiling[0m image v0.25.10
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:16.4034292Z [1m[92m   Compiling[0m postgres v0.19.14
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:16.7254257Z [1m[92m   Compiling[0m toml v0.8.23
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:18.5060583Z [1m[92m   Compiling[0m colored v2.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:18.9674335Z [1m[92m   Compiling[0m tokio-stream v0.1.18
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:19.4054297Z [1m[92m   Compiling[0m md-5 v0.10.6
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:19.5113652Z [1m[92m   Compiling[0m base64 v0.21.7
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:19.8783779Z [1m[92m   Compiling[0m urlencoding v2.1.3
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:20.0273897Z [1m[92m   Compiling[0m nohash-hasher v0.2.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:25.8033183Z [1m[92m   Compiling[0m rusqlite v0.31.0
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:04:26.7016153Z [1m[92m   Compiling[0m kujo v1.0.2 (/home/runner/work/dossier/dossier/.runtime/kujo)
+kujo-native	Build pinned Kujo runtime	2026-09-22T17:08:25.8531126Z [1m[92m    Finished[0m `release` profile [optimized] target(s) in 6m 18s
+kujo-native	Validate	﻿2026-09-22T17:08:25.9818915Z ##[group]Run bash scripts/validate.sh
+kujo-native	Validate	2026-09-22T17:08:25.9819435Z [36;1mbash scripts/validate.sh[0m
+kujo-native	Validate	2026-09-22T17:08:25.9860669Z shell: /usr/bin/bash -e {0}
+kujo-native	Validate	2026-09-22T17:08:25.9860933Z env:
+kujo-native	Validate	2026-09-22T17:08:25.9861183Z   KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+kujo-native	Validate	2026-09-22T17:08:25.9861505Z   CARGO_HOME: /home/runner/.cargo
+kujo-native	Validate	2026-09-22T17:08:25.9861757Z   CARGO_INCREMENTAL: 0
+kujo-native	Validate	2026-09-22T17:08:25.9861978Z   CARGO_TERM_COLOR: always
+kujo-native	Validate	2026-09-22T17:08:25.9862573Z   KUJO_BIN: /home/runner/work/dossier/dossier/.runtime/kujo/target/release/kujo
+kujo-native	Validate	2026-09-22T17:08:25.9862965Z ##[endgroup]
+kujo-native	Validate	2026-09-22T17:08:25.9987432Z check passed: dossier.kujo
+kujo-native	Validate	2026-09-22T17:08:26.0809007Z 13 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:26.1958380Z 13 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:26.2160085Z 9 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:26.2989666Z 6 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:26.4015649Z 16 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:26.4785708Z 90 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:30.9133912Z 20 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:31.1625174Z 26 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:31.2636360Z 9 passed; 0 failed
+kujo-native	Validate	2026-09-22T17:08:32.0626291Z Dossier contention checks passed: distinct=32/32 same-id=1/32; record/history checksums agree.
+kujo-native	Validate	2026-09-22T17:08:32.1907406Z Dossier validation passed.
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	﻿2026-09-22T17:08:32.2033984Z Post job cleanup.
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.2957574Z [command]/usr/bin/git version
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3002952Z git version 2.55.0
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3045608Z Temporarily overriding HOME='/home/runner/work/_temp/5d21ecab-6926-4b7a-b0a0-350c1f004127' before making global git config changes
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3046906Z Adding repository directory to the temporary git global config as a safe directory
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3052440Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dossier/dossier/.runtime/kujo
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3096723Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3136563Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3401888Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3433604Z http.https://github.com/.extraheader
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3445981Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3483949Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3767392Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.3847748Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	﻿2026-09-22T17:08:32.4350911Z Post job cleanup.
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5271821Z [command]/usr/bin/git version
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5316522Z git version 2.55.0
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5354704Z Temporarily overriding HOME='/home/runner/work/_temp/0f803d3f-0ced-44f8-a4aa-22a3ee11532e' before making global git config changes
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5356195Z Adding repository directory to the temporary git global config as a safe directory
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5360180Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dossier/dossier
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5406272Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5445585Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5723461Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5751378Z http.https://github.com/.extraheader
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5763960Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.5801337Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.6080846Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+kujo-native	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-09-22T17:08:32.6124567Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+kujo-native	Complete job	﻿2026-09-22T17:08:32.6541462Z Cleaning up orphan processes
