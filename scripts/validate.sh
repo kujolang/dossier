@@ -11,6 +11,7 @@ cd "$ROOT"
 "$KUJO_RUNTIME" run tests/storage_test.kujo
 "$KUJO_RUNTIME" run tests/domain_test.kujo
 "$KUJO_RUNTIME" run tests/hardening_test.kujo
+"$KUJO_RUNTIME" run tests/helper_boundary_test.kujo
 "$KUJO_RUNTIME" run tests/audit_test.kujo
 "$KUJO_RUNTIME" run tests/audit_contract_test.kujo -- "$KUJO_RUNTIME"
 "$KUJO_RUNTIME" run tests/legacy_test.kujo

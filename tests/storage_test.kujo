@@ -9,6 +9,13 @@ root := "/tmp/storage-transaction-" + uuid_v4()
 metadata := {"schema_version":"1.0.0","tool":"storage-test","tool_version":"0.2.0","contract_version":"1.0.0","created_at":"2026-08-14T00:00:00Z"}
 check(initialize(root, metadata)["ok"], "storage initialized")
 record := {"schema_version":"1.0.0","tool_version":"0.2.0","contract_version":"1.0.0","id":"record-transaction","record_type":"test","command":"test","actor":"test-actor","created_at":"2026-08-14T00:00:01Z","provenance":[],"payload":{}}
+for field in ["actor", "created_at"] {
+    malformed := record; malformed[field] = null
+    rejected := save_new(root, malformed)
+    check(!rejected["ok"] && rejected["code"] == "invalid_record", "malformed storage metadata rejected")
+    check(len(list_dir(root + "/locks")) == 0 && len(list_dir(root + "/records")) == 0, "invalid storage input leaves no lock or record")
+}
+check(!save_new(root, null)["ok"], "non-object storage input rejected")
 event_path := root + "/history/" + substring(sha256(record["created_at"] + "\n" + record["id"]), 0, 32) + ".json"
 write_file(event_path, "{}", true)
 conflict := save_new(root, record)

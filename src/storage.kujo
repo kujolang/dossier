@@ -70,7 +70,11 @@ func acquire_lock(state, id) {
 func release_lock(path) { if path_is_file(path) { try { delete_file(path) } except error {} } }
 
 export func save_new(state, record) {
-    id := record["id"]
+    if type(record) != "dict" { return {"ok": false, "code": "invalid_record", "error": "record must be an object"} }
+    for field in ["actor", "created_at"] {
+        if type(get(record, field, null)) != "string" { return {"ok": false, "code": "invalid_record", "error": "record " + field + " must be a string"} }
+    }
+    id := get(record, "id", null)
     if !safe_id(id) { return {"ok": false, "code": "unsafe_id", "error": "unsafe record id"} }
     state_error := validate_state_path(state)
     if state_error != "" { return {"ok": false, "code": "unsafe_state", "error": state_error} }

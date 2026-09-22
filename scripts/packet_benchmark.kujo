@@ -1,0 +1,9 @@
+// Deterministic in-memory signing workload; timing is collected by the caller.
+from src.hardening import sign_packet
+from src.common import canonical_json, utf8_size
+mut claims := []
+for i in range(1000) { claims = push(claims, {"id": "claim-" + to_string(i), "support": repeat("x", 1000)}) }
+packet := {"claims": claims}
+mut receipt := {}
+for i in range(5) { receipt = sign_packet(packet, "benchmark-fixture-key") }
+print(to_json({"iterations": 5, "claims": len(claims), "canonical_bytes": utf8_size(canonical_json(packet)), "manifest": receipt}))

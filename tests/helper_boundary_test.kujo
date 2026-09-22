@@ -1,0 +1,43 @@
+from src.hardening import freshness_status, citation, streaming_packet_report, benchmark_packet_stream, retention_receipt, encrypt_packet, decrypt_packet
+mut passed := 0; mut failed := 0
+func check(ok, label) { if ok { passed = passed + 1 } else { failed = failed + 1; eprint("FAIL: " + label) } }
+for bad in [null, true, 1, [], {}] {
+    check(!encrypt_packet(bad, "unused", "fixture")["ok"], "invalid encryption input path type")
+    check(!decrypt_packet(bad, "unused", "fixture")["ok"], "invalid decryption input path type")
+    check(!encrypt_packet("fixtures/core.json", bad, "fixture")["ok"], "invalid encryption output path type")
+    check(!decrypt_packet("fixtures/core.json", bad, "fixture")["ok"], "invalid decryption output path type")
+}
+claims := [{"classification": "verified"}, {"classification": "observed"}, {"classification": "verified"}]
+check(!streaming_packet_report(claims, 1.5)["ok"], "fractional batch size rejected")
+check(!benchmark_packet_stream(10000.5, 500)["ok"], "fractional claim count rejected")
+check(!benchmark_packet_stream(10000, 1.5)["ok"], "fractional synthetic batch rejected")
+policy := {"source_classes": {"primary": 30}, "claim_classes": {"fact": 7}}
+check(freshness_status(policy, "primary", "fact", 7)["status"] == "fresh", "freshness ceiling inclusive")
+check(freshness_status(policy, "primary", "fact", 7.5)["status"] == "expired", "fractional day compatibility")
+for bad in [null, true, "1", [], {}] {
+    check(!streaming_packet_report(claims, bad)["ok"], "invalid batch type")
+    check(!benchmark_packet_stream(bad, 500)["ok"], "invalid count type")
+    check(!freshness_status(policy, "primary", "fact", bad)["ok"], "invalid age type")
+    check(!retention_receipt({"created_day": 1}, {"default": 30}, bad)["ok"], "invalid clock type")
+}
+for bad in [null, true, "7", [], {}] {
+    check(!freshness_status({"source_classes": {"primary": bad}, "claim_classes": {"fact": 7}}, "primary", "fact", 1)["ok"], "invalid configured ceiling")
+    check(!retention_receipt({"created_day": bad}, {"default": 30}, 40)["ok"], "invalid created day")
+    check(!retention_receipt({"created_day": 1}, {"default": bad}, 40)["ok"], "invalid retention duration")
+}
+for field in ["author", "title", "year", "locator"] {
+    source := {"author": "Author", "title": "Title", "year": "2026", "locator": "fixture:one"}
+    for bad in [null, 2026, true, [], {}] {
+        source[field] = bad
+        check(!citation("apa", source)["ok"], "citation rejects non-string " + field)
+    }
+}
+for fields in [null, "subject", {}, [1], [null], [true]] {
+    check(!retention_receipt({"created_day": 1, "subject": "private"}, {"default": 30, "redact_fields": fields}, 40)["ok"], "invalid redaction field list")
+}
+check(streaming_packet_report(claims, 2)["batches"] == 2, "partial final batch counted")
+check(streaming_packet_report([], 1)["batches"] == 0, "empty stream is valid")
+check(retention_receipt({"created_day": 1}, {"default": 30}, 31)["action"] == "retain", "retention ceiling inclusive")
+check(retention_receipt({"created_day": 1}, {"default": 30}, 31.5)["action"] == "redact", "fractional retention clock compatibility")
+print(to_string(passed) + " passed; " + to_string(failed) + " failed")
+if failed > 0 { exit(1) }
