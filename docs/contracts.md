@@ -12,8 +12,12 @@ filtered page. A page examines at most 1,000 JSON record candidates and 4 MiB
 of accepted-size record files, and retains at most the requested 1..1000
 records. Corruption warnings count toward the scan budget. A record is still
 limited to 1 MiB; exports written to a file remain limited to 8 MiB.
-Directory name enumeration and sorting still use memory proportional to the
-directory size. Invalid filenames may require operator repair before a cursor
+Directory enumeration uses `list_dir_page` and retains at most 1,001 filenames
+per call. Every page still scans all directory entries (O(N) time); there is no
+cross-call snapshot or cache. UTF-8/entry errors fail explicitly rather than
+silently skipping names. Files are ordered by their complete `.json` filenames;
+record cursors remain suffix-free IDs and are translated consistently, including
+prefix-related IDs. Invalid filenames may require operator repair before a cursor
 can be used; cursors retain the safe-record-ID contract.
 
 Byte limits and export `bytes` receipts count UTF-8 bytes, including non-ASCII
@@ -29,8 +33,22 @@ A truncated whole-state check returns `ok: false`, `validation_incomplete`,
 and exit 1. `doctor` checks bounded readability, not full domain integrity, and
 also refuses to certify a truncated scan.
 
-`history` currently retains its existing record-list view. Raw creation events
-are in `STATE/history/`; a dedicated event-view contract remains open.
+`history` retains its record-list view. The additive `history events` command
+reads `STATE/history/` and returns `events`, `warnings`, `truncated`, `next_after`.
+Each entry contains `event_id` (the filename stem) and `event` (the original
+creation-event object). `--id` filters by record ID, `--limit` is 1..1000, and
+`--after` accepts an exclusive 24- or 32-character hex event ID. Events are
+ordered by filename, not chronology. Original 0.1.0 events remain readable.
+Pages process at most 1,000 files and 4 MiB; each event is at most 64 KiB.
+Warnings and filtered-out events count toward the scan budget. Continue empty
+filtered pages using `next_after` while `truncated` is true. Invalid filenames
+may require operator repair, as with record cursors. The published page schema
+is `schemas/history-events.schema.json`.
+
+Event views validate fields and filename identity, but do not assert that the
+referenced record exists or authenticate its checksum: orphan events remain
+inspectable for recovery. Use `verify --id` for record/event integrity. Neither
+view repairs, rewrites or removes history. Existing CLI output remains unchanged.
 
 ## Writes and failure semantics
 
@@ -77,7 +95,24 @@ strings. Invalid helper arguments return `ok: false`, rather than relying on
 native coercions or arithmetic errors. Packet manifests and HMAC bytes remain
 unchanged; signing reuses a single canonical representation.
 
-The native AES file helpers currently check output existence before a replacing
-rename. Use a distinct output path for each encryption/decryption operation;
-concurrent calls must not share a destination. Dossier's record locks do not
-protect these optional library operations. See the 2026-09-22 audit follow-up.
+The pinned runtime publishes native AES file outputs with atomic no-replace
+semantics. Competing calls to one destination have exactly one successful
+publisher; the loser returns a structured error and does not overwrite it.
+Existing crypto receipt fields remain; `published` and `temporary_removed` are
+additive. If temporary cleanup fails after successful publication, the receipt
+includes `temporary_path` for operator cleanup instead of falsely reporting that
+the committed output failed. This is exclusive publication, not a power-loss
+or hostile-ancestor sandbox guarantee. Older runtimes retain the race described
+in the historical audit; upgrade to the exact runtime revision pinned in CI.
+
+
+## Runtime build contract
+
+`version` and `doctor` report both `minimum_kujo` and
+`minimum_kujo_revision`. CI pins the source revision and Rust 1.96.0, uses the
+committed Cargo lock with `--locked`, and builds `--no-default-features`:
+Dossier does not require Kujo's optional database, image, PDF, archive or JIT
+APIs. The full default-feature runtime is also supported. Runner system packages
+are not bit-for-bit pinned; this is a bounded build-input improvement, not a
+claim of reproducible binaries. Atomic no-replace publication requires a
+filesystem supporting hard links (as existing Dossier record writes already do).

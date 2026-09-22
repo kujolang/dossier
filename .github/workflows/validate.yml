@@ -5,10 +5,10 @@ on:
 permissions:
   contents: read
 env:
-  KUJO_COMMIT: 5059695d14d6726bc17fef55e0b95511624967cf
+  KUJO_COMMIT: 5b057c62ec276c7761a5ae0534e30d86dc5e30bb
 jobs:
   kujo-native:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -18,10 +18,15 @@ jobs:
           path: .runtime/kujo
       - uses: dtolnay/rust-toolchain@6d653acede28d24f02e3cd41383119e8b1b35921
         with:
-          toolchain: stable
+          toolchain: 1.96.0
+      # Dossier needs core filesystem, JSON, process and crypto APIs.
       - name: Build pinned Kujo runtime
-        run: cargo build --release --manifest-path .runtime/kujo/Cargo.toml
+        run: cargo build --release --locked --no-default-features --manifest-path .runtime/kujo/Cargo.toml
       - name: Validate
         env:
           KUJO_BIN: ${{ github.workspace }}/.runtime/kujo/target/release/kujo
         run: bash scripts/validate.sh
+      - name: Directory memory evidence
+        env:
+          KUJO_BIN: ${{ github.workspace }}/.runtime/kujo/target/release/kujo
+        run: bash scripts/directory_benchmark.sh

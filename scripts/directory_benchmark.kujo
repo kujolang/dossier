@@ -1,0 +1,13 @@
+// Manual allocation/RSS workload: same directory, same selected names.
+mode := args()[0]; root := args()[1]
+if mode == "prepare" {
+    create_dir(root)
+    for i in range(20000) { write_file(root + "/claim-" + to_string(100000 + i) + ".json", "{}", false) }
+    print("prepared_entries=20000")
+} else if mode == "full" {
+    names := sort(list_dir(root))
+    print(to_json({"selected_sha256": sha256(to_json(slice(names, 0, 1000))), "buffered_entries": len(names)}))
+} else if mode == "page" {
+    page := list_dir_page(root, "", 1000, ".json")
+    print(to_json({"selected_sha256": sha256(to_json(page["entries"])), "buffered_entries": page["buffered_entries"], "examined_entries": page["examined_entries"], "truncated": page["truncated"]}))
+} else { exit(2) }

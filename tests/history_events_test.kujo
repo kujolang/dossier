@@ -1,0 +1,91 @@
+from src.storage import list_events
+from src.core import dispatch
+from src.args import parse_args
+from src.common import get
+from tests.support import cleanup
+mut passed := 0; mut failed := 0
+func check(ok, label) { if ok { passed = passed + 1 } else { failed = failed + 1; eprint("FAIL: " + label) } }
+func opts(values) { return parse_args(values, ["json", "dry-run", "force"]) }
+root := "/tmp/dossier-events-" + uuid_v4()
+check(dispatch("history events", opts(["--state", root]))["value"]["events"] == [] && !file_exists(root), "missing event view is empty and read-only")
+for bad in [null, 0, -1, 1001, 1.5, "1", true] {
+    check(list_events(root, "", bad, "")["code"] == "invalid_query", "direct event API requires bounded integer limit")
+}
+check(list_events(root, null, 1, "")["code"] == "invalid_query", "direct event API rejects non-string cursor")
+for id in ["claim-prefix", "claim-prefix-child", "claim-third"] {
+    check(dispatch("claim add", opts(["--state", root, "--input", "fixtures/core.json", "--actor", "editor", "--timestamp", "2026-09-22T00:00:00Z", "--id", id]))["ok"], "create event fixture")
+}
+// Record cursors must follow filename order, including prefix-related IDs.
+all_ids := []; cursor := ""
+for i in range(4) {
+    page := dispatch("report", opts(["--state", root, "--limit", "1", "--after", cursor]))["value"]
+    for record in page["records"] { all_ids = push(all_ids, record["id"]) }
+    cursor = page["next_after"]
+    if !page["truncated"] { break }
+}
+check(all_ids == ["claim-prefix-child", "claim-prefix", "claim-third"], "record pagination neither duplicates nor loses prefix ids")
+legacy := dispatch("history", opts(["--state", root]))
+check(len(legacy["value"]["records"]) == 3 && has_key(legacy["value"], "events") == 0, "legacy history remains a record view")
+all_events := []; cursor = ""
+for i in range(4) {
+    page := dispatch("history events", opts(["--state", root, "--limit", "1", "--after", cursor]))["value"]
+    for entry in page["events"] { all_events = push(all_events, entry) }
+    cursor = page["next_after"]
+    if !page["truncated"] { break }
+}
+check(len(all_events) == 3, "event pagination yields every event once")
+ids := []; for entry in all_events { ids = push(ids, entry["event_id"]) }
+check(ids == sort(ids) && ids[0] != ids[1] && ids[1] != ids[2], "event ids are sorted and distinct")
+filtered := dispatch("history events", opts(["--state", root, "--id", "claim-prefix"]))["value"]
+check(len(filtered["events"]) == 1 && filtered["events"][0]["event"]["record_id"] == "claim-prefix", "event record filter")
+for cursor in ["../escape", "claim-prefix", repeat("a", 33)] {
+    check(dispatch("history events", opts(["--state", root, "--after", cursor]))["code"] == "unsafe_cursor", "invalid event cursor rejected")
+}
+runtime := args()[0]
+cli := spawn_process([runtime, "run", "dossier.kujo", "--", "history", "events", "--state", root, "--limit", "1", "--json"], {"timeout_ms": 5000, "max_output_bytes": 8192})
+check(cli.exitcode == 0 && len(parse_json(cli.stdout)["data"]["events"]) == 1, "actual event CLI and envelope")
+check(json_schema_validate(parse_json(cli.stdout)["data"], parse_json(read_file("schemas/history-events.schema.json")))["valid"], "event view matches published schema")
+bad_cli := spawn_process([runtime, "run", "dossier.kujo", "--", "history", "events", "--state", root, "--after", "../bad", "--json"], {"timeout_ms": 5000, "max_output_bytes": 8192})
+check(bad_cli.exitcode == 1 && parse_json(bad_cli.stdout)["error_code"] == "unsafe_cursor", "event CLI invalid cursor exits 1")
+// View includes valid orphan events for recovery; it is not an integrity verdict.
+delete_file(root + "/records/claim-prefix.json")
+check(len(dispatch("history events", opts(["--state", root, "--id", "claim-prefix"]))["value"]["events"]) == 1, "orphan event remains inspectable")
+corrupt := root + "/history/" + ids[0] + ".json"; original := read_file(corrupt)
+write_file(corrupt, "{", true)
+page := dispatch("history events", opts(["--state", root]))["value"]
+check(len(page["warnings"]) == 1 && len(page["events"]) == 2, "corrupt event warned without hiding valid events")
+write_file(corrupt, repeat("x", 65537), true)
+check(dispatch("history events", opts(["--state", root]))["value"]["warnings"][0]["code"] == "history_too_large", "oversized event bounded")
+write_file(corrupt, original, true)
+legacy_id := "fd3d5d3fa81e944a51d7cd5d"
+write_file(root + "/history/" + legacy_id + ".json", read_file("fixtures/legacy-0.1.0/history/" + legacy_id + ".json"), false)
+check(len(dispatch("history events", opts(["--state", root]))["value"]["events"]) == 4, "original 24-character legacy event visible")
+// 1001 filtered-out events still require a continuation cursor.
+for name in list_dir(root + "/history") { delete_file(root + "/history/" + name) }
+for i in range(1001) {
+    id := substring(sha256(to_string(i)), 0, 32)
+    write_file(root + "/history/" + id + ".json", "{", false)
+}
+page := dispatch("history events", opts(["--state", root, "--id", "claim-missing"]))["value"]
+check(page["truncated"] && len(page["warnings"]) == 1000 && len(page["events"]) == 0, "corruption/filter processing bounded")
+next := dispatch("history events", opts(["--state", root, "--after", page["next_after"]]))["value"]
+check(!next["truncated"] && len(next["warnings"]) == 1, "empty event page continuation loses no diagnostics")
+for name in list_dir(root + "/history") { delete_file(root + "/history/" + name) }
+for i in range(70) {
+    record_id := "claim-large-" + to_string(i); at := "2026-09-22T00:00:00Z"
+    id := substring(sha256(at + "\n" + record_id), 0, 32)
+    event := {"schema_version": "1.0.0", "event": "record.created", "record_id": record_id, "actor": "editor", "at": at, "record_sha256": repeat("a", 64), "padding": repeat("x", 64000)}
+    write_file(root + "/history/" + id + ".json", to_json(event), false)
+}
+page := dispatch("history events", opts(["--state", root, "--limit", "1000"]))["value"]
+check(page["truncated"] && len(page["events"]) > 0 && len(page["events"]) < 70, "event byte budget truncates below candidate limit")
+next := dispatch("history events", opts(["--state", root, "--limit", "1000", "--after", page["next_after"]]))["value"]
+check(!next["truncated"] && len(page["events"]) + len(next["events"]) == 70, "event byte continuation loses no entries")
+cleanup(root)
+create_dir(root); create_dir(root + "-outside")
+linked := spawn_process(["ln", "-s", root + "-outside", root + "/history"], {"timeout_ms": 5000, "max_output_bytes": 4096})
+check(linked.exitcode == 0 && dispatch("history events", opts(["--state", root]))["code"] == "unsafe_state", "event directory symlinks rejected")
+cleanup(root + "-outside")
+cleanup(root)
+print(to_string(passed) + " passed; " + to_string(failed) + " failed")
+if failed > 0 { exit(1) }

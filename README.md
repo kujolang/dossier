@@ -34,8 +34,11 @@ dossier --version --json
 dossier doctor --json
 ```
 
-Dossier requires Kujo 1.0.1 or newer and has no required database, provider,
-model, or network dependency.
+Dossier requires the Kujo 1.4.0 runtime revision pinned in
+[CI](.github/workflows/validate.yml), including `list_dir_page` and exclusive
+streaming-crypto publication. Earlier 1.4.0 builds may lack these fixes; a version
+string alone is insufficient. There is no database, provider, model, or runtime
+network dependency.
 
 ## Quick start
 
@@ -59,7 +62,7 @@ dossier validate --json
 | `consent record`, `rights record` | Preserve scoped assertions without granting authority. |
 | `freshness check`, `verify`, `validate` | Validate stored record and contract integrity. |
 | `packet`, `report`, `export` | Create and emit bounded portable evidence collections. |
-| `history`, `doctor`, `version` | Inspect operation, health, and compatibility. |
+| `history`, `history events`, `doctor`, `version` | Inspect operation, health, and compatibility. |
 
 Common flags include `--state`, `--config`, `--input`, `--actor`, `--timestamp`,
 `--id`, `--path`, `--type`, `--after`, `--limit`, `--output`, `--force`,
@@ -77,7 +80,7 @@ retrieval time, and reviewer identity.
 
 State defaults to `.dossier/`. JSON records are immutable, history is
 append-only, exports are atomic, and record inputs and page processing are bounded.
-Directory enumeration still scales with the total number of files.
+Each page still scans the directory, but retains at most 1,001 filenames.
 Traversal, symlinks, malformed JSON, incompatible schema majors, duplicate IDs,
 secret-shaped fields, and unsafe overwrites fail closed. See
 [contracts](docs/contracts.md) and [security](docs/security.md).
@@ -100,3 +103,9 @@ limits and remaining work. When `truncated` is true, pass `next_after` as
 `--after` to continue, including on an empty filtered page. Whole-state
 validation fails with `validation_incomplete` when a page cannot cover the
 state; use paginated reports and `verify --id` for larger ledgers.
+
+
+`history` preserves its record-list view. Use `dossier history events --json`
+for raw creation events, with `--id RECORD_ID`, `--limit`, and event `--after`
+cursors. Event order follows filenames, not timestamps; continue while
+`truncated` is true, even when filtering yields no events.

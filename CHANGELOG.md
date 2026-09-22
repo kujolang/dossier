@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Require the pinned Kujo 1.4.0 source revision with bounded `list_dir_page`
+  and exclusive streaming-AES publication; existing record formats are unchanged.
+- Retain at most 1,001 directory names per page and fix prefix-related record
+  cursors so pagination neither skips nor repeats records.
+- Add `history events` with filtered, bounded creation-event pages and a published
+  schema; preserve the existing `history` record view and legacy events.
+
 - Read original tagged v0.1.0 metadata/records and canonical-checksum audit events without rewriting historical files; verify against a fixture produced by that release while retaining current domain safety checks.
 - Normalize crypto authentication and output-parent failures at the native-call boundary so older pinned runtimes preserve structured failures instead of depending on cross-function exception handling.
 - Publish immutable records, audit events, metadata, and record locks without replacement; verify record bytes against creation events and protect managed state from forced exports.

@@ -1,4 +1,4 @@
-from src.common import get, parse_object, safe_id, utf8_size, canonical_json
+from src.common import get, parse_object, safe_id, utf8_size, canonical_json, valid_timestamp
 
 func parent_dir(path) {
     mut index := len(path) - 1
@@ -135,29 +135,29 @@ export func verify_history(state, record, checksum) {
 func list_records_impl(state, kind, after, limit, include_checksums) {
     mut records := []; mut warnings := []; mut truncated := false
     mut checksums := {}
-    mut scanned := 0; mut bytes := 0; mut next_after := after
+    mut bytes := 0; mut next_after := after
     state_error := validate_state_path(state); if state_error != "" { return {"records": records, "warnings": [{"id": "", "code": "unsafe_state", "error": state_error}], "truncated": false} }
     dir := records_dir(state); if file_exists(dir) && (path_is_symlink(dir) || !path_is_dir(dir)) { return {"records": records, "warnings": [{"id": "", "code": "unsafe_state", "error": "records path must be a regular directory"}], "truncated": false} }; if !path_is_dir(dir) { return {"records": records, "warnings": warnings, "truncated": false} }
-    for name in sort(list_dir(dir)) {
-        if ends_with(name, ".json") {
-            id := substring(name, 0, len(name) - 5)
-            if after == "" || id > after {
-                if scanned >= 1000 { truncated = true; break }
-                path := record_path(state, id)
-                mut size := 0
-                if path_is_file(path) { size = file_size(path) }
-                if size <= 1048576 && bytes + size > 4194304 { truncated = true; break }
-                loaded := load_record(state, id)
-                if loaded["ok"] {
-                    record := loaded["value"]
-                    if kind == "" || get(record, "record_type", "") == kind { if len(records) >= limit { truncated = true; break }; records = push(records, record) }
-                    if include_checksums { checksums[id] = loaded["checksum"] }
-                } else { warnings = push(warnings, {"id": id, "code": loaded["code"], "error": loaded["error"]}) }
-                scanned = scanned + 1
-                if size <= 1048576 { bytes = bytes + size }
-                next_after = id
+    cursor := ""; if after != "" { cursor = after + ".json" }
+    page := list_dir_page(dir, cursor, 1000, ".json")
+    truncated = page["truncated"]
+    for name in page["entries"] {
+        id := substring(name, 0, len(name) - 5)
+        path := record_path(state, id)
+        size := 0
+        if path_is_file(path) && !path_is_symlink(path) { size = file_size(path) }
+        if size <= 1048576 && bytes + size > 4194304 { truncated = true; break }
+        loaded := load_record(state, id)
+        if loaded["ok"] {
+            record := loaded["value"]
+            if kind == "" || get(record, "record_type", "") == kind {
+                if len(records) >= limit { truncated = true; break }
+                records = push(records, record)
             }
-        }
+            if include_checksums { checksums[id] = loaded["checksum"] }
+        } else { warnings = push(warnings, {"id": id, "code": loaded["code"], "error": loaded["error"]}) }
+        if size <= 1048576 { bytes = bytes + size }
+        next_after = id
     }
     result := {"records": records, "warnings": warnings, "truncated": truncated, "next_after": next_after}
     if include_checksums { result["checksums"] = checksums }
@@ -166,3 +166,50 @@ func list_records_impl(state, kind, after, limit, include_checksums) {
 
 export func list_records(state, kind, after, limit) { return list_records_impl(state, kind, after, limit, false) }
 export func records_for_validation(state) { return list_records_impl(state, "", "", 1000, true) }
+
+
+// Separate event view: legacy `history` retains its record-list contract.
+export func list_events(state, after, limit, record_id) {
+    if type(after) != "string" || type(record_id) != "string" || type(limit) != "int" || limit < 1 || limit > 1000 { return {"ok": false, "code": "invalid_query", "error": "event query needs string cursors/ids and limit 1..1000"} }
+    error := validate_state_path(state)
+    if error != "" { return {"ok": false, "code": "unsafe_state", "error": error} }
+    if after != "" && !regex_match(after, "^([a-f0-9]{24}|[a-f0-9]{32})$") { return {"ok": false, "code": "unsafe_cursor", "error": "event cursor must be a 24- or 32-character hex event id"} }
+    if record_id != "" && !safe_id(record_id) { return {"ok": false, "code": "unsafe_id", "error": "unsafe record id"} }
+    dir := history_dir(state)
+    events := []; warnings := []; next_after := after; truncated := false; bytes := 0
+    if file_exists(dir) && (path_is_symlink(dir) || !path_is_dir(dir)) { return {"ok": false, "code": "unsafe_state", "error": "history path must be a regular directory"} }
+    if !path_is_dir(dir) { return {"ok": true, "value": {"events": events, "warnings": warnings, "next_after": next_after, "truncated": false}} }
+    cursor := ""; if after != "" { cursor = after + ".json" }
+    page := list_dir_page(dir, cursor, 1000, ".json"); truncated = page["truncated"]
+    for name in page["entries"] {
+        id := substring(name, 0, len(name) - 5)
+        path := join_path(dir, name)
+        size := 0; if path_is_file(path) && !path_is_symlink(path) { size = file_size(path) }
+        if size <= 65536 && bytes + size > 4194304 { truncated = true; break }
+        loaded := load_event(path, id)
+        if loaded["ok"] {
+            event := loaded["value"]
+            if record_id == "" || event["record_id"] == record_id {
+                if len(events) >= limit { truncated = true; break }
+                events = push(events, {"event_id": id, "event": event})
+            }
+        } else { warnings = push(warnings, {"id": id, "code": loaded["code"], "error": loaded["error"]}) }
+        if size <= 65536 { bytes = bytes + size }
+        next_after = id
+    }
+    return {"ok": true, "value": {"events": events, "warnings": warnings, "next_after": next_after, "truncated": truncated}}
+}
+
+func load_event(path, id) {
+    if !regex_match(id, "^([a-f0-9]{24}|[a-f0-9]{32})$") { return {"ok": false, "code": "unsafe_event_id", "error": "invalid event filename"} }
+    if !path_is_file(path) || path_is_symlink(path) { return {"ok": false, "code": "unsafe_event", "error": "event must be a regular non-symlink file"} }
+    if file_size(path) > 65536 { return {"ok": false, "code": "history_too_large", "error": "audit event exceeds 64 KiB"} }
+    parsed := parse_object(read_file(path), "audit event"); if !parsed["ok"] { return parsed }
+    event := parsed["value"]
+    checksum := get(event, "record_sha256", ""); if len(id) == 24 { checksum = get(event, "checksum", "") }
+    if get(event, "event", "") != "record.created" || get(event, "schema_version", "") != "1.0.0" || !safe_id(get(event, "record_id", "")) || !valid_timestamp(get(event, "at", "")) || type(get(event, "actor", null)) != "string" || trim(event["actor"]) == "" || len(event["actor"]) > 256 || !regex_match(event["actor"], "^[^\\x00-\\x1F\\x7F]+$") || type(checksum) != "string" || !regex_match(checksum, "^[a-f0-9]{64}$") { return {"ok": false, "code": "invalid_event", "error": "invalid creation event fields"} }
+    expected := substring(sha256(event["at"] + "\n" + event["record_id"]), 0, 32)
+    if len(id) == 24 { expected = substring(sha256(event["at"] + event["record_id"]), 0, 24) }
+    if expected != id { return {"ok": false, "code": "event_id_mismatch", "error": "event does not match its filename"} }
+    return {"ok": true, "value": event}
+}

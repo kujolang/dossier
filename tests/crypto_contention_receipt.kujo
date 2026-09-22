@@ -1,0 +1,23 @@
+from src.common import get
+root := args()[0]
+for mode in ["encrypt", "decrypt"] {
+    winners := 0; winner_checksum := ""
+    for name in ["one", "two"] {
+        result := parse_json(read_file(root + "/" + mode + "-" + name + ".json"))
+        if result["ok"] {
+            winners = winners + 1
+            receipt := result["receipt"]
+            if !get(receipt, "published", false) || !get(receipt, "temporary_removed", false) { eprint("publication/cleanup receipt missing"); exit(1) }
+            winner_checksum = receipt["plaintext_sha256"]
+        } else if contains(result["error"], "safe input and new output") == 0 && contains(result["error"], "without replacement") == 0 && contains(result["error"], "already exists") == 0 { eprint("unexpected crypto failure: " + result["error"]); exit(1) }
+    }
+    if winners != 1 { eprint("crypto must have exactly one winner"); exit(1) }
+    actual := sha256_file(root + "/state/shared-plain")
+    if mode == "encrypt" {
+        result := parse_json(read_file(root + "/read.json"))
+        if !result["ok"] { eprint("could not decrypt winning ciphertext"); exit(1) }
+        actual = sha256_file(root + "/state/restored")
+    }
+    if actual != winner_checksum { eprint("successful writer was overwritten"); exit(1) }
+}
+for name in list_dir(root + "/state") { if contains(name, ".tmp") == 1 { eprint("crypto left a temporary file"); exit(1) } }
