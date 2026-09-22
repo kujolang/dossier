@@ -1,0 +1,2 @@
+Compiler optimization: 0 constants folded, 3 dead instructions removed, 0 peephole optimizations
+{"created":3,"received":["claim-prefix-child","claim-third"]}

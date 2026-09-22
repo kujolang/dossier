@@ -1,4 +1,6 @@
-Current follow-up: [2026-09-22 re-audit](repository-hardening-2026-09-22.md).
+Remaining-item resolution: [2026-09-22 completion](remaining-items-2026-09-22.md).
+
+Earlier follow-up: [2026-09-22 re-audit](repository-hardening-2026-09-22.md).
 
 # Dossier repository hardening audit
 

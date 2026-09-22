@@ -1,3 +1,5 @@
+Remaining-item resolution: [2026-09-22 completion](remaining-items-2026-09-22.md).
+
 # Dossier hardening re-audit — 2026-09-22
 
 ## Repository and scope

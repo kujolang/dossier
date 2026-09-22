@@ -1,0 +1,29 @@
+warning: unused import: `SequentialWriter`
+ --> vendor/tiny_http-0.12.0/src/util/mod.rs:7:28
+  |
+7 | pub use self::sequential::{SequentialWriter, SequentialWriterBuilder};
+  |                            ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: trait `MustBeShareDummy` is never used
+   --> vendor/tiny_http-0.12.0/src/lib.rs:164:7
+    |
+164 | trait MustBeShareDummy: Sync + Send {}
+    |       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `tiny_http` (lib) generated 2 warnings (run `cargo fix --lib -p tiny_http` to apply 1 suggestion)
+   Compiling kujolang v1.4.0 (/Users/robertdevore/2026/Kujolang/kujo-repos/kujo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.49s
+     Running tests/generated_artifact_freshness_contract.rs (target/debug/deps/generated_artifact_freshness_contract-2c0df744524ce9f1)
+
+running 3 tests
+test generated_unsafe_inventory_artifact_is_fresh_and_matches_generator_output ... ok
+test generated_todo_triage_artifact_is_fresh_and_matches_generator_output ... ok
+test generated_vm_mismatch_inventory_artifact_is_fresh_and_matches_generator_output has been running for over 60 seconds
+test generated_vm_mismatch_inventory_artifact_is_fresh_and_matches_generator_output ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 123.33s
+

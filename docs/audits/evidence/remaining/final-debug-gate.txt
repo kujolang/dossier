@@ -1,0 +1,19 @@
+check passed: dossier.kujo
+13 passed; 0 failed
+Compiler optimization: 0 constants folded, 1 dead instructions removed, 0 peephole optimizations
+13 passed; 0 failed
+9 passed; 0 failed
+Compiler optimization: 0 constants folded, 1 dead instructions removed, 0 peephole optimizations
+6 passed; 0 failed
+16 passed; 0 failed
+90 passed; 0 failed
+20 passed; 0 failed
+26 passed; 0 failed
+9 passed; 0 failed
+32 passed; 0 failed
+Dossier contention checks passed: distinct=32/32 same-id=1/32; record/history checksums agree.
+Dossier crypto contention passed: encrypt=1/2 decrypt=1/2; persisted bytes match winners.
+Dossier validation passed.
+real 704.46
+user 154.81
+sys 22.29

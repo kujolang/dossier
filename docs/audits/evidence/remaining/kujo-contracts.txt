@@ -1,0 +1,45 @@
+warning: unused import: `SequentialWriter`
+ --> vendor/tiny_http-0.12.0/src/util/mod.rs:7:28
+  |
+7 | pub use self::sequential::{SequentialWriter, SequentialWriterBuilder};
+  |                            ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: trait `MustBeShareDummy` is never used
+   --> vendor/tiny_http-0.12.0/src/lib.rs:164:7
+    |
+164 | trait MustBeShareDummy: Sync + Send {}
+    |       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `tiny_http` (lib) generated 2 warnings (run `cargo fix --lib -p tiny_http` to apply 1 suggestion)
+   Compiling kujolang v1.4.0 (/Users/robertdevore/2026/Kujolang/kujo-repos/kujo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 25s
+     Running tests/directory_page_contract.rs (target/debug/deps/directory_page_contract-16dacfc9cb4d7308)
+
+running 1 test
+test directory_pages_match_vm_interpreter_and_enforce_capabilities ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.93s
+
+     Running tests/stdlib_reference_contract.rs (target/debug/deps/stdlib_reference_contract-23a13df06ca8800e)
+
+running 5 tests
+test stdlib_inventory_rows_include_required_contract_fields ... ok
+test stdlib_inventory_alias_rows_match_canonical_runtime_contracts ... ok
+test stdlib_inventory_arity_column_matches_centralized_arity_metadata ... ok
+test stdlib_inventory_documents_all_runtime_builtins_exactly_once ... ok
+test stdlib_inventory_capability_column_matches_runtime_policy ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/stdlib_reference_policy_contract.rs (target/debug/deps/stdlib_reference_policy_contract-277a88ff90a8b887)
+
+running 2 tests
+test stdlib_reference_defines_v1_tier_guarantee_policy ... ok
+test stdlib_reference_mentions_every_runtime_builtin ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

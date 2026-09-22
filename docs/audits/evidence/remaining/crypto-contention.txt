@@ -1,0 +1,1 @@
+Dossier crypto contention passed: encrypt=1/2 decrypt=1/2; persisted bytes match winners.

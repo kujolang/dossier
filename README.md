@@ -98,8 +98,9 @@ bash scripts/validate.sh
 CI builds the pinned Kujo runtime and runs the same gate. Hosted providers are
 optional and are not required for core operation.
 
-Read the [hardening audit](docs/audits/repository-hardening.md) for measured
-limits and remaining work. When `truncated` is true, pass `next_after` as
+Read the [completion report](docs/audits/remaining-items-2026-09-22.md) for
+current runtime requirements, measurements and storage assumptions. When
+`truncated` is true, pass `next_after` as
 `--after` to continue, including on an empty filtered page. Whole-state
 validation fails with `validation_incomplete` when a page cannot cover the
 state; use paginated reports and `verify --id` for larger ledgers.

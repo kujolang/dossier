@@ -1,0 +1,13 @@
+[KUJOVM001] [vm] Runtime Error: Missing map key: "value"
+  --> 0:0
+
+Call stack:
+  0 at check
+  1 at check
+  2 at check
+  3 at check
+  4 at check
+  5 at check
+  6 at check
+  7 at check
+
