@@ -1,0 +1,29 @@
+[package]
+name = "dossier"
+version = "0.2.0"
+description = "Kujo-native evidence, claims, sources, consent, freshness, and rights ledger"
+license = "MIT"
+authors = ["Kujolang <contact@kujolang.ai>"]
+repository = "https://github.com/kujolang/dossier"
+documentation = "https://github.com/kujolang/dossier#readme"
+readme = "README.md"
+
+[package.exports]
+cli = "dossier.kujo"
+
+[kujo]
+minimum_version = "1.4.0"
+entry = "dossier.kujo"
+sources = ["."]
+includes = ["README.md", "LICENSE", "CHANGELOG.md", "SECURITY.md", "VERSION", "kujo.toml", "bin", "docs", "examples", "fixtures", "schemas", "scripts", "tests", ".github/workflows/validate.yml"]
+excludes = [".git", ".dossier", ".kennel_tmp", "kennel_packages", "node_modules", "target", "dist", "build", "output", "__pycache__", ".runtime", ".loop-engineering"]
+
+[dependencies]
+
+[scripts]
+verify = "bash scripts/validate.sh"
+
+# Preserve the source-pinned runtime requirement documented in CI.
+[package.metadata]
+runtime_revision = "5b057c62ec276c7761a5ae0534e30d86dc5e30bb"
+runtime_requirements = ".github/workflows/validate.yml"
