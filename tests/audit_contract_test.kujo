@@ -28,11 +28,18 @@ check(dispatch("export", opts(["--state", root, "--output", exported, "--dry-run
 check(dispatch("export", opts(["--state", root, "--output", exported]))["ok"], "safe export works")
 check(!dispatch("export", opts(["--state", root, "--output", exported]))["ok"], "safe export requires explicit replacement")
 check(dispatch("export", opts(["--state", root, "--output", exported, "--force"]))["ok"], "safe explicit replacement works")
+dangling_output := root + "/dangling-output"
+linked := spawn_process(["ln","-s",root+"/absent-output",dangling_output], {"timeout_ms":5000,"max_output_bytes":4096})
+check(linked.exitcode == 0 && dispatch("export",opts(["--state",root,"--output",dangling_output,"--force"]))["code"] == "unsafe_output", "force refuses dangling export symlink")
+if linked.exitcode == 0 { spawn_process(["unlink",dangling_output], {"timeout_ms":5000,"max_output_bytes":4096}) }
 record := parse_json(original); payload := record["payload"]; payload["claim_text"] = "Tampered but domain-valid claim"; record["payload"] = payload
 write_file(path, to_json(record), true)
 result := dispatch("verify", opts(["--state", root, "--id", "claim-audit"]))
 check(!result["ok"] && result["code"] == "history_mismatch", "history detects content drift")
 check(!dispatch("validate", opts(["--state", root]))["ok"], "whole-state validation detects drift")
+record["artifact"] = {"path":root+"/previous-attachment","bytes":0,"sha256":repeat("a",64)}
+write_file(path,to_json(record),true)
+check(dispatch("verify",opts(["--state",root,"--id","claim-audit"]))["code"] == "history_mismatch", "record history is verified before attachment inspection")
 payload["api_key"] = "fixture-only"; record["payload"] = payload
 write_file(path, to_json(record), true)
 check(dispatch("verify", opts(["--state", root, "--id", "claim-audit"]))["code"] == "secret_rejected", "stored secret fields rejected")

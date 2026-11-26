@@ -1,12 +1,14 @@
 from src.common import get, parse_object, safe_id, utf8_size, canonical_json, valid_timestamp
 
-func parent_dir(path) {
-    mut index := len(path) - 1
-    while index >= 0 {
-        if substring(path, index, index + 1) == "/" { if index == 0 { return "/" }; return substring(path, 0, index) }
-        index = index - 1
+export func is_present_link(path) {
+    try { return path_is_symlink(path) } except error { return false }
+}
+
+func directory_problem(path, label) {
+    if is_present_link(path) || (file_exists(path) && !path_is_dir(path)) {
+        return label + " must be a regular directory"
     }
-    return "."
+    return ""
 }
 
 func ensure_tree(path) {
@@ -27,7 +29,7 @@ func ensure_tree(path) {
 export func validate_state_path(path) {
     if type(path) != "string" || trim(path) == "" { return "state path is empty or invalid" }
     for part in split(replace_str(path, "\\", "/"), "/") { if part == ".." { return "state path traversal is not allowed" } }
-    if file_exists(path) && path_is_symlink(path) { return "state directory symlinks are not allowed" }
+    if is_present_link(path) { return "state directory symlinks are not allowed" }
     if file_exists(path) && !path_is_dir(path) { return "state path is not a directory" }
     return ""
 }
@@ -39,17 +41,20 @@ export func record_path(state, id) { return join_path(records_dir(state), id + "
 
 export func initialize(state, metadata) {
     error := validate_state_path(state); if error != "" { return {"ok": false, "code": "unsafe_state", "error": error} }
-    for dir in [records_dir(state), history_dir(state), locks_dir(state)] { error = ensure_tree(dir); if error != "" { return {"ok": false, "code": "unsafe_state", "error": error} }; if path_is_symlink(dir) || !path_is_dir(dir) { return {"ok": false, "code": "unsafe_state", "error": "managed state paths must be regular directories"} } }
     path := join_path(state, "metadata.json")
-    if file_exists(path) {
-        if path_is_symlink(path) || !path_is_file(path) { return {"ok": false, "code": "unsafe_state", "error": "metadata must be a regular non-symlink file"} }
+    if is_present_link(path) { return {"ok":false,"code":"unsafe_state","error":"metadata must be a regular non-symlink file"} }
+    already_initialized := file_exists(path)
+    if already_initialized {
+        if !path_is_file(path) { return {"ok": false, "code": "unsafe_state", "error": "metadata must be a regular non-symlink file"} }
         if file_size(path) > 65536 { return {"ok": false, "code": "metadata_too_large", "error": "metadata exceeds 64 KiB"} }
-        parsed := parse_object(read_file(path), "state metadata"); if !parsed["ok"] { return parsed }
+        parsed := parse_object(read_file_beneath(state,"metadata.json",65536), "state metadata"); if !parsed["ok"] { return parsed }
         existing := parsed["value"]
         existing_contract := get(existing, "contract_version", "")
         if has_key(existing, "contract_version") == 0 && get(existing, "tool_version", "") == "0.1.0" && get(existing, "schema_version", "") == "1.0.0" { existing_contract = "1.0.0" }
         if get(existing, "tool", "") != get(metadata, "tool", "") || existing_contract != get(metadata, "contract_version", "") { return {"ok": false, "code": "incompatible_state", "error": "state metadata belongs to an incompatible tool or contract"} }
-    } else {
+    }
+    for dir in [records_dir(state), history_dir(state), locks_dir(state)] { error = ensure_tree(dir); if error != "" { return {"ok": false, "code": "unsafe_state", "error": error} }; if is_present_link(dir) || !path_is_dir(dir) { return {"ok": false, "code": "unsafe_state", "error": "managed state paths must be regular directories"} } }
+    if !already_initialized {
         try { write_file_atomic(path, to_json_pretty(metadata) + "\n", false) } except error {
             // A concurrent initializer may have won. Revalidate its metadata.
             if path_is_file(path) { return initialize(state, metadata) }
@@ -83,14 +88,14 @@ export func save_new(state, record) {
     }
     lock := acquire_lock(state, id); if !lock["ok"] { return lock }
     path := record_path(state, id)
+    if is_present_link(path) { release_lock(lock["path"]); return {"ok": false, "code": "symlink_escape", "error": "record symlinks are not allowed"} }
     if path_is_file(path) { release_lock(lock["path"]); return {"ok": false, "code": "duplicate_id", "error": "record already exists: " + id} }
-    if file_exists(path) && path_is_symlink(path) { release_lock(lock["path"]); return {"ok": false, "code": "symlink_escape", "error": "record symlinks are not allowed"} }
     serialized := to_json_pretty(record) + "\n"
     if utf8_size(serialized) > 1048576 { release_lock(lock["path"]); return {"ok": false, "code": "record_too_large", "error": "serialized record exceeds 1 MiB"} }
     checksum := sha256(serialized)
     event := {"schema_version": "1.0.0", "event": "record.created", "record_id": id, "actor": record["actor"], "at": record["created_at"], "record_sha256": checksum}
     event_path := join_path(history_dir(state), substring(sha256(record["created_at"] + "\n" + id), 0, 32) + ".json")
-    if file_exists(event_path) { release_lock(lock["path"]); return {"ok": false, "code": "history_conflict", "error": "audit history event already exists"} }
+    if is_present_link(event_path) || file_exists(event_path) { release_lock(lock["path"]); return {"ok": false, "code": "history_conflict", "error": "audit history event already exists"} }
     try { write_file_atomic(path, serialized, false) } except error { release_lock(lock["path"]); return {"ok": false, "code": "write_failed", "error": "atomic record write failed"} }
     try { write_file_atomic(event_path, to_json_pretty(event) + "\n", false) } except error {
         try { delete_file(path) } except rollback_error {}
@@ -102,16 +107,36 @@ export func save_new(state, record) {
     return {"ok": true, "value": {"path": path, "checksum": checksum}}
 }
 
-export func load_record(state, id) {
-    if !safe_id(id) { return {"ok": false, "code": "unsafe_id", "error": "unsafe record id"} }
-    state_error := validate_state_path(state); if state_error != "" { return {"ok": false, "code": "unsafe_state", "error": state_error} }
-    dir := records_dir(state); if file_exists(dir) && (path_is_symlink(dir) || !path_is_dir(dir)) { return {"ok": false, "code": "unsafe_state", "error": "records path must be a regular directory"} }
-    path := record_path(state, id)
-    if !path_is_file(path) || path_is_symlink(path) { return {"ok": false, "code": "not_found", "error": "record not found: " + id} }
-    if file_size(path) > 1048576 { return {"ok": false, "code": "record_too_large", "error": "record exceeds 1 MiB"} }
-    contents := read_file(path); parsed := parse_object(contents, "record " + id); if !parsed["ok"] { return parsed }
-    if get(parsed["value"], "id", "") != id { return {"ok": false, "code": "id_mismatch", "error": "record id does not match filename"} }
-    return {"ok": true, "value": parsed["value"], "checksum": sha256(contents)}
+func checked_record_leaf(state,id) {
+    if !safe_id(id) { return {"ok":false,"code":"unsafe_id","error":"unsafe record id"} }
+    path := record_path(state,id)
+    if !path_is_file(path) || path_is_symlink(path) {
+        return {"ok":false,"code":"not_found","error":"record not found: "+id}
+    }
+    size := file_size(path)
+    if size > 1048576 { return {"ok":false,"code":"record_too_large","error":"record exceeds 1 MiB"} }
+    return {"ok":true,"path":path,"bytes":size}
+}
+
+func parse_record_leaf(path,id,include_checksum) {
+    contents := read_file_beneath(dirname(path),basename(path),1048576)
+    parsed := parse_object(contents,"record "+id)
+    if !parsed["ok"] { return parsed }
+    if get(parsed["value"],"id","") != id {
+        return {"ok":false,"code":"id_mismatch","error":"record id does not match filename"}
+    }
+    if include_checksum { parsed["checksum"] = sha256(contents) }
+    return parsed
+}
+
+export func load_record(state,id) {
+    if !safe_id(id) { return {"ok":false,"code":"unsafe_id","error":"unsafe record id"} }
+    problem := validate_state_path(state)
+    if problem == "" { problem = directory_problem(records_dir(state),"records path") }
+    if problem != "" { return {"ok":false,"code":"unsafe_state","error":problem} }
+    leaf := checked_record_leaf(state,id)
+    if !leaf["ok"] { return leaf }
+    return parse_record_leaf(leaf["path"],id,true)
 }
 
 export func verify_history(state, record, checksum) {
@@ -126,28 +151,56 @@ export func verify_history(state, record, checksum) {
     path := join_path(dir, event_id + ".json")
     if !path_is_file(path) || path_is_symlink(path) { return {"ok": false, "code": "history_missing", "error": "record has no safe audit event"} }
     if file_size(path) > 65536 { return {"ok": false, "code": "history_too_large", "error": "audit event exceeds 64 KiB"} }
-    parsed := parse_object(read_file(path), "audit event"); if !parsed["ok"] { return parsed }
+    parsed := parse_object(read_file_beneath(dirname(path),basename(path),65536), "audit event"); if !parsed["ok"] { return parsed }
     event := parsed["value"]
     if get(event, checksum_key, "") != expected_checksum || get(event, "record_id", "") != record["id"] || get(event, "actor", "") != record["actor"] || get(event, "at", "") != record["created_at"] || get(event, "event", "") != "record.created" || get(event, "schema_version", "") != "1.0.0" { return {"ok": false, "code": "history_mismatch", "error": "record and audit event disagree"} }
     return {"ok": true}
 }
 
+func valid_event_id(value) {
+    return type(value) == "string" && regex_match(value,"^([a-f0-9]{24}|[a-f0-9]{32})$")
+}
+
+func filename_cursor(value,for_event) {
+    if value == "" { return "" }
+    if (for_event && valid_event_id(value)) || (!for_event && safe_id(value)) { return value+".json" }
+    if type(value) != "string" || !regex_match(value,"^file:[A-Za-z0-9+/=]{4,344}$") { return null }
+    try {
+        filename := decode_base64_utf8(substring(value,5,len(value)))
+        if !ends_with(filename,".json") || utf8_size(filename) > 255 || contains(filename,"/") == 1 || regex_match(filename,"[\\x00]") { return null }
+        return filename
+    } except error { return null }
+}
+
+func page_cursor(name,id,for_event) {
+    if (for_event && valid_event_id(id)) || (!for_event && safe_id(id)) { return id }
+    return "file:"+encode_base64(name)
+}
+
+export func valid_record_cursor(value) { return type(filename_cursor(value,false)) != "null" }
+
 func list_records_impl(state, kind, after, limit, include_checksums) {
     mut records := []; mut warnings := []; mut truncated := false
     mut checksums := {}
     mut bytes := 0; mut next_after := after
-    state_error := validate_state_path(state); if state_error != "" { return {"records": records, "warnings": [{"id": "", "code": "unsafe_state", "error": state_error}], "truncated": false} }
-    dir := records_dir(state); if file_exists(dir) && (path_is_symlink(dir) || !path_is_dir(dir)) { return {"records": records, "warnings": [{"id": "", "code": "unsafe_state", "error": "records path must be a regular directory"}], "truncated": false} }; if !path_is_dir(dir) { return {"records": records, "warnings": warnings, "truncated": false} }
-    cursor := ""; if after != "" { cursor = after + ".json" }
-    page := list_dir_page(dir, cursor, 1000, ".json")
+    state_error := validate_state_path(state)
+    dir := records_dir(state)
+    if state_error == "" { state_error = directory_problem(dir,"records path") }
+    if state_error != "" { return {"records":records,"warnings":[{"id":"","code":"unsafe_state","error":state_error}],"truncated":false} }
+    if !path_is_dir(dir) { return {"records":records,"warnings":warnings,"truncated":false} }
+    cursor := filename_cursor(after,false)
+    if type(cursor) == "null" {
+        return {"records":records,"warnings":[{"id":"","code":"unsafe_cursor","error":"invalid record pagination cursor"}],"truncated":false}
+    }
+    page := list_dir_page(dir,cursor,1000,".json")
     truncated = page["truncated"]
     for name in page["entries"] {
-        id := substring(name, 0, len(name) - 5)
-        path := record_path(state, id)
-        size := 0
-        if path_is_file(path) && !path_is_symlink(path) { size = file_size(path) }
-        if size <= 1048576 && bytes + size > 4194304 { truncated = true; break }
-        loaded := load_record(state, id)
+        id := substring(name,0,len(name)-5)
+        leaf := checked_record_leaf(state,id)
+        size := get(leaf,"bytes",0)
+        if bytes+size > 4194304 { truncated = true; break }
+        loaded := leaf
+        if leaf["ok"] { loaded = parse_record_leaf(leaf["path"],id,include_checksums) }
         if loaded["ok"] {
             record := loaded["value"]
             if kind == "" || get(record, "record_type", "") == kind {
@@ -156,8 +209,8 @@ func list_records_impl(state, kind, after, limit, include_checksums) {
             }
             if include_checksums { checksums[id] = loaded["checksum"] }
         } else { warnings = push(warnings, {"id": id, "code": loaded["code"], "error": loaded["error"]}) }
-        if size <= 1048576 { bytes = bytes + size }
-        next_after = id
+        bytes = bytes + size
+        next_after = page_cursor(name,id,false)
     }
     result := {"records": records, "warnings": warnings, "truncated": truncated, "next_after": next_after}
     if include_checksums { result["checksums"] = checksums }
@@ -173,13 +226,14 @@ export func list_events(state, after, limit, record_id) {
     if type(after) != "string" || type(record_id) != "string" || type(limit) != "int" || limit < 1 || limit > 1000 { return {"ok": false, "code": "invalid_query", "error": "event query needs string cursors/ids and limit 1..1000"} }
     error := validate_state_path(state)
     if error != "" { return {"ok": false, "code": "unsafe_state", "error": error} }
-    if after != "" && !regex_match(after, "^([a-f0-9]{24}|[a-f0-9]{32})$") { return {"ok": false, "code": "unsafe_cursor", "error": "event cursor must be a 24- or 32-character hex event id"} }
+    cursor := filename_cursor(after,true)
+    if type(cursor) == "null" { return {"ok":false,"code":"unsafe_cursor","error":"invalid event pagination cursor"} }
     if record_id != "" && !safe_id(record_id) { return {"ok": false, "code": "unsafe_id", "error": "unsafe record id"} }
     dir := history_dir(state)
     events := []; warnings := []; next_after := after; truncated := false; bytes := 0
-    if file_exists(dir) && (path_is_symlink(dir) || !path_is_dir(dir)) { return {"ok": false, "code": "unsafe_state", "error": "history path must be a regular directory"} }
+    problem := directory_problem(dir,"history path")
+    if problem != "" { return {"ok":false,"code":"unsafe_state","error":problem} }
     if !path_is_dir(dir) { return {"ok": true, "value": {"events": events, "warnings": warnings, "next_after": next_after, "truncated": false}} }
-    cursor := ""; if after != "" { cursor = after + ".json" }
     page := list_dir_page(dir, cursor, 1000, ".json"); truncated = page["truncated"]
     for name in page["entries"] {
         id := substring(name, 0, len(name) - 5)
@@ -195,7 +249,7 @@ export func list_events(state, after, limit, record_id) {
             }
         } else { warnings = push(warnings, {"id": id, "code": loaded["code"], "error": loaded["error"]}) }
         if size <= 65536 { bytes = bytes + size }
-        next_after = id
+        next_after = page_cursor(name,id,true)
     }
     return {"ok": true, "value": {"events": events, "warnings": warnings, "next_after": next_after, "truncated": truncated}}
 }
@@ -204,7 +258,7 @@ func load_event(path, id) {
     if !regex_match(id, "^([a-f0-9]{24}|[a-f0-9]{32})$") { return {"ok": false, "code": "unsafe_event_id", "error": "invalid event filename"} }
     if !path_is_file(path) || path_is_symlink(path) { return {"ok": false, "code": "unsafe_event", "error": "event must be a regular non-symlink file"} }
     if file_size(path) > 65536 { return {"ok": false, "code": "history_too_large", "error": "audit event exceeds 64 KiB"} }
-    parsed := parse_object(read_file(path), "audit event"); if !parsed["ok"] { return parsed }
+    parsed := parse_object(read_file_beneath(dirname(path),basename(path),65536), "audit event"); if !parsed["ok"] { return parsed }
     event := parsed["value"]
     checksum := get(event, "record_sha256", ""); if len(id) == 24 { checksum = get(event, "checksum", "") }
     if get(event, "event", "") != "record.created" || get(event, "schema_version", "") != "1.0.0" || !safe_id(get(event, "record_id", "")) || !valid_timestamp(get(event, "at", "")) || type(get(event, "actor", null)) != "string" || trim(event["actor"]) == "" || len(event["actor"]) > 256 || !regex_match(event["actor"], "^[^\\x00-\\x1F\\x7F]+$") || type(checksum) != "string" || !regex_match(checksum, "^[a-f0-9]{64}$") { return {"ok": false, "code": "invalid_event", "error": "invalid creation event fields"} }

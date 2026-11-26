@@ -26,8 +26,13 @@ for i in range(1001) {
     id := "claim-" + to_string(10000 + i)
     write_file(root + "/records/" + id + ".json", to_json({"id": id, "record_type": "claim"}), false)
 }
+delete_file(root + "/records/claim-10999.json")
+write_file(root + "/records/claim-10999-bad!.json", "{}", false)
 listing := list_records(root, "source", "", 100)
 check(listing["truncated"] && len(listing["records"]) == 0, "filtered scan is bounded")
+check(starts_with(listing["next_after"],"file:"), "invalid boundary filename gets an opaque cursor")
+continuation := dispatch("report",opts(["--state",root,"--after",listing["next_after"]]))
+check(continuation["ok"] && continuation["value"]["records"][0]["id"] == "claim-11000", "record CLI can resume after invalid filename")
 if has_key(listing, "next_after") == 1 {
     next := list_records(root, "source", listing["next_after"], 100)
     check(!next["truncated"], "empty filtered page has a usable cursor")

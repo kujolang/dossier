@@ -17,16 +17,18 @@ per call. Every page still scans all directory entries (O(N) time); there is no
 cross-call snapshot or cache. UTF-8/entry errors fail explicitly rather than
 silently skipping names. Files are ordered by their complete `.json` filenames;
 record cursors remain suffix-free IDs and are translated consistently, including
-prefix-related IDs. Invalid filenames may require operator repair before a cursor
-can be used; cursors retain the safe-record-ID contract.
+prefix-related IDs. Healthy record cursors remain suffix-free IDs. When an invalid filename is at
+a page boundary, the cursor is an opaque `file:` token. Pass it back unchanged.
 
 Byte limits and export `bytes` receipts count UTF-8 bytes, including non-ASCII
-text. The pinned runtime predates `byte_length`; a local Base64-size helper
-preserves that runtime compatibility at the cost of a temporary encoding.
+text. The pinned runtime provides native `byte_length` and bounded read-beneath
+operations for metadata, records, and events.
 
 `validate`, `verify`, and `freshness check` perform record/domain/artifact and
 audit-event integrity checks. The event must match the exact stored bytes,
-record ID, actor, timestamp, event type, and schema. Missing history and drift
+record ID, actor, timestamp, event type, and schema before artifact reads. A
+whole-state validation checks up to 256 MiB of distinct artifact paths, reusing
+a checksum for repeated references within that run. Missing history and drift
 are failures, including for supported 0.1.0 records. These commands do not
 authenticate external evidence or apply the optional freshness-policy helper.
 A truncated whole-state check returns `ok: false`, `validation_incomplete`,
@@ -37,12 +39,12 @@ also refuses to certify a truncated scan.
 reads `STATE/history/` and returns `events`, `warnings`, `truncated`, `next_after`.
 Each entry contains `event_id` (the filename stem) and `event` (the original
 creation-event object). `--id` filters by record ID, `--limit` is 1..1000, and
-`--after` accepts an exclusive 24- or 32-character hex event ID. Events are
+`--after` accepts an exclusive 24- or 32-character hex event ID or an opaque
+`file:` token emitted at a malformed filename boundary. Events are
 ordered by filename, not chronology. Original 0.1.0 events remain readable.
 Pages process at most 1,000 files and 4 MiB; each event is at most 64 KiB.
 Warnings and filtered-out events count toward the scan budget. Continue empty
-filtered pages using `next_after` while `truncated` is true. Invalid filenames
-may require operator repair, as with record cursors. The published page schema
+filtered pages using `next_after` while `truncated` is true. The published page schema
 is `schemas/history-events.schema.json`.
 
 Event views validate fields and filename identity, but do not assert that the
@@ -93,7 +95,8 @@ Citation author/title/year/locator values must be non-empty strings, with the
 existing 4 KiB rendered limit. Retention `redact_fields` must be an array of
 strings. Invalid helper arguments return `ok: false`, rather than relying on
 native coercions or arithmetic errors. Packet manifests and HMAC bytes remain
-unchanged; signing reuses a single canonical representation.
+unchanged; signing reuses a single canonical representation. Verification matches the
+manifest algorithms and claim count and checks the HMAC in constant time.
 
 The pinned runtime publishes native AES file outputs with atomic no-replace
 semantics. Competing calls to one destination have exactly one successful

@@ -2,7 +2,7 @@ from src.args import parse_args
 from src.common import get, has, canonical_json, parse_object, safe_id, valid_timestamp, find_sensitive_key, bounded_int, envelope, utf8_size
 from src.profile import profile
 from src.domain import record_type, id_prefix, validate_command
-from src.storage import initialize, save_new, load_record, list_records, validate_state_path, verify_history, records_for_validation, list_events
+from src.storage import initialize, save_new, load_record, list_records, validate_state_path, verify_history, records_for_validation, list_events, valid_record_cursor, is_present_link
 
 func flag(parsed, name, fallback) {
     if has_key(parsed["flags"], name) == 1 { return parsed["flags"][name] }
@@ -60,11 +60,14 @@ func read_payload(parsed) {
     return {"ok": true, "value": payload}
 }
 
+MAX_ARTIFACT_BYTES := 67108864
+MAX_VALIDATION_ARTIFACT_BYTES := 4 * MAX_ARTIFACT_BYTES
+
 func artifact_metadata(path) {
     if path == "" { return {"ok": true, "value": null} }
     if !path_is_file(path) || path_is_symlink(path) { return {"ok": false, "code": "unsafe_artifact", "error": "artifact must be a regular non-symlink file"} }
     bytes := file_size(path)
-    if bytes > 67108864 { return {"ok": false, "code": "artifact_too_large", "error": "artifact exceeds 64 MiB"} }
+    if bytes > MAX_ARTIFACT_BYTES { return {"ok": false, "code": "artifact_too_large", "error": "artifact exceeds 64 MiB"} }
     return {"ok": true, "value": {"path": path, "sha256": sha256_file(path), "bytes": bytes}}
 }
 
@@ -110,15 +113,45 @@ func validate_record(record, p) {
     if find_sensitive_key(record["payload"], "") != "" { return {"ok": false, "code": "secret_rejected", "error": "stored payload contains a sensitive field"} }
     artifact := get(record, "artifact", null)
     if type(artifact) != "null" && type(artifact) != "dict" { return {"ok": false, "code": "invalid_record", "error": "artifact must be an object"} }
-    if type(artifact) == "dict" {
-        path := get(artifact, "path", "")
-        if path == "" || !path_is_file(path) || path_is_symlink(path) { return {"ok": false, "code": "artifact_missing", "error": "bound artifact is missing or unsafe"} }
-        if file_size(path) > 67108864 || get(artifact, "bytes", -1) != file_size(path) { return {"ok": false, "code": "artifact_size_drift", "error": "bound artifact size is invalid or has drifted"} }
-        if sha256_file(path) != get(artifact, "sha256", "") { return {"ok": false, "code": "checksum_drift", "error": "bound artifact checksum drift detected"} }
-    }
     error := validate_command(record["command"], record["payload"], get(record, "artifact", null))
     if error != "" { return {"ok": false, "code": "domain_validation", "error": error} }
     return {"ok": true}
+}
+
+func validate_bound_artifact(record, budget) {
+    artifact := get(record,"artifact",null)
+    if type(artifact) == "null" { return {"ok":true,"budget":budget} }
+    path := get(artifact,"path","")
+    if type(path) != "string" || path == "" || !path_is_file(path) || path_is_symlink(path) {
+        return {"ok":false,"code":"artifact_missing","error":"bound artifact is missing or unsafe","budget":budget}
+    }
+    bytes := file_size(path)
+    if bytes > MAX_ARTIFACT_BYTES || get(artifact,"bytes",-1) != bytes {
+        return {"ok":false,"code":"artifact_size_drift","error":"bound artifact size is invalid or has drifted","budget":budget}
+    }
+    cache := budget["digests"]
+    observed := get(cache,path,null)
+    if type(observed) == "null" || observed["bytes"] != bytes {
+        if budget["used"] + bytes > budget["maximum"] {
+            return {"ok":false,"code":"validation_incomplete","error":"bound artifact reads exceed the whole-state validation budget","budget":budget}
+        }
+        budget["used"] = budget["used"] + bytes
+        observed = {"bytes":bytes,"sha256":sha256_file(path)}
+        cache[path] = observed
+        budget["digests"] = cache
+    }
+    if observed["sha256"] != get(artifact,"sha256","") {
+        return {"ok":false,"code":"checksum_drift","error":"bound artifact checksum drift detected","budget":budget}
+    }
+    return {"ok":true,"budget":budget}
+}
+
+func validate_stored_record(state, record, checksum, p, budget) {
+    checked := validate_record(record,p)
+    if !checked["ok"] { return checked }
+    history := verify_history(state,record,checksum)
+    if !history["ok"] { return history }
+    return validate_bound_artifact(record,budget)
 }
 
 func export_result(value, parsed, p, state) {
@@ -136,7 +169,7 @@ func export_result(value, parsed, p, state) {
             if destination == managed || starts_with(destination, managed + "/") { return {"ok": false, "code": "unsafe_output", "error": "exports cannot replace managed state"} }
         }
     }
-    if file_exists(output) && path_is_symlink(output) { return {"ok": false, "code": "unsafe_output", "error": "output symlinks are not allowed"} }
+    if is_present_link(output) { return {"ok": false, "code": "unsafe_output", "error": "output symlinks are not allowed"} }
     if file_exists(output) && flag(parsed, "force", false) != true { return {"ok": false, "code": "output_exists", "error": "output exists; use --force only for intentional safe replacement"} }
     rendered := to_json_pretty(envelope(true, value, null, null, p["version"], p["contract_version"])) + "\n"
     rendered_bytes := utf8_size(rendered)
@@ -163,7 +196,7 @@ func dispatch_impl(command, parsed) {
         if state_error != "" { code = "unsafe_state"; error = state_error }
         if state_error == "" && len(listing["warnings"]) > 0 { code = "corrupt_state"; error = "one or more records are unreadable" }
         if healthy == false && type(code) == "null" { code = "validation_incomplete"; error = "state exceeds the bounded health check; use paginated reports and per-record validation" }
-        return {"ok": healthy, "code": code, "error": error, "value": {"healthy": healthy, "tool": p["slug"], "version": p["version"], "minimum_kujo": "1.4.0", "minimum_kujo_revision": "5b057c62ec276c7761a5ae0534e30d86dc5e30bb", "state": state, "record_count": len(listing["records"]), "corrupt_records": listing["warnings"], "limits": {"input_bytes": 1048576, "record_bytes": 1048576, "artifact_bytes": 67108864, "list_records": 1000}, "limitations": p["limitations"]}}
+        return {"ok": healthy, "code": code, "error": error, "value": {"healthy": healthy, "tool": p["slug"], "version": p["version"], "minimum_kujo": "1.4.0", "minimum_kujo_revision": "5b057c62ec276c7761a5ae0534e30d86dc5e30bb", "state": state, "record_count": len(listing["records"]), "corrupt_records": listing["warnings"], "limits": {"input_bytes": 1048576, "record_bytes": 1048576, "artifact_bytes": MAX_ARTIFACT_BYTES, "validation_artifact_bytes": MAX_VALIDATION_ARTIFACT_BYTES, "list_records": 1000}, "limitations": p["limitations"]}}
     }
     if has(p["show_commands"], command) {
         id := flag(parsed, "id", ""); if id == "" { return {"ok": false, "code": "id_required", "error": "show requires --id"} }
@@ -176,7 +209,7 @@ func dispatch_impl(command, parsed) {
     if has(p["list_commands"], command) {
         limit_result := bounded_int(setting(parsed, config, "limit", 100), 100, 1, 1000); if !limit_result["ok"] { return limit_result }
         kind := flag(parsed, "type", get(p["list_kinds"], command, ""))
-        after := flag(parsed, "after", ""); if after != "" && !safe_id(after) { return {"ok": false, "code": "unsafe_cursor", "error": "pagination cursor must be a safe record id"} }
+        after := flag(parsed, "after", ""); if !valid_record_cursor(after) { return {"ok": false, "code": "unsafe_cursor", "error": "invalid record pagination cursor"} }
         listing := list_records(state, kind, after, limit_result["value"])
         if len(listing["warnings"]) > 0 && listing["warnings"][0]["code"] == "unsafe_state" { return {"ok": false, "code": "unsafe_state", "error": listing["warnings"][0]["error"]} }
         return {"ok": true, "value": listing}
@@ -191,24 +224,39 @@ func dispatch_impl(command, parsed) {
     }
     if has(p["validate_commands"], command) {
         id := flag(parsed, "id", "")
-        if id != "" { loaded := load_record(state, id); if !loaded["ok"] { return loaded }; checked := validate_record(loaded["value"], p); if !checked["ok"] { return checked }; history := verify_history(state, loaded["value"], loaded["checksum"]); if !history["ok"] { return history }; return {"ok": true, "value": {"valid": true, "id": id, "checksum": loaded["checksum"]}} }
-        listing := records_for_validation(state); mut invalid := []
-        for record in listing["records"] {
-            checked := validate_record(record, p)
-            if checked["ok"] {
-                checked = verify_history(state, record, listing["checksums"][record["id"]])
-            }
-            if !checked["ok"] { invalid = push(invalid, {"id": record["id"], "code": checked["code"], "error": checked["error"]}) }
+        budget := {"used":0,"maximum":MAX_VALIDATION_ARTIFACT_BYTES,"digests":{}}
+        if id != "" {
+            loaded := load_record(state,id)
+            if !loaded["ok"] { return loaded }
+            checked := validate_stored_record(state,loaded["value"],loaded["checksum"],p,budget)
+            if !checked["ok"] { return checked }
+            return {"ok":true,"value":{"valid":true,"id":id,"checksum":loaded["checksum"]}}
         }
-        valid := len(invalid) == 0 && len(listing["warnings"]) == 0 && !listing["truncated"]
+        listing := records_for_validation(state)
+        mut invalid := []
+        mut checked_count := 0
+        mut artifact_limit := false
+        for record in listing["records"] {
+            checked := validate_stored_record(state,record,listing["checksums"][record["id"]],p,budget)
+            budget = get(checked,"budget",budget)
+            if get(checked,"code","") == "validation_incomplete" { artifact_limit = true; break }
+            checked_count = checked_count + 1
+            if !checked["ok"] { invalid = push(invalid,{"id":record["id"],"code":checked["code"],"error":checked["error"]}) }
+        }
+        truncated := listing["truncated"] || artifact_limit
+        valid := len(invalid) == 0 && len(listing["warnings"]) == 0 && !truncated
         mut code := null; mut error := null
         if !valid { code = "validation_failed"; error = "one or more records failed validation" }
-        if listing["truncated"] { code = "validation_incomplete"; error = "state exceeds the bounded validation check; use paginated reports and per-record validation" }
-        return {"ok": valid, "code": code, "error": error, "value": {"valid": valid, "checked": len(listing["records"]), "invalid": invalid, "storage_warnings": listing["warnings"], "truncated": listing["truncated"]}}
+        if truncated {
+            code = "validation_incomplete"
+            error = "state exceeds the bounded validation check; use paginated reports and per-record validation"
+        }
+        return {"ok":valid,"code":code,"error":error,"value":{"valid":valid,"checked":checked_count,"invalid":invalid,"storage_warnings":listing["warnings"],"truncated":truncated}}
     }
+
     if has(p["export_commands"], command) {
         limit_result := bounded_int(setting(parsed, config, "limit", 1000), 1000, 1, 1000); if !limit_result["ok"] { return limit_result }
-        after := flag(parsed, "after", ""); if after != "" && !safe_id(after) { return {"ok": false, "code": "unsafe_cursor", "error": "pagination cursor must be a safe record id"} }
+        after := flag(parsed, "after", ""); if !valid_record_cursor(after) { return {"ok": false, "code": "unsafe_cursor", "error": "invalid record pagination cursor"} }
         listing := list_records(state, flag(parsed, "type", ""), after, limit_result["value"])
         if len(listing["warnings"]) > 0 && listing["warnings"][0]["code"] == "unsafe_state" { return {"ok": false, "code": "unsafe_state", "error": listing["warnings"][0]["error"]} }
         return export_result({"schema_version": "1.0.0", "tool": p["slug"], "records": listing["records"], "warnings": listing["warnings"], "truncated": listing["truncated"], "next_after": get(listing, "next_after", after)}, parsed, p, state)

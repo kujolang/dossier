@@ -3,6 +3,10 @@ mut pass:=0;mut fail:=0;func check(ok,label){if ok{pass=pass+1}else{fail=fail+1;
 packet:={"claims":[{"id":"claim-one","classification":"verified"}]};signed:=sign_packet(packet,"fixture-key-123456");check(signed["ok"]&&verify_packet(packet,signed,"fixture-key-123456"),"signed packet");drift_valid:=verify_packet({"claims":[{"id":"changed"}]},signed,"fixture-key-123456");check(drift_valid==false,"detached drift")
 check(signed["packet_sha256"] == "34f1e7a1e39af302261d3bda5a36e2b550f74673a8a349d57866390482d1b321" && signed["signature"] == "ca711145c9917b87e8c7b57d64299e4d0760cbeef650d14fe8c2affb8a0b83b1", "canonical signing bytes remain compatible")
 check(!verify_packet(packet, signed, "wrong-fixture-key-123456"), "wrong signing key rejected")
+altered := signed; altered["signature_algorithm"] = "unknown"
+check(!verify_packet(packet,altered,"fixture-key-123456"),"unknown detached signature algorithm rejected")
+altered = signed; altered["claims"] = 2
+check(!verify_packet(packet,altered,"fixture-key-123456"),"detached claim count drift rejected")
 policy:={"source_classes":{"primary":30},"claim_classes":{"fact":7}};check(freshness_status(policy,"primary","fact",6)["status"]=="fresh","freshness fresh");check(freshness_status(policy,"primary","fact",8)["status"]=="expired","freshness expired")
 source:=parse_json(read_file("fixtures/citations/source.json"));for format in ["apa","mla","chicago"]{check(citation(format,source)["ok"],"citation "+format)}
 root:="/tmp/dossier-encryption-"+uuid_v4();plain:=root+".json";encrypted:=root+".aead";restored:=root+".restored";write_file(plain,to_json(packet),true);check(encrypt_packet(plain,encrypted,"0123456789abcdef0123456789abcdef")["ok"],"encrypt");check(decrypt_packet(encrypted,restored,"0123456789abcdef0123456789abcdef")["ok"]&&read_file(restored)==read_file(plain),"decrypt")

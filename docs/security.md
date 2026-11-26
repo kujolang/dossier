@@ -4,7 +4,9 @@ Dossier is local-first. State paths are explicit, record IDs reject traversal,
 record and managed-directory symlinks are refused, inputs are limited to 1 MiB,
 and artifacts to 64 MiB. Immutable files use atomic no-replace publication;
 `--force` cannot replace managed state. Validation checks the stored record
-against its creation event. Secret-shaped payload fields are rejected on both
+against its creation event before reading an attachment. Whole-state
+validation hashes up to 256 MiB of distinct paths and reports incomplete
+coverage beyond that limit. Secret-shaped payload fields are rejected on both
 creation and validation; this is not detection of credentials embedded in prose.
 
 The state directory and its ancestors must be controlled by the operator.

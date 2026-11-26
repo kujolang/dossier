@@ -66,7 +66,12 @@ for i in range(1001) {
     id := substring(sha256(to_string(i)), 0, 32)
     write_file(root + "/history/" + id + ".json", "{", false)
 }
+event_names := sort(list_dir(root + "/history"))
+invalid_name := substring(event_names[999],0,32) + "-bad.json"
+delete_file(root + "/history/" + event_names[999])
+write_file(root + "/history/" + invalid_name, "{}", false)
 page := dispatch("history events", opts(["--state", root, "--id", "claim-missing"]))["value"]
+check(starts_with(page["next_after"],"file:"), "invalid event filename has a usable opaque cursor")
 check(page["truncated"] && len(page["warnings"]) == 1000 && len(page["events"]) == 0, "corruption/filter processing bounded")
 next := dispatch("history events", opts(["--state", root, "--after", page["next_after"]]))["value"]
 check(!next["truncated"] && len(next["warnings"]) == 1, "empty event page continuation loses no diagnostics")
