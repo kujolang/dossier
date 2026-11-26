@@ -184,8 +184,11 @@ func list_records_impl(state, kind, after, limit, include_checksums) {
     mut checksums := {}
     mut bytes := 0; mut next_after := after
     state_error := validate_state_path(state)
-    dir := records_dir(state)
-    if state_error == "" { state_error = directory_problem(dir,"records path") }
+    dir := ""
+    if state_error == "" {
+        dir = records_dir(state)
+        state_error = directory_problem(dir,"records path")
+    }
     if state_error != "" { return {"records":records,"warnings":[{"id":"","code":"unsafe_state","error":state_error}],"truncated":false} }
     if !path_is_dir(dir) { return {"records":records,"warnings":warnings,"truncated":false} }
     cursor := filename_cursor(after,false)
