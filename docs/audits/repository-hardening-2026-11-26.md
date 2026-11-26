@@ -1,0 +1,19 @@
+# Dossier repository hardening
+
+Reviewed `main` from `670def8c62e690bcd3c0936cd85b224257ca4a03`. The implementation ends at `faf33c79b5a296d3f2041506721d2a2ae1f20ac9`. Dossier is an offline Kujo ledger for immutable source, claim, evidence, conflict, quotation, consent and rights records. The review covered CLI and configuration, record and event contracts, legacy compatibility, artifact I/O, pagination, atomic storage, packet crypto, concurrency, packaging inputs and release tests. The agent-facing surface is the CLI and its bounded JSON responses. The ledger needs no service, model or external runtime dependency other than Kujo.
+
+The baseline passed the exact pinned CI job. The unqualified 1.4.0 binary failed the existing baseline, as documented by the repository's minimum revision requirement. A local debug 1.10 baseline passed its suites and record contention but hit the workstation disk quota during crypto contention. The updated full local gate passed after retiring task-owned scratch. [Baseline CI](https://github.com/kujolang/dossier/actions/runs/39885480465)
+
+| Priority | Finding | Fix |
+| --- | --- | --- |
+| P0 | Whole-state validation could hash many large attachments before checking their ledger binding. | Validate schema and creation history first, hash at most 256 MiB of distinct attachment paths in a whole-state pass, and reuse path digests within a pass. Single-record verification remains available. |
+| P0 | Managed paths used separate checks and unbounded leaf read primitives. Dangling state and export symlinks could be treated like missing paths. | Read managed leaves with the pinned rooted byte-limited APIs. Detect dangling links, check existing metadata before populating a state tree, and reject forced export through a dangling link. |
+| P0 | Detached verification compared HMAC text directly and ignored the declared algorithms and claim count. | Check the manifest fields and verify the HMAC with the native constant-time verifier. Existing signed bytes and valid receipts pass unchanged. |
+| P1 | An invalid filename at a page boundary could produce an unusable continuation. | Emit and accept a bounded opaque cursor for that filename. Ordinary record and event IDs retain their existing cursor encoding. |
+| P1 | Reports repeated record preflight and hashing. UTF-8 size allocated a temporary Base64 encoding. | Reuse one leaf preflight, skip report-only checksums, and use the pinned native byte-length operation. |
+
+Five paired validations on Intel macOS used 32 immutable records referencing the same 6 MiB synthetic attachment with Kujo 1.10.0. Successful envelopes matched. Median time changed from 10,983.657 ms to 630.470 ms. Ranges were 9,576.397–12,261.435 ms and 565.385–685.854 ms. A separate five-attachment fixture produced `validation_incomplete` after checking 256 MiB of a 320 MiB set. Its fifth record still passed `verify --id`. No peak-memory or token reduction was measured.
+
+The CLI, record formats, history formats, supported legacy versions, environment variables and minimum runtime revision are unchanged. The operator-owned state and filesystem assumptions still apply, including recovery for interruptions between the two exclusive publications. No cross-repository change is required for this pass. [Storage and verification contract](../contracts.md)
+
+The full local `KUJO_BIN=<runtime> bash scripts/validate.sh` passed with the Kujo 1.10.0 debug build. It covers legacy records, the published schemas, bounded paging, immutable exports, concurrent writers and exclusive crypto publication. A clean source archive created a claim and verified both the record and its event via the installed launcher. The pinned hosted build verifies the production runtime revision and the directory benchmark. [Hosted implementation verification](https://github.com/kujolang/dossier/actions/runs/45777179209)
